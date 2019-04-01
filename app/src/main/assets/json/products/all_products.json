@@ -1,0 +1,324 @@
+{
+  "all": [
+    {
+      "category": "Мясная продукция",
+      "image_res": 0,
+      "products": [
+        {
+          "title": "Говядина",
+          "count": "2",
+          "unit": "кг",
+          "price": "350"
+        },
+        {
+          "title": "Свинина",
+          "count": "3",
+          "unit": "кг",
+          "price": "300"
+        },
+        {
+          "title": "Котлеты",
+          "count": "1",
+          "unit": "кг",
+          "price": "200"
+        },
+        {
+          "title": "Фарш",
+          "count": "1",
+          "unit": "кг",
+          "price": "300"
+        },
+        {
+          "title": "Курица",
+          "count": "1",
+          "unit": "кг",
+          "price": "150"
+        }
+      ]
+    },
+    {
+      "category": "Рыбная продукция",
+      "image_res": 0,
+      "products": [
+        {
+          "title": "Минтай",
+          "count": "1",
+          "unit": "кг",
+          "price": "150"
+        },
+        {
+          "title": "Горбуша",
+          "count": "1",
+          "unit": "кг",
+          "price": "150"
+        },
+        {
+          "title": "Кальмар",
+          "count": "1",
+          "unit": "кг",
+          "price": "200"
+        },
+        {
+          "title": "Креветки",
+          "count": "1",
+          "unit": "кг",
+          "price": "400"
+        },
+        {
+          "title": "Котлеты",
+          "count": "1",
+          "unit": "кг",
+          "price": "200"
+        }
+      ]
+    },
+    {
+      "category": "Молочная продукция",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Молоко",
+          "count": "1",
+          "unit":"л",
+          "price": "50"},
+        {
+          "title":"Йогурт",
+          "count": "1",
+          "unit":"шт",
+          "price": "30" },
+        {
+          "title":"Кефир",
+          "count": "1",
+          "unit":"шт",
+          "price": "40" },
+        {
+          "title":"Сыр",
+          "count": "1",
+          "unit":"шт",
+          "price": "150" },
+        {
+          "title":"Сметана",
+          "count": "1",
+          "unit":"шт",
+          "price": "60" }
+      ]
+    },
+    {
+      "category": "Бакалея",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Масло растительное",
+          "count": "1",
+          "unit":"шт",
+          "price": "120"},
+        {
+          "title":"Макароны",
+          "count": "1",
+          "unit":"шт",
+          "price": "50"},
+        {
+          "title":"Сахар",
+          "count": "1",
+          "unit":"шт",
+          "price": "40" },
+        {
+          "title":"Гречка",
+          "count": "1",
+          "unit":"шт",
+          "price": "60" },
+        {
+          "title":"Геркулес",
+          "count": "1",
+          "unit":"шт",
+          "price": "50" }
+      ]
+    },
+    {
+      "category": "Фрукты, овощи",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Яблоки",
+          "count": "1",
+          "unit":"кг",
+          "price": "50" },
+        {
+          "title":"Бананы",
+          "count": "1",
+          "unit":"кг",
+          "price": "60"},
+        {
+          "title":"Лук",
+          "count": "1",
+          "unit":"кг",
+          "price": "20" },
+        {
+          "title":"Морковь",
+          "count": "1",
+          "unit":"кг",
+          "price": "30"  },
+        {
+          "title":"Картофель",
+          "count": "1",
+          "unit":"кг",
+          "price": "30"  }
+      ]
+    },
+    {
+      "category": "Кондитерская продукция",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Конфеты",
+          "count": "1",
+          "unit":"кг",
+          "price": "200" },
+        {
+          "title":"Карамель",
+          "count": "1",
+          "unit":"кг",
+          "price": "150"},
+        {
+          "title":"Пироженое",
+          "count": "1",
+          "unit":"кг",
+          "price": "400"  },
+        {
+          "title":"Торт",
+          "count": "1",
+          "unit":"кг",
+          "price": "300" },
+        {
+          "title":"Вафли",
+          "count": "1",
+          "unit":"кг",
+          "price": "300" }
+      ]
+    },
+    {
+      "category": "Выпечка",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Хлеб белый",
+          "count": "1",
+          "unit":"шт",
+          "price": "30"},
+        {
+          "title":"Хлеб ржаной",
+          "count": "1",
+          "unit":"шт",
+          "price": "30" },
+        {
+          "title":"Печенье",
+          "count": "1",
+          "unit":"кг",
+          "price": "150" },
+        {
+          "title":"Булочка",
+          "count": "1",
+          "unit":"шт",
+          "price": "20" },
+        {
+          "title":"Сухари",
+          "count": "1",
+          "unit":"кг",
+          "price": "200" }
+      ]
+    },
+    {
+      "category": "Напитки",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Кофе",
+          "count": "1",
+          "unit":"шт",
+          "price": "200"  },
+        {
+          "title":"Чай",
+          "count": "1",
+          "unit":"шт",
+          "price": "150"  },
+        {
+          "title":"Какао",
+          "count": "1",
+          "unit":"шт",
+          "price": "150"  },
+        {
+          "title":"Лимонад",
+          "count": "1",
+          "unit":"л",
+          "price": "50" },
+        {
+          "title":"Вода",
+          "count": "1",
+          "unit":"л",
+          "price": "30"  }
+      ]
+    },
+    {
+      "category": "Химия и товары для дома",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Порошок",
+          "count": "1",
+          "unit":"шт",
+          "price": "200"   },
+        {
+          "title":"Средство для мытья посуды",
+          "count": "1",
+          "unit":"шт",
+          "price": "50" },
+        {
+          "title":"Средство для мытья полов",
+          "count": "1",
+          "unit":"шт",
+          "price": "100"  },
+        {
+          "title":"Бумага туалетная",
+          "count": "1",
+          "unit":"шт",
+          "price": "100" },
+        {
+          "title":"Полотенца бумажные",
+          "count": "1",
+          "unit":"шт",
+          "price": "100" }
+      ]
+    },
+    {
+      "category": "Продукция для детей",
+      "image_res": 0,
+      "products": [
+        {
+          "title":"Присыпка",
+          "count": "1",
+          "unit":"шт",
+          "price": "100" },
+        {
+          "title":"Подгузники",
+          "count": "1",
+          "unit":"шт",
+          "price": "800"  },
+        {
+          "title":"Мыло детское",
+          "count": "1",
+          "unit":"шт",
+          "price": "50"},
+        {
+          "title":"Порошок детский",
+          "count": "1",
+          "unit":"шт",
+          "price": "200"},
+        {
+          "title":"Влажные салфетки",
+          "count": "1",
+          "unit":"шт",
+          "price": "100"}
+      ]
+    }
+  ]
+}

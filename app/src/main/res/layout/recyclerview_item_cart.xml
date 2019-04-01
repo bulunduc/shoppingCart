@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:animateLayoutChanges="true"
+    android:background="@color/backgroundColor"
+    android:id="@+id/cartContainer">
+
+    <RelativeLayout
+        android:id="@+id/main_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <TextView
+            android:id="@+id/cartItemName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true"
+            android:text="Name(2кг)"
+            android:layout_margin="8dp"
+            android:layout_alignParentLeft="true" />
+
+        <TextView
+            android:id="@+id/cartItemPrice"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            android:layout_centerVertical="true"
+            android:layout_toLeftOf="@id/cartItemIsChecked"
+            android:layout_toStartOf="@+id/cartItemIsChecked"
+            android:text="Price: 300р" />
+
+        <CheckBox
+            android:id="@+id/cartItemIsChecked"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp"
+            style="@style/checkBoxStyle"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/expand_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="8dp"
+        android:layout_below="@id/main_container"
+        android:visibility="visible">
+
+        <EditText
+            android:id="@+id/etCount"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:gravity="right"
+            android:layout_marginLeft="24dp"
+            android:layout_marginRight="8dp"
+            android:hint="@string/field_count"
+            android:singleLine="true"
+            android:maxLines="1"
+            android:textSize="14sp" />
+
+        <Spinner
+            android:id="@+id/spUnit"
+            android:layout_width="50dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_toEndOf="@+id/etCount"
+            android:layout_toRightOf="@+id/etCount"
+            android:entries="@array/units" />
+
+        <EditText
+            android:id="@+id/etPrice"
+            android:layout_width="70dp"
+            android:layout_height="wrap_content"
+            android:layout_toLeftOf="@id/btnSaveCartItem"
+            android:hint="@string/field_price"
+            android:textSize="14sp"
+            android:gravity="right"
+            android:maxLines="1"
+            android:layout_toStartOf="@id/btnSaveCartItem" />
+        <ImageButton
+            android:id="@+id/btnSaveCartItem"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="16dp"
+            android:layout_alignParentRight="true"
+            app:srcCompat="@drawable/ic_save"
+            android:background="@color/backgroundColor"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="16dp"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+</RelativeLayout>

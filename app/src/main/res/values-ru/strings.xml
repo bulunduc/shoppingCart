@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<resources>
+    <string name="app_name">За покупками</string>
+    <string name="action_settings">Settings</string>
+    <string name="search">Поиск</string>
+    <string name="action_share">Отправить</string>
+    <string name="action_edit">Редактировать</string>
+
+    <string name="name">Название</string>
+    <string name="total">Итого:</string>
+
+    <!-- EmptyView -->
+    <string name="emptyList">Список пуст</string>
+
+    <!-- Titles -->
+    <string name="edit_item_title">Редактирование</string>
+
+    <!-- Tab menu -->
+    <string name="favourites">Избранное</string>
+    <string name="add_category">Добавить категорию</string>
+
+    <!-- Bottom menu -->
+    <string name="list">Продукты</string>
+    <string name="recipes">Рецепты</string>
+    <string name="cart">Корзина</string>
+
+    <!-- Default units -->
+    <string-array name="units">
+        <item>кг</item>
+        <item>л</item>
+        <item>шт</item>
+    </string-array>
+
+    <!-- Item -->
+    <string name="item_name">"Название продукта:"</string>
+    <string name="item_min_count">"Минимальное количество:"</string>
+    <string name="item_unit">"Единицы измерения:"</string>
+    <string name="item_price">"Цена(за 1 ед):"</string>
+    <string name="item_category">"Категория:"</string>
+
+
+    <string name="ok">Ок</string>
+    <string name="cancel">Отмена</string>
+    <string name="action_deleteAll">Очистить список</string>
+    <string name="action_deleteChecked">Удалить купленное</string>
+    <string name="newCategory">Новая категория</string>
+    <string name="enterCategory">Введите категорию</string>
+    <string name="delete">Удалить</string>
+    <string name="deleteCategory">Удалить категорию?</string>
+    <string name="tv_description">Загружаемся...</string>
+    <string name="fail_sending">Отправка не удалась</string>
+    <string name="deleted_category" formatted="false">Категория %s удалена</string>
+    <string name="invalid_field">Поле "%s" некорректно!</string>
+
+
+    <string name="cart_product_title">%s (%s %s)</string>
+
+    <string name="item_title_hint">Название</string>
+    <string name="item_category_hint">Категория</string>
+    <string name="item_count_hint">Количество</string>
+    <string name="item_price_hint">Цена</string>
+    <string name="field_count">Количество</string>
+    <string name="field_price">Цена</string>
+    <string name="field_title">Название</string>
+    <string name="category">Категория</string>
+    <string name="willBeSoon">Совсем скоро...</string>
+    <string name="templates">Шаблоны</string>
+    <string name="check_fields">Проверьте поля!</string>
+    <string name="chooseApp">Выберите приложение для отправки:</string>
+
+
+</resources>
