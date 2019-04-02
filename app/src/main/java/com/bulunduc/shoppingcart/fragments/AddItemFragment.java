@@ -159,7 +159,8 @@ public class AddItemFragment extends DialogFragment {
 
             }
         });
-        final ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(mActivity, simple_spinner_item, mActivity.getResources().getStringArray(R.array.units));
+        final ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mActivity.getResources().getStringArray(R.array.units));
+        unitAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mUnitSpinner.setAdapter(unitAdapter);
         mUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -175,8 +176,8 @@ public class AddItemFragment extends DialogFragment {
 
 
         mCategories.add(mCategories.size(), getString(R.string.newCategory));
-        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, simple_spinner_item, mCategories.toArray(new String[mCategories.size()]));
-        categoryAdapter.setDropDownViewResource(simple_spinner_dropdown_item);
+        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mCategorySpinner.setAdapter(categoryAdapter);
         mCategorySpinner.setSelection(mCurrentCategoryPosition);
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -229,7 +230,7 @@ public class AddItemFragment extends DialogFragment {
             throw new InvalidCountException();
         }
         try {
-            mPrice = Double.parseDouble(mPriceEditText.getText().toString()) / mCount;
+            mPrice = Double.parseDouble(mPriceEditText.getText().toString());
         } catch (NumberFormatException e) {
             throw new InvalidPriceException();
         }

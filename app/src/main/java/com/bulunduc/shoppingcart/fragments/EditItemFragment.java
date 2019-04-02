@@ -216,7 +216,7 @@ public class EditItemFragment extends DialogFragment {
         });
 
         final ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<CharSequence>(mActivity, android.R.layout.simple_spinner_item, mActivity.getResources().getStringArray(R.array.units));
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spUnit.setAdapter(spinnerAdapter);
         spUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -254,8 +254,8 @@ public class EditItemFragment extends DialogFragment {
         }
         categories[categories.length - 1] = getString(R.string.newCategory);
 
-        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, categories);
-        categoryAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, categories);
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spItemCategory.setAdapter(categoryAdapter);
         spItemCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override

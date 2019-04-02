@@ -46,12 +46,11 @@ public class Item implements Parcelable {
 
 
     public double getPrice() {
-        return price;
+        return Math.round(price * 100.0) / 100.0;
     }
 
-    public double getFinalPrice(){
-        return mCount*price;
-    }
+    public double getFinalPrice(){ return Math.round(mCount*price * 100.0) / 100.0; }
+
     public void addCount(Double count, String unit){
         if (!this.countUnit.equals(unit)) {
 
