@@ -107,7 +107,7 @@ public class CategoryPageFragment extends Fragment{
             }
 
             @Override
-            public void onItemDoubleClick(View view, int position) {
+            public void onItemDoubleClick(int position) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 EditItemFragment editItemFragment = EditItemFragment.newInstance(getActivity(), mProducts.get(position).getItemName(),
                         mProducts.get(position).getCount(), mProducts.get(position).getCountUnit(),

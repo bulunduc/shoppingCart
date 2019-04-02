@@ -5,7 +5,9 @@ import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -68,12 +70,20 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
         int position = 0;
 
 
-        ViewHolder(View itemView){
+        ViewHolder(final View itemView){
             super(itemView);
-            itemView.setOnLongClickListener(new View.OnLongClickListener() {
+            itemView.setOnTouchListener(new View.OnTouchListener() {
+                private GestureDetector gestureDetector = new GestureDetector(mActivity, new GestureDetector.SimpleOnGestureListener() {
+                    @Override
+                    public boolean onDoubleTap(MotionEvent e) {
+                        mItemRecyclerViewClickListener.onItemDoubleClick(position);
+                        return true;
+                    }
+                });
+
                 @Override
-                public boolean onLongClick(View v) {
-                    mItemRecyclerViewClickListener.onItemLongClick(v, position);
+                public boolean onTouch(View v, MotionEvent event) {
+                    gestureDetector.onTouchEvent(event);
                     return true;
                 }
             });
