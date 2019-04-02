@@ -6,7 +6,7 @@ public class AppConstants {
     public static final int INVALID_VALUE_IDENTIFIER = -1;
     public static final int ZERO_VALUE_IDENTIFIER = 0;
     public static final double ZERO_DOUBLE_VALUE = 0.0;
-    
+
     //AppPreference
     public static final String KEY_FIRST_RUN = "first_run";
     public static final String KEY_SAVED_TAB = "saved_tab";
