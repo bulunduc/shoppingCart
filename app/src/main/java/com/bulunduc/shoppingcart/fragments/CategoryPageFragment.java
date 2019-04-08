@@ -29,6 +29,7 @@ public class CategoryPageFragment extends Fragment{
     private static final String ARG_PAGE = "ARG_PAGE";
     private static final String CATEGORIES = "CATEGORIES";
     private static final String PRODUCTS = "PRODUCTS";
+    private static final String HIGHLIGHT = "highlight";
 
     private Context mContext;
     private Activity mActivity;
@@ -36,17 +37,19 @@ public class CategoryPageFragment extends Fragment{
     private int mCategoryId;
     private ArrayList<String> mCategories;
     private ArrayList<Item> mProducts;
+    private String highlightString;
 
     private ItemViewAdapter mAdapter;
     private RecyclerViewEmptySupport mRvProducts;
     private View mEmptyView;
     private ImageButton mDeleteCategory;
 
-    public static CategoryPageFragment newInstance(int page, ArrayList<String> categories, ArrayList<Item> products) {
+    public static CategoryPageFragment newInstance(int page, ArrayList<String> categories, ArrayList<Item> products, String highlightText) {
         Bundle args = new Bundle();
         args.putInt(ARG_PAGE, page);
         args.putStringArrayList(CATEGORIES, categories );
         args.putParcelableArrayList(PRODUCTS, products);
+        args.putString(HIGHLIGHT, highlightText);
         CategoryPageFragment fragment = new CategoryPageFragment();
         fragment.setArguments(args);
         return fragment;
@@ -61,6 +64,7 @@ public class CategoryPageFragment extends Fragment{
             mCategories = new ArrayList<>();
             mCategories = getArguments().getStringArrayList(CATEGORIES);
             mProducts = getArguments().getParcelableArrayList(PRODUCTS);
+            highlightString = getArguments().getString(HIGHLIGHT);
         }
     }
 
@@ -89,7 +93,7 @@ public class CategoryPageFragment extends Fragment{
             }
         });
 
-        mAdapter = new ItemViewAdapter(getActivity(), mProducts);
+        mAdapter = new ItemViewAdapter(getActivity(), mProducts, highlightString);
         mAdapter.setItemRecyclerViewClickListener(new ItemRecyclerViewClickListener() {
             @Override
             public void onItemClick(View view, int position) {

@@ -33,4 +33,5 @@ dependencies {
     implementation 'org.kie.modules:com-google-code-gson:6.5.0.Final'
     implementation 'com.android.support:recyclerview-v7:27.1.1'
     implementation 'io.github.luizgrp.sectionedrecyclerviewadapter:sectionedrecyclerviewadapter:1.2.0'
+    implementation 'com.miguelcatalan:materialsearchview:1.4.0'
 }

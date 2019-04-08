@@ -4,7 +4,9 @@ import android.app.Activity;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
+import android.text.Html;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,15 +26,19 @@ import com.bulunduc.shoppingcart.models.Item;
 
 import java.util.ArrayList;
 
+
 public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHolder> {
+    private static final String TAG = "ItemViewAdapter";
     private Activity mActivity;
     private ArrayList<Item> mItems;
+    private String mHighlight;
     private ItemRecyclerViewClickListener mItemRecyclerViewClickListener;
 
-    public ItemViewAdapter(Activity activity, ArrayList<Item> productList) {
+    public ItemViewAdapter(Activity activity, ArrayList<Item> productList, String highlightString) {
         mActivity = activity;
         mItems = new ArrayList<>();
         mItems = productList;
+        mHighlight = highlightString;
     }
 
     @NonNull
@@ -99,7 +105,15 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
         }
 
         void bind(final Item item){
-            title.setText(item.getItemName());
+            if (mHighlight.equals("")){
+                title.setText(item.getItemName());}
+            else {
+
+                int firstIndex = item.getItemName().toLowerCase().indexOf(mHighlight);
+                title.setText(Html.fromHtml(item.getItemName().substring(0, firstIndex) +
+                        "<font color='red'>"+ item.getItemName().substring(firstIndex, firstIndex + mHighlight.length()) + "</font>"+
+                        item.getItemName().substring(firstIndex + mHighlight.length())));
+            }
             String txtCount = Item.getStringFormatCount(item.getCount(), item.getCountUnit());
             count.setText(txtCount);
             count.setSelection(txtCount.length());

@@ -15,17 +15,19 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     private ArrayList<String> categories;
     private LinkedHashMap<String, ArrayList<Item>> allProducts;
+    private String highlightText;
 
-    public ViewPagerAdapter(FragmentManager fm, LinkedHashMap<String, ArrayList<Item>> products) {
+    public ViewPagerAdapter(FragmentManager fm, LinkedHashMap<String, ArrayList<Item>> products, String highlight) {
         super(fm);
         categories = new ArrayList<>();
         categories.addAll(products.keySet());
         allProducts = products;
+        highlightText = highlight != null ? highlight : "";
     }
 
     @Override
     public Fragment getItem(int position) {
-        return CategoryPageFragment.newInstance(position + 1, categories, allProducts.get(categories.get(position)));
+        return CategoryPageFragment.newInstance(position + 1, categories, allProducts.get(categories.get(position)), highlightText);
     }
 
     @Override

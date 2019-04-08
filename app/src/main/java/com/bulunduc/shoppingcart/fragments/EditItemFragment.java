@@ -30,6 +30,7 @@ import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class EditItemFragment extends DialogFragment {
     private static final String TAG = "EditItemFragment";
@@ -162,6 +163,7 @@ public class EditItemFragment extends DialogFragment {
             mPrice = bundle.getDouble(AppConstants.KEY_ITEM_PRICE);
             mCategoryPosition = bundle.getInt(AppConstants.KEY_ITEM_CATEGORY);
             mCategories = bundle.getStringArrayList(AppConstants.KEY_ITEM_CATEGORIES);
+            Collections.sort(mCategories);
             mPosition = bundle.getInt(AppConstants.KEY_POSITION);
         }
     }
