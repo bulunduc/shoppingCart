@@ -6,13 +6,17 @@ import android.content.Intent;
 import android.net.Uri;
 import android.widget.Toast;
 
+import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Item;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
 import java.util.Set;
 
 public class AppUtilities {
@@ -67,6 +71,8 @@ public class AppUtilities {
         }
         products.get(category).add(item);
         saveProductList(context, products);
+        showToast(context, context.getResources().getString(R.string.addedToList));
+
     }
 
     public static ArrayList<CartItem> addItemAndReturnCartList(Context context, CartItem cartItem) {
@@ -87,9 +93,10 @@ public class AppUtilities {
     }
 
     public static ArrayList<String> getCategories(Context context) {
-        String jsonAllProductsList = JSONUtilities.getInstance().loadJson(context, AppConstants.DEFAULT_PRODUCT_DIRECTORY, AppConstants.ALL_PRODUCT_JSON_FILE);
-        Set<String> categories = JSONUtilities.getInstance().parceJSONAllProducts(jsonAllProductsList).keySet();
-        return new ArrayList<>(categories);
+        ArrayList<String> categories = new ArrayList<>();
+        categories.addAll(getProductList(context).keySet());
+        Collections.sort(categories);
+        return categories;
     }
 
     public static ArrayList<CartItem> getCartList(Context context) {

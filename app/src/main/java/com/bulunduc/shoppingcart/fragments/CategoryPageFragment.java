@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -113,6 +114,7 @@ public class CategoryPageFragment extends Fragment{
             @Override
             public void onItemDoubleClick(int position) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
+                Log.d(TAG, "category(click): " + mCategories.get(mCategoryId));
                 EditItemFragment editItemFragment = EditItemFragment.newInstance(getActivity(), mProducts.get(position).getItemName(),
                         mProducts.get(position).getCount(), mProducts.get(position).getCountUnit(),
                         mProducts.get(position).getPrice(),mCategoryId, mCategories,  position);
@@ -128,18 +130,15 @@ public class CategoryPageFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppConstants.EDIT_ITEM_REQUEST_CODE) {
+            int position = data.getIntExtra(AppConstants.KEY_POSITION, AppConstants.INVALID_VALUE_IDENTIFIER);
+            Log.d(TAG, "position: " + position);
+            String category = data.getStringExtra(AppConstants.KEY_ITEM_CATEGORY);
             if (resultCode == Result.OK.getCode()) {
-                int position = data.getIntExtra(AppConstants.KEY_POSITION, AppConstants.INVALID_VALUE_IDENTIFIER);
-                String newCategory = data.getStringExtra(AppConstants.KEY_ITEM_CATEGORY);
-
                 Item item = data.getParcelableExtra(AppConstants.KEY_ITEM);
-                ((ItemCategoryActivity)getActivity()).updateProductLists(item,newCategory, mCategories.get(mCategoryId), position);
+                ((ItemCategoryActivity)getActivity()).updateProductLists(item, category, mCategories.get(mCategoryId), position);
                 mAdapter.notifyDataSetChanged();
             }
             if (resultCode == Result.DELETE.getCode()) {
-                int position = data.getIntExtra(AppConstants.KEY_POSITION, AppConstants.INVALID_VALUE_IDENTIFIER);
-                String category = data.getStringExtra(AppConstants.KEY_ITEM_CATEGORY);
-
                 ((ItemCategoryActivity)getActivity()).deleteItem(category, position);
             }
         }

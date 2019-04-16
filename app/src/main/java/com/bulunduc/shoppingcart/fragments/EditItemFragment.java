@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -57,6 +58,7 @@ public class EditItemFragment extends DialogFragment {
         args.putDouble(AppConstants.KEY_ITEM_PRICE, price);
         args.putInt(AppConstants.KEY_ITEM_CATEGORY, category);
         args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
+        Log.d(TAG, "categories: " + categories.toString() + " : " + category);
         args.putInt(AppConstants.KEY_POSITION, position);
         EditItemFragment fragment = new EditItemFragment();
         fragment.setArguments(args);

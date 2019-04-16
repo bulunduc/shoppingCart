@@ -65,6 +65,9 @@
     <string name="chooseApp">Choose app to share</string>
     <string name="title_activity_settings">Settings</string>
 
+    <string name="addedToList">Product added to lists</string>
+
+
     <!-- Strings related to Settings -->
 
     <!-- Example General settings -->

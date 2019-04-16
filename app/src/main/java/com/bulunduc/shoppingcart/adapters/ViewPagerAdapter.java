@@ -9,6 +9,7 @@ import com.bulunduc.shoppingcart.fragments.CategoryPageFragment;
 import com.bulunduc.shoppingcart.models.Item;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.LinkedHashMap;
 
 public class ViewPagerAdapter extends FragmentStatePagerAdapter {
@@ -21,6 +22,7 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         categories = new ArrayList<>();
         categories.addAll(products.keySet());
+        Collections.sort(categories);
         allProducts = products;
         highlightText = highlight != null ? highlight : "";
     }

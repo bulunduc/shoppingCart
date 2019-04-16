@@ -105,7 +105,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
         }
 
         void bind(final Item item){
-            if (mHighlight.equals("")){
+            if (mHighlight==null || mHighlight.isEmpty()){
                 title.setText(item.getItemName());}
             else {
 

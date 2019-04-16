@@ -12,6 +12,7 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
 import android.app.SearchManager;
+import android.util.Log;
 import android.widget.SearchView;
 import android.widget.SearchView.OnQueryTextListener;
 import android.view.Menu;
@@ -70,7 +71,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
                 savedCurrentTab = AppPreference.getInstance(mContext).getInt(AppConstants.KEY_SAVED_TAB);
             }
         }
-        updateViewPager(mAllProducts, savedCurrentTab, null);
+        updateViewPager(mAllProducts, savedCurrentTab, "");
     }
 
 
@@ -123,10 +124,11 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
             @Override
             public void onSearchViewClosed() {
-                updateViewPager(mAllProducts, AppConstants.ZERO_VALUE_IDENTIFIER, null);
+                updateViewPager(mAllProducts, AppConstants.ZERO_VALUE_IDENTIFIER, "");
 
             }
         });
+
         initToolbar(true);
         setToolbarTitle(getString(R.string.app_name));
 
@@ -161,10 +163,11 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
             if (!mAllProducts.keySet().contains(newCategory))
             {
                 mAllProducts.put(newCategory, new ArrayList<Item>());
-                updateViewPager(mAllProducts, mAllProducts.size(), null);
+                updateViewPager(mAllProducts, mAllProducts.size(), "");
             }
             mAllProducts.get(newCategory).add(model);
         } else {
+            Log.d(TAG, "updateProductLists: " + mAllProducts.get(oldCategory).get(0).getItemName());
             mAllProducts.get(oldCategory).set(position, model);
         }
     }
@@ -244,6 +247,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
             mAllProducts.put(category, new ArrayList<Item>());
         }
         mAllProducts.get(category).add(item);
+        AppUtilities.showToast(mContext, mContext.getResources().getString(R.string.addedToList));
         updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
     }
 
