@@ -64,7 +64,7 @@
     <string name="field_price">Цена</string>
     <string name="field_title">Название</string>
     <string name="category">Категория</string>
-    <string name="willBeSoon">Совсем скоро...</string>
+    <string name="willBeSoon">Совсем скоро запрашиваемая функция будет реализована...</string>
     <string name="templates">Шаблоны</string>
     <string name="check_fields">Проверьте поля!</string>
     <string name="chooseApp">Выберите приложение для отправки:</string>

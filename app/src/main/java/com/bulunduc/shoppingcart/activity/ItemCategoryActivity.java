@@ -228,8 +228,11 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            AppUtilities.showToast(mContext, getString(R.string.willBeSoon));
+            /*
             Intent intent = new Intent(ItemCategoryActivity.this, SettingsActivity.class);
             startActivity(intent);
+            */
         }
         if (id == R.id.add_item){
             try {

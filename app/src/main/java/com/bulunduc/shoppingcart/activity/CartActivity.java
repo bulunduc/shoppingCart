@@ -255,8 +255,11 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
                 updateAndWriteData();
                 break;
             case R.id.action_settings:
+                AppUtilities.showToast(mContext, getString(R.string.willBeSoon));
+                /*
                 Intent intent = new Intent(CartActivity.this, SettingsActivity.class);
                 startActivity(intent);
+                */
                 break;
         }
         return super.onOptionsItemSelected(item);
@@ -266,15 +269,26 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
 
     private String cartListToSms() {
         StringBuilder sms = new StringBuilder();
+        String category = "";
         for (CartItem cartItemModel : mCartItemList) {
+            if (!category.equals(cartItemModel.getCategory())){
+                if (sms.length() > 0 )
+                {
+                    sms.deleteCharAt(sms.length() - 2)
+                            .append(" / ");
+                }
+                sms.append(cartItemModel.getCategory());
+                sms.append(": ");
+                category = cartItemModel.getCategory();
+            }
             sms.append(cartItemModel.getItem().getItemName())
                     .append("(")
                     .append(cartItemModel.getItem().getCount())
                     .append(cartItemModel.getItem().getCountUnit())
                     .append(")")
-                    .append("/");
+                    .append(", ");
         }
-        sms.deleteCharAt(sms.length() - 1);
+        sms.deleteCharAt(sms.length() - 2);
         return sms.toString();
     }
 

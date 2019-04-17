@@ -59,7 +59,7 @@
     <string name="field_price">price</string>
     <string name="field_title">Title</string>
     <string name="category">Category</string>
-    <string name="willBeSoon">It will be soon...</string>
+    <string name="willBeSoon">It will be soon... Now this function is not realized. Sorry</string>
     <string name="templates">Templates</string>
     <string name="check_fields">Check fields!</string>
     <string name="chooseApp">Choose app to share</string>
