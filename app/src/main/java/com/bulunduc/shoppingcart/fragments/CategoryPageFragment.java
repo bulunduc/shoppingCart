@@ -1,7 +1,9 @@
 package com.bulunduc.shoppingcart.fragments;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -22,6 +24,7 @@ import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.constants.Result;
 import com.bulunduc.shoppingcart.listeners.ItemRecyclerViewClickListener;
 import com.bulunduc.shoppingcart.models.Item;
+import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 
@@ -89,7 +92,24 @@ public class CategoryPageFragment extends Fragment{
         mDeleteCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ((ItemCategoryActivity)getActivity()).deleteCurrentCategory();
+                AppUtilities.showToast(mContext, "Button is enabled");
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle(R.string.confirm_deleting)
+                        .setMessage(getString(R.string.deleteCategoryPromt))
+                        .setIcon(R.mipmap.ic_launcher)
+                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                ((ItemCategoryActivity)getActivity()).deleteCurrentCategory();
+                                dialog.dismiss();
+                            }
+                        })
+                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int id) {
+                                // Закрываем окно
+                                dialog.cancel();
+                            }
+                        });
+                builder.show();
 
             }
         });

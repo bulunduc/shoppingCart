@@ -70,6 +70,7 @@
     <string name="chooseApp">Выберите приложение для отправки:</string>
 
     <string name="addedToList">Продукт добавлен в списки</string>
+    <string name="deleteCategoryPromt">Вы действительно хотите удалить категорию?</string>
 
     <string name="title_activity_settings">Settings</string>
 
@@ -145,5 +146,6 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="result">Result</string>
+    <string name="confirm_deleting">Подтвердите удаление</string>
 
 </resources>

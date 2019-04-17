@@ -36,7 +36,7 @@
     <string name="item_price">"Price(for 1 piece):"</string>
     <string name="item_category">"Category:"</string>
 
-    <string name="ok">Ok</string>
+    <string name="ok">OK</string>
     <string name="cancel">Cancel</string>
     <string name="action_deleteAll">Delete all</string>
     <string name="action_deleteChecked">Delete checked</string>
@@ -66,6 +66,7 @@
     <string name="title_activity_settings">Settings</string>
 
     <string name="addedToList">Product added to lists</string>
+    <string name="deleteCategoryPromt">re you sure to delete category?</string>
 
 
     <!-- Strings related to Settings -->
@@ -140,5 +141,6 @@
 
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="result">Result</string>
+    <string name="confirm_deleting">Confirm deleting</string>
 
 </resources>

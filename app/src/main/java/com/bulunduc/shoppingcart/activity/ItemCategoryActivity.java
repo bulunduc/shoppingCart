@@ -105,10 +105,12 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
                                 }
                                 searchResults.get(category).add(item);
 
-                                updateViewPager(searchResults, AppConstants.ZERO_VALUE_IDENTIFIER, newText.toLowerCase());
                             }
+                            updateViewPager(searchResults, AppConstants.ZERO_VALUE_IDENTIFIER, newText.toLowerCase());
+
                         }
                     }
+                    if (searchResults.isEmpty()) AppUtilities.showToast(mContext, "Ничего не найдено");
                 }else{
                     updateViewPager(mAllProducts, AppConstants.ZERO_VALUE_IDENTIFIER, null);
                 }
