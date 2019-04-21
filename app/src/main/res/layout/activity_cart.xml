@@ -31,7 +31,7 @@
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:text="@string/emptyList"
+        android:text="@string/empty_list"
     />
 
     <LinearLayout
@@ -49,13 +49,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextViewEditFragmentStyle"
-            android:text="Общая стоимость: "
+            android:text="@string/full_price"
             />
         <TextView
             android:id="@+id/totalPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="р"
+            android:text=""
             />
     </LinearLayout>
 
@@ -74,13 +74,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             style="@style/TextViewEditFragmentStyle"
-            android:text="Куплено на сумму: "
+            android:text="@string/buyed_on"
             />
         <TextView
             android:id="@+id/checkedItemsPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="р"
+            android:text=""
             />
     </LinearLayout>
 
@@ -92,7 +92,10 @@
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="64dp"
         android:layout_marginRight="8dp"
-        android:src="@drawable/ic_add"/>
+        android:src="@drawable/ic_add"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        tools:ignore="VectorDrawableCompat" />
     <include
         android:id="@+id/bottom_navigation"
         layout="@layout/bottom_navigation_menu" />

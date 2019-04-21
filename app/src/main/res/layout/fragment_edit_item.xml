@@ -7,11 +7,11 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="0dp"
         android:layout_weight="1"
         android:background="@color/colorPrimary"
         android:gravity="center_vertical"
-        android:paddingLeft="10dp"
+        android:padding="16dp"
         android:text="@string/edit_item_title"
         android:textColor="@android:color/black"
         android:textSize="24sp"
@@ -30,14 +30,15 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1.5"
-            android:text="@string/item_name" />
+            android:text="@string/item_titlr" />
 
         <EditText
             android:id="@+id/etItemName"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:inputType="textCapSentences"
-            android:layout_weight="1" />
+            android:layout_weight="1"
+            android:importantForAutofill="no" />
     </LinearLayout>
 
     <LinearLayout
@@ -65,7 +66,8 @@
                 android:layout_height="match_parent"
                 android:layout_weight="1"
                 android:digits="0,1,2,3,4,5,6,7,8,9,."
-                android:inputType="number|numberDecimal" />
+                android:inputType="number|numberDecimal"
+                android:importantForAutofill="no" />
 
             <Spinner
                 android:id="@+id/spItemUnit"
@@ -98,7 +100,8 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:digits="0,1,2,3,4,5,6,7,8,9,."
-            android:inputType="numberDecimal" />
+            android:inputType="numberDecimal"
+            android:importantForAutofill="no" />
     </LinearLayout>
 
     <LinearLayout
@@ -143,10 +146,11 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:hint="@string/enterCategory"
+            android:hint="@string/enter_сategory"
             android:textSize="18sp"
             android:inputType="textCapSentences"
-            android:visibility="visible" />
+            android:visibility="visible"
+            android:importantForAutofill="no" />
     </LinearLayout>
 
 </LinearLayout>

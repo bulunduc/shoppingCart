@@ -9,16 +9,12 @@ import android.view.inputmethod.InputMethodManager;
 public class ActivityUtilities {
 
     private static ActivityUtilities activityUtilities = null;
-    public static ActivityUtilities getInstance(){
+
+    public static ActivityUtilities getInstance() {
         if (activityUtilities == null) {
             activityUtilities = new ActivityUtilities();
         }
         return activityUtilities;
-    }
-
-    public void invokeNewActivity(Activity activity, Class<?> tClass) {
-        Intent intent = new Intent(activity, tClass);
-        activity.startActivity(intent);
     }
 
     public static void hideKeyboard(Activity activity) {
@@ -27,11 +23,15 @@ public class ActivityUtilities {
         if (view == null) {
             view = new View(activity);
         }
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     public static void hideKeyboardFrom(Context context, View view) {
         InputMethodManager imm = (InputMethodManager) context.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        if (imm != null) {
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 }

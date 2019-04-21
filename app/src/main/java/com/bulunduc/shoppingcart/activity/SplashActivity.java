@@ -15,7 +15,7 @@ import com.bulunduc.shoppingcart.R;
 public class SplashActivity extends AppCompatActivity {
 
 
-    private static final int SPLASH_DURATION = 2500;
+    private static final int SPLASH_DURATION = 2000;
     private ImageView imageView;
     private Animation animation;
     private ProgressBar progressBar;
@@ -25,9 +25,9 @@ public class SplashActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        progressBar = (ProgressBar) findViewById(R.id.progressBar);
-        layout = (ConstraintLayout) findViewById(R.id.splashLayout);
-        imageView = (ImageView) findViewById(R.id.ivSplashIcon);
+        progressBar = findViewById(R.id.progressBar);
+        layout = findViewById(R.id.splashLayout);
+        imageView = findViewById(R.id.ivSplashIcon);
         animation = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
 
     }

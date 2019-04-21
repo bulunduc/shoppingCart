@@ -1,28 +1,21 @@
 package com.bulunduc.shoppingcart.fragments;
 
 import android.app.Activity;
-import android.app.Dialog;
 import android.content.DialogInterface;
 import android.graphics.PorterDuff;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.design.widget.BottomSheetBehavior;
-import android.support.design.widget.BottomSheetDialog;
 import android.support.design.widget.BottomSheetDialogFragment;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
-import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 
@@ -174,7 +167,7 @@ public class ItemAddBottomSheetDialogFragment extends BottomSheetDialogFragment 
             }
         });
 
-        mCategories.add(mCategories.size(), getString(R.string.newCategory));
+        mCategories.add(mCategories.size(), getString(R.string.new_category));
         categoryAdapter = new ArrayAdapter<>(mActivity, simple_spinner_item, mCategories.toArray(new String[mCategories.size()]));
         categoryAdapter.setDropDownViewResource(simple_spinner_dropdown_item);
         mCategorySpinner.setAdapter(categoryAdapter);
@@ -183,7 +176,7 @@ public class ItemAddBottomSheetDialogFragment extends BottomSheetDialogFragment 
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mNewCategoryEditText.setText(mCategories.get(position));
-                if (mCategories.get(position).equals(getString(R.string.newCategory))) {
+                if (mCategories.get(position).equals(getString(R.string.new_category))) {
                     mNewCategoryEditText.setText("");
                     mNewCategoryEditText.setVisibility(View.VISIBLE);
                     mNewCategoryEditText.requestFocus();

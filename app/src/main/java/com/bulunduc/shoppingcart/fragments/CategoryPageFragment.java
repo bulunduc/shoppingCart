@@ -24,7 +24,6 @@ import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.constants.Result;
 import com.bulunduc.shoppingcart.listeners.ItemRecyclerViewClickListener;
 import com.bulunduc.shoppingcart.models.Item;
-import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 
@@ -92,10 +91,9 @@ public class CategoryPageFragment extends Fragment{
         mDeleteCategory.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AppUtilities.showToast(mContext, "Button is enabled");
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle(R.string.confirm_deleting)
-                        .setMessage(getString(R.string.deleteCategoryPromt))
+                        .setMessage(getString(R.string.confirm_deleting_category))
                         .setIcon(R.mipmap.ic_launcher)
                         .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int id) {
@@ -124,7 +122,7 @@ public class CategoryPageFragment extends Fragment{
             @Override
             public void onItemLongClick(View view, int position) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
-                EditItemFragment editItemFragment = EditItemFragment.newInstance(getActivity(), mProducts.get(position).getItemName(),
+                EditItemFragment editItemFragment = EditItemFragment.newInstance(mProducts.get(position).getItemName(),
                         mProducts.get(position).getCount(), mProducts.get(position).getCountUnit(),
                         mProducts.get(position).getPrice(),mCategoryId, mCategories,  position);
                 editItemFragment.setTargetFragment(CategoryPageFragment.this, AppConstants.EDIT_ITEM_REQUEST_CODE);
@@ -135,7 +133,7 @@ public class CategoryPageFragment extends Fragment{
             public void onItemDoubleClick(int position) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 Log.d(TAG, "category(click): " + mCategories.get(mCategoryId));
-                EditItemFragment editItemFragment = EditItemFragment.newInstance(getActivity(), mProducts.get(position).getItemName(),
+                EditItemFragment editItemFragment = EditItemFragment.newInstance(mProducts.get(position).getItemName(),
                         mProducts.get(position).getCount(), mProducts.get(position).getCountUnit(),
                         mProducts.get(position).getPrice(),mCategoryId, mCategories,  position);
                 editItemFragment.setTargetFragment(CategoryPageFragment.this, AppConstants.EDIT_ITEM_REQUEST_CODE);

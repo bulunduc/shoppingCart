@@ -6,7 +6,6 @@ import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -64,8 +63,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
     }
 
 
-
-    class ViewHolder extends RecyclerView.ViewHolder{
+    class ViewHolder extends RecyclerView.ViewHolder {
         TextView title;
         Button lessCount;
         EditText count;
@@ -76,7 +74,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
         int position = 0;
 
 
-        ViewHolder(final View itemView){
+        ViewHolder(final View itemView) {
             super(itemView);
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 private GestureDetector gestureDetector = new GestureDetector(mActivity, new GestureDetector.SimpleOnGestureListener() {
@@ -93,26 +91,26 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
                     return true;
                 }
             });
-            title =  itemView.findViewById(R.id.item_title);
-            lessCount =  itemView.findViewById(R.id.less_count);
-            count =  itemView.findViewById(R.id.item_count);
-            count.setFilters(new NumberInputFilter[]{new NumberInputFilter(4,2)});
-            unit =  itemView.findViewById(R.id.item_unit);
-            moreCount =  itemView.findViewById(R.id.more_count);
-            price =  itemView.findViewById(R.id.item_price);
-            addToCart =  itemView.findViewById(R.id.add_to_cart);
+            title = itemView.findViewById(R.id.item_title);
+            lessCount = itemView.findViewById(R.id.less_count);
+            count = itemView.findViewById(R.id.item_count);
+            count.setFilters(new NumberInputFilter[]{new NumberInputFilter(4, 2)});
+            unit = itemView.findViewById(R.id.item_unit);
+            moreCount = itemView.findViewById(R.id.more_count);
+            price = itemView.findViewById(R.id.item_price);
+            addToCart = itemView.findViewById(R.id.add_to_cart);
 
         }
 
-        void bind(final Item item){
-            if (mHighlight==null || mHighlight.isEmpty()){
-                title.setText(item.getItemName());}
-            else {
+        void bind(final Item item) {
+            if (mHighlight == null || mHighlight.isEmpty()) {
+                title.setText(item.getItemName());
+            } else {
 
                 int firstIndex = item.getItemName().toLowerCase().indexOf(mHighlight);
                 title.setText(Html.fromHtml(item.getItemName().substring(0, firstIndex) +
-                        "<font color='red'>"+ item.getItemName().substring(firstIndex, firstIndex + mHighlight.length()) + "</font>"+
-                        item.getItemName().substring(firstIndex + mHighlight.length())));
+                        "<font color='red'>" + item.getItemName().substring(firstIndex, firstIndex + mHighlight.length()) +
+                        "</font>" + item.getItemName().substring(firstIndex + mHighlight.length())));
             }
             String txtCount = Item.getStringFormatCount(item.getCount(), item.getCountUnit());
             count.setText(txtCount);
@@ -121,9 +119,11 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
             lessCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if ( count.getText().toString().equals("")) count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
+                    if (count.getText().toString().equals(""))
+                        count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
                     Double newCount = Double.parseDouble(count.getText().toString()) - item.getStepCount();
-                    if (newCount < AppConstants.ZERO_DOUBLE_VALUE) newCount = AppConstants.ZERO_DOUBLE_VALUE;
+                    if (newCount < AppConstants.ZERO_DOUBLE_VALUE)
+                        newCount = AppConstants.ZERO_DOUBLE_VALUE;
                     count.setText(Item.getStringFormatCount(newCount, item.getCountUnit()));
                 }
             });
@@ -138,7 +138,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
                     try {
                         item.setCount(Double.parseDouble(s.toString()));
                         price.setText(String.valueOf(item.getFinalPrice()));
-                    }catch (NumberFormatException e) {
+                    } catch (NumberFormatException e) {
                     }
                 }
 
@@ -151,16 +151,17 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
             moreCount.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    if ( count.getText().toString().isEmpty()) count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
+                    if (count.getText().toString().isEmpty())
+                        count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
                     Double newWeight = Double.parseDouble(count.getText().toString()) + item.getStepCount();
                     count.setText(Item.getStringFormatCount(newWeight, item.getCountUnit()));
-                    }
+                }
             });
             addToCart.setOnClickListener(null);
             addToCart.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ((ItemCategoryActivity)mActivity).addToCart(new Item(item.getItemName(), Double.parseDouble(count.getText().toString()), item.getCountUnit(), item.getPrice())) ;
+                    ((ItemCategoryActivity) mActivity).addToCart(new Item(item.getItemName(), Double.parseDouble(count.getText().toString()), item.getCountUnit(), item.getPrice()));
                 }
             });
         }

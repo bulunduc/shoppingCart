@@ -2,7 +2,6 @@ package com.bulunduc.shoppingcart.activity;
 
 
 import android.app.Activity;
-import android.app.SearchManager;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -11,10 +10,7 @@ import android.support.design.widget.TabLayout;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.app.SearchManager;
 import android.util.Log;
-import android.widget.SearchView;
-import android.widget.SearchView.OnQueryTextListener;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -24,7 +20,6 @@ import com.bulunduc.shoppingcart.adapters.ViewPagerAdapter;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.data.preference.AppPreference;
 import com.bulunduc.shoppingcart.fragments.AddItemFragment;
-import com.bulunduc.shoppingcart.fragments.ItemAddBottomSheetDialogFragment;
 import com.bulunduc.shoppingcart.listeners.AddItemDialogClickListener;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Item;
@@ -34,7 +29,6 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
-import java.util.Map;
 
 public class ItemCategoryActivity extends BaseActivity implements AddItemDialogClickListener {
     private static final String TAG = "ItemCategoryActivity";
@@ -63,7 +57,8 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         super.onCreate(savedInstanceState);
         initView();
         initVar();
-        if (savedInstanceState!=null) savedCurrentTab = savedInstanceState.getInt(AppConstants.KEY_SAVED_TAB);
+        if (savedInstanceState != null)
+            savedCurrentTab = savedInstanceState.getInt(AppConstants.KEY_SAVED_TAB);
         else {
             //проверяем что время еще не прошло
             if (AppPreference.getInstance(mContext).getLong(AppConstants.KEY_SAVING_TIME) + AppConstants.KEY_TIME >
@@ -80,7 +75,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         mContext = mActivity.getApplicationContext();
         mAllProducts = new LinkedHashMap<>();
         mAllProducts = AppUtilities.getProductList(mContext);
-        }
+    }
 
     public void initView() {
         setContentView(R.layout.activity_item_category_viewpager);
@@ -95,12 +90,12 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
             @Override
             public boolean onQueryTextChange(String newText) {
-                if (newText != null && !newText.isEmpty()){
+                if (newText != null && !newText.isEmpty()) {
                     LinkedHashMap<String, ArrayList<Item>> searchResults = new LinkedHashMap<>();
                     for (String category : mAllProducts.keySet()) {
                         for (Item item : mAllProducts.get(category)) {
                             if (item.getItemName().toLowerCase().contains(newText.toLowerCase())) {
-                                if (!searchResults.containsKey(category)){
+                                if (!searchResults.containsKey(category)) {
                                     searchResults.put(category, new ArrayList<Item>());
                                 }
                                 searchResults.get(category).add(item);
@@ -110,8 +105,9 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
                         }
                     }
-                    if (searchResults.isEmpty()) AppUtilities.showToast(mContext, "Ничего не найдено");
-                }else{
+                    if (searchResults.isEmpty())
+                        AppUtilities.showToast(mContext, "Ничего не найдено");
+                } else {
                     updateViewPager(mAllProducts, AppConstants.ZERO_VALUE_IDENTIFIER, null);
                 }
                 return false;
@@ -162,8 +158,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
     public void updateProductLists(Item model, String newCategory, String oldCategory, int position) {
         if (!newCategory.equals(oldCategory)) {
             mAllProducts.get(oldCategory).remove(position);
-            if (!mAllProducts.keySet().contains(newCategory))
-            {
+            if (!mAllProducts.keySet().contains(newCategory)) {
                 mAllProducts.put(newCategory, new ArrayList<Item>());
                 updateViewPager(mAllProducts, mAllProducts.size(), "");
             }
@@ -174,12 +169,12 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         }
     }
 
-    public void deleteItem(String category, int position){
+    public void deleteItem(String category, int position) {
         mAllProducts.get(category).remove(position);
         updateViewPager(mAllProducts, getTabPositionByCategory(category), "");
     }
 
-    private void updateViewPager(LinkedHashMap<String,ArrayList<Item>> products, int position, String searchText) {
+    private void updateViewPager(LinkedHashMap<String, ArrayList<Item>> products, int position, String searchText) {
         mViewPager.setAdapter(new ViewPagerAdapter(getSupportFragmentManager(), products, searchText));
         mTabLayout.setupWithViewPager(mViewPager);
         mViewPager.setCurrentItem(position);
@@ -189,10 +184,10 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         String category = getCategory(item);
         //here was fixed setCount and ItemViewAdapter
         AppUtilities.addItemAndReturnCartList(mContext, new CartItem(item, category, false));
-        AppUtilities.showToast(mContext, "Товар добавлен в корзину");
+        AppUtilities.showToast(mContext, getString(R.string.product_added_to_cart));
     }
 
-    private String getCategory(Item item){
+    private String getCategory(Item item) {
         for (String s : mAllProducts.keySet()) {
             for (Item model : mAllProducts.get(s)) {
                 if (model.equals(item)) {
@@ -228,13 +223,13 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            AppUtilities.showToast(mContext, getString(R.string.willBeSoon));
+            AppUtilities.showToast(mContext, getString(R.string.will_be_soon));
             /*
             Intent intent = new Intent(ItemCategoryActivity.this, SettingsActivity.class);
             startActivity(intent);
             */
         }
-        if (id == R.id.add_item){
+        if (id == R.id.add_item) {
             try {
                 ArrayList<String> categories = AppUtilities.getCategories(mContext);
                 AddItemFragment addItemFragment = AddItemFragment.newInstance(this, categories, 1);
@@ -252,7 +247,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
             mAllProducts.put(category, new ArrayList<Item>());
         }
         mAllProducts.get(category).add(item);
-        AppUtilities.showToast(mContext, mContext.getResources().getString(R.string.addedToList));
+        AppUtilities.showToast(mContext, mContext.getResources().getString(R.string.added_to_list));
         updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
     }
 
@@ -263,7 +258,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         mViewPager.setCurrentItem(savedCurrentTab);
     }
 
-    private int getTabPositionByCategory(String category){
+    private int getTabPositionByCategory(String category) {
         for (int i = 0; i < mTabLayout.getTabCount(); i++) {
             if (mTabLayout.getTabAt(i).getText().toString().equals(category)) {
                 return i;
@@ -271,16 +266,17 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         }
         return AppConstants.INVALID_VALUE_IDENTIFIER;
     }
+
     public void deleteCurrentCategory() {
-        int position =  mTabLayout.getSelectedTabPosition();
+        int position = mTabLayout.getSelectedTabPosition();
         String currentCategory = mTabLayout.getTabAt(position).getText().toString();
         mAllProducts.remove(currentCategory);
         updateViewPager(mAllProducts, position, null);
         try {
             mViewPager.setCurrentItem(position);
-        } catch (Exception e){
+        } catch (Exception e) {
             mViewPager.setCurrentItem(position - 1);
         }
         AppUtilities.showLongToast(mContext, String.format(getString(R.string.deleted_category), currentCategory));
-        }
+    }
 }

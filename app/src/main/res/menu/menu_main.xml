@@ -5,15 +5,15 @@
     <item
         android:id="@+id/search"
         android:icon="@drawable/ic_search"
-        android:title="@string/search"
-        app:showAsAction="always|collapseActionView" />
+        android:title="@string/action_search"
+        app:showAsAction="ifRoom|collapseActionView" />
     <item
         android:id="@+id/add_item"
         android:layout_width="match_parent"
         android:icon="@drawable/ic_add"
         android:orderInCategory="100"
-        android:title="Add"
-        app:showAsAction="always" />
+        android:title="@string/add"
+        app:showAsAction="ifRoom" />
     <item
         android:id="@+id/action_settings"
         android:orderInCategory="100"

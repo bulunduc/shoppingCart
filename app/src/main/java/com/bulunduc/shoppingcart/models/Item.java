@@ -27,7 +27,7 @@ public class Item implements Parcelable {
         return mCount;
     }
 
-    public int getStepCount(){
+    public int getStepCount() {
         return AppConstants.WEIGHT_MIN_KG_L_PIECE_STEP;
     }
 
@@ -36,12 +36,11 @@ public class Item implements Parcelable {
     }
 
 
-
-    public static String getStringFormatCount(double count, String unit){
+    public static String getStringFormatCount(double count, String unit) {
         if (!unit.equals("шт"))
             return String.valueOf(count);
         else
-            return (String.valueOf((int)count));
+            return (String.valueOf((int) count));
     }
 
 
@@ -49,12 +48,11 @@ public class Item implements Parcelable {
         return Math.round(price * 100.0) / 100.0;
     }
 
-    public double getFinalPrice(){ return Math.round(mCount*price * 100.0) / 100.0; }
+    public double getFinalPrice() {
+        return Math.round(mCount * price * 100.0) / 100.0;
+    }
 
-    public void addCount(Double count, String unit){
-        if (!this.countUnit.equals(unit)) {
-
-        }
+    public void addCount(Double count, String unit) {
         this.mCount += count;
     }
 

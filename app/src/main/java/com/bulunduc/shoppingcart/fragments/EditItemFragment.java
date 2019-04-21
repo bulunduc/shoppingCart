@@ -31,11 +31,10 @@ import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 
 public class EditItemFragment extends DialogFragment {
     private static final String TAG = "EditItemFragment";
-    private static Activity mActivity;
+    private Activity mActivity;
     private EditText etTitle;
     private EditText etCount;
     private Spinner spUnit;
@@ -49,9 +48,8 @@ public class EditItemFragment extends DialogFragment {
     private int mCategoryPosition;
     private int mPosition;
 
-    public static EditItemFragment newInstance(Activity activity, String itemName, Double minCount, String unit, Double price, int category, ArrayList<String> categories, int position) {
+    public static EditItemFragment newInstance(String itemName, Double minCount, String unit, Double price, int category, ArrayList<String> categories, int position) {
         Bundle args = new Bundle();
-        mActivity = activity;
         args.putString(AppConstants.KEY_ITEM_NAME, itemName);
         args.putDouble(AppConstants.KEY_ITEM_MIN_COUNT, minCount);
         args.putString(AppConstants.KEY_ITEM_UNIT, unit);
@@ -157,6 +155,7 @@ public class EditItemFragment extends DialogFragment {
     }
 
     private void initVar() {
+        mActivity = getActivity();
         Bundle bundle = getArguments();
         if (bundle != null) {
             mItemName = bundle.getString(AppConstants.KEY_ITEM_NAME);
@@ -256,7 +255,7 @@ public class EditItemFragment extends DialogFragment {
         for (int i = 0; i < categories.length - 1; i++) {
             categories[i] = mCategories.get(i);
         }
-        categories[categories.length - 1] = getString(R.string.newCategory);
+        categories[categories.length - 1] = getString(R.string.new_category);
 
         final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, categories);
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -265,7 +264,7 @@ public class EditItemFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mCategoryPosition = position;
-                if (categories[position].equals(getString(R.string.newCategory))) {
+                if (categories[position].equals(getString(R.string.new_category))) {
                     etNewCategory.setVisibility(View.VISIBLE);
                     etNewCategory.setText("");
                 } else {

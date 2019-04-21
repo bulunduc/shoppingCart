@@ -33,9 +33,6 @@ import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 
-import static android.R.layout.simple_spinner_dropdown_item;
-import static android.R.layout.simple_spinner_item;
-
 public class AddItemFragment extends DialogFragment {
     private static final String TAG = "ItemAddBottomSheet";
     private static Activity mActivity;
@@ -175,7 +172,7 @@ public class AddItemFragment extends DialogFragment {
         });
 
 
-        mCategories.add(mCategories.size(), getString(R.string.newCategory));
+        mCategories.add(mCategories.size(), getString(R.string.new_category));
         final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mCategorySpinner.setAdapter(categoryAdapter);
@@ -184,7 +181,7 @@ public class AddItemFragment extends DialogFragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 mNewCategoryEditText.setText(mCategories.get(position));
-                if (mCategories.get(position).equals(getString(R.string.newCategory))) {
+                if (mCategories.get(position).equals(getString(R.string.new_category))) {
                     mNewCategoryEditText.setText("");
                     mNewCategoryEditText.setVisibility(View.VISIBLE);
                     mNewCategoryEditText.requestFocus();
@@ -204,6 +201,7 @@ public class AddItemFragment extends DialogFragment {
                     initItemModelFields();
                     mAddItemDialogClickListener.onItemAddClick(new Item(mTitle, mCount, mUnit, mPrice), mCategory);
                     clear();
+                    updateCategorySpinner();
                 } catch (EmptyTextException e) {
                     if (mTitle.isEmpty()) showInvalidFields(getString(R.string.field_title), mTitleEditText);
                     else if (mCategory.isEmpty()) showInvalidFields(getString(R.string.category), mNewCategoryEditText);
@@ -214,6 +212,14 @@ public class AddItemFragment extends DialogFragment {
                 }
             }
         });
+    }
+
+    private void updateCategorySpinner(){
+        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
+        categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        mCategorySpinner.setAdapter(categoryAdapter);
+        mCategorySpinner.setSelection(mCurrentCategoryPosition);
+        mNewCategoryEditText.setVisibility(View.INVISIBLE);
     }
 
     private void showInvalidFields(String field, EditText view) {
@@ -236,6 +242,10 @@ public class AddItemFragment extends DialogFragment {
         }
         mCategory = mNewCategoryEditText.getText().toString();
         if (mCategory.isEmpty()) throw new EmptyTextException();
+        if (!mCategories.contains(mCategory)) {
+            mCategories.add(mCategory);
+            mCurrentCategoryPosition = mCategories.indexOf(mCategory);
+        }
     }
 
     private void clear() {

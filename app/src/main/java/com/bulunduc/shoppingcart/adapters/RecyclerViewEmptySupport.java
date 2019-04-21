@@ -43,7 +43,7 @@ public class RecyclerViewEmptySupport extends RecyclerView {
     public void setAdapter(Adapter adapter) {
         super.setAdapter(adapter);
 
-        if(adapter != null) {
+        if (adapter != null) {
             adapter.registerAdapterDataObserver(emptyObserver);
         }
 

@@ -23,18 +23,18 @@ import java.util.HashMap;
 import java.util.LinkedHashMap;
 
 
-public class JSONUtilities {
+class JSONUtilities {
     private static final String TAG = "JSONUtilities";
     private static JSONUtilities jsonUtilities = null;
 
-    public static JSONUtilities getInstance() {
+    static JSONUtilities getInstance() {
         if (jsonUtilities == null) {
             jsonUtilities = new JSONUtilities();
         }
         return jsonUtilities;
     }
 
-    public String loadJson(Context context, String directory, String fileName) {
+    String loadJson(Context context, String directory, String fileName) {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
         try {
@@ -63,7 +63,7 @@ public class JSONUtilities {
         return stringBuffer.toString();
     }
 
-    public void writeToJSON(Context context, String fileName, String json) {
+    void writeToJSON(Context context, String fileName, String json) {
         Log.d(TAG, "writeToJSON: " + json);
         Writer writer = null;
         try {
@@ -84,7 +84,7 @@ public class JSONUtilities {
         }
     }
 
-    public String parceCartItemsToJSON(ArrayList<CartItem> cartList) {
+    String parceCartItemsToJSON(ArrayList<CartItem> cartList) {
         String json = "";
         try {
             JSONObject jsonObject = new JSONObject();
@@ -94,10 +94,10 @@ public class JSONUtilities {
                 JSONObject object = new JSONObject();
                 JSONObject itemObject = new JSONObject();
 
-                itemObject.put(AppConstants.JSON_KEY_TITLE, cartItem.getItem().getItemName());
-                itemObject.put(AppConstants.JSON_KEY_COUNT, cartItem.getItem().getCount());
-                itemObject.put(AppConstants.JSON_KEY_COUNT_UNIT, cartItem.getItem().getCountUnit());
-                itemObject.put(AppConstants.JSON_KEY_PRICE, cartItem.getItem().getPrice());
+                itemObject.put(AppConstants.JSON_KEY_PROD_TITLE, cartItem.getItem().getItemName());
+                itemObject.put(AppConstants.JSON_KEY_PROD_COUNT, cartItem.getItem().getCount());
+                itemObject.put(AppConstants.JSON_KEY_PROD_UNIT, cartItem.getItem().getCountUnit());
+                itemObject.put(AppConstants.JSON_KEY_PROD_PRICE, cartItem.getItem().getPrice());
 
                 object.put(AppConstants.JSON_KEY_CART_ITEM, itemObject);
                 object.put(AppConstants.JSON_KEY_CART_CATEGORY, cartItem.getCategory());
@@ -113,7 +113,7 @@ public class JSONUtilities {
         return json;
     }
 
-    public String parceAllProductsToJSON(HashMap<String, ArrayList<Item>> productList) {
+    String parceAllProductsToJSON(HashMap<String, ArrayList<Item>> productList) {
         String json = "";
         try {
             JSONObject jsonObject = new JSONObject();
@@ -143,7 +143,7 @@ public class JSONUtilities {
         return json;
     }
 
-    public LinkedHashMap<String, ArrayList<Item>> parceJSONAllProducts(String json) {
+    LinkedHashMap<String, ArrayList<Item>> parceJSONAllProducts(String json) {
         LinkedHashMap<String, ArrayList<Item>> mAllProducts = new LinkedHashMap<>();
         try {
             JSONObject jsonObject = new JSONObject(json);
@@ -158,13 +158,13 @@ public class JSONUtilities {
                 JSONArray categoryProductsArray = object.getJSONArray(AppConstants.JSON_KEY_PRODUCTS);
                 for (int j = 0; j < categoryProductsArray.length(); j++) {
                     JSONObject categoryProduct = categoryProductsArray.getJSONObject(j);
-                    String item = categoryProduct.getString(AppConstants.JSON_KEY_TITLE);
-                    Double minCount = categoryProduct.getDouble(AppConstants.JSON_KEY_COUNT);
-                    String unit = categoryProduct.getString(AppConstants.JSON_KEY_COUNT_UNIT);
-                    Double price = categoryProduct.getDouble(AppConstants.JSON_KEY_PRICE);
+                    String item = categoryProduct.getString(AppConstants.JSON_KEY_PROD_TITLE);
+                    Double minCount = categoryProduct.getDouble(AppConstants.JSON_KEY_PROD_COUNT);
+                    String unit = categoryProduct.getString(AppConstants.JSON_KEY_PROD_UNIT);
+                    Double price = categoryProduct.getDouble(AppConstants.JSON_KEY_PROD_PRICE);
                     categoryProducts.add(new Item(item, minCount, unit, price));
                 }
-                mAllProducts.put(category,categoryProducts);
+                mAllProducts.put(category, categoryProducts);
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -172,7 +172,7 @@ public class JSONUtilities {
         return mAllProducts;
     }
 
-    public ArrayList<CartItem> parceJSONCartItems(String json) {
+    ArrayList<CartItem> parceJSONCartItems(String json) {
         ArrayList<CartItem> cartList = new ArrayList<>();
         try {
             JSONObject jsonObject = new JSONObject(json);
@@ -180,10 +180,10 @@ public class JSONUtilities {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 JSONObject itemObject = object.getJSONObject(AppConstants.JSON_KEY_CART_ITEM);
-                Item item = new Item(itemObject.getString(AppConstants.JSON_KEY_TITLE),
-                        itemObject.getDouble(AppConstants.JSON_KEY_COUNT),
-                        itemObject.getString(AppConstants.JSON_KEY_COUNT_UNIT),
-                        itemObject.getDouble(AppConstants.JSON_KEY_PRICE));
+                Item item = new Item(itemObject.getString(AppConstants.JSON_KEY_PROD_TITLE),
+                        itemObject.getDouble(AppConstants.JSON_KEY_PROD_COUNT),
+                        itemObject.getString(AppConstants.JSON_KEY_PROD_UNIT),
+                        itemObject.getDouble(AppConstants.JSON_KEY_PROD_PRICE));
                 String category = object.getString(AppConstants.JSON_KEY_CART_CATEGORY);
                 boolean isBuyed = object.getBoolean(AppConstants.JSON_KEY_CART_ITEM_IS_BUYED);
                 cartList.add(new CartItem(item, category, isBuyed));
@@ -193,6 +193,4 @@ public class JSONUtilities {
         }
         return cartList;
     }
-
-
 }

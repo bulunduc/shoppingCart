@@ -13,11 +13,8 @@ import com.bulunduc.shoppingcart.models.Item;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
-import java.util.LinkedHashSet;
-import java.util.Set;
 
 public class AppUtilities {
     private static final String TAG = "AppUtilities";
@@ -40,20 +37,6 @@ public class AppUtilities {
         backPressed = System.currentTimeMillis();
     }
 
-    public static void shareApp(Activity activity) {
-        try {
-            final String appPackageName = activity.getPackageName();
-            Intent sendIntent = new Intent();
-            sendIntent.putExtra(Intent.EXTRA_TEXT, "Поделиться https://play.google.com/store/apps/details?id=" + appPackageName);
-            sendIntent.setType("text/plain");
-            activity.startActivity(sendIntent);
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
-
     public static LinkedHashMap<String, ArrayList<Item>> getProductList(Context context) {
         String jsonAllProductsList = JSONUtilities.getInstance().loadJson(context, AppConstants.DEFAULT_PRODUCT_DIRECTORY, AppConstants.ALL_PRODUCT_JSON_FILE);
         return JSONUtilities.getInstance().parceJSONAllProducts(jsonAllProductsList);
@@ -71,7 +54,7 @@ public class AppUtilities {
         }
         products.get(category).add(item);
         saveProductList(context, products);
-        showToast(context, context.getResources().getString(R.string.addedToList));
+        showToast(context, context.getResources().getString(R.string.added_to_list));
 
     }
 
@@ -106,14 +89,5 @@ public class AppUtilities {
 
     public static void saveCartList(Context context, ArrayList<CartItem> cartList) {
         JSONUtilities.getInstance().writeToJSON(context, AppConstants.CART_JSON_FILE, JSONUtilities.getInstance().parceCartItemsToJSON(cartList));
-    }
-
-
-    public static void rateThisApp(Activity activity) {
-        try {
-            activity.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps/details?id=" + activity.getPackageName())));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
     }
 }

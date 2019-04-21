@@ -14,7 +14,9 @@ public class AppConstants {
     public static final long KEY_TIME = 3600000; // 1 hour
 
 
-    //new product file
+    // product file
+    public static final String DEFAULT_PRODUCT_DIRECTORY = "json/products/";
+
     public static final String ALL_PRODUCT_JSON_FILE = "all_products.json";
     public static final String JSON_KEY_ALL_PRODUCTS = "all";
     public static final String JSON_KEY_PRODUCTS = "products";
@@ -24,14 +26,6 @@ public class AppConstants {
     public static final String JSON_KEY_PROD_COUNT = "count";
     public static final String JSON_KEY_PROD_UNIT = "unit";
     public static final String JSON_KEY_PROD_PRICE = "price";
-
-    // product file
-    public static final String DEFAULT_PRODUCT_DIRECTORY = "json/products/";
-
-    public static final String JSON_KEY_TITLE = "title";
-    public static final String JSON_KEY_COUNT = "count";
-    public static final String JSON_KEY_COUNT_UNIT = "unit";
-    public static final String JSON_KEY_PRICE = "price";
 
     // cart file
     public static final String CART_JSON_FILE = "cart_list.json";
@@ -45,7 +39,6 @@ public class AppConstants {
 
     //dialog fragment edit item
     public static final String KEY_ITEM = "item";
-
     public static final String KEY_ITEM_NAME = "item_name";
     public static final String KEY_ITEM_MIN_COUNT = "item_min_count";
     public static final String KEY_ITEM_UNIT = "item_unit";
@@ -55,7 +48,6 @@ public class AppConstants {
     public static final String KEY_DIALOG_FRAGMENT = "dialog_fragment";
     public static final String KEY_POSITION = "position";
     public static final int EDIT_ITEM_REQUEST_CODE = 100;
-
 
     public static final String APP_PREF_NAME = "shopping_cart_app_pref";
     public static final String KEY_ITEM_CATEGORY_POSITION = "position";

@@ -1,5 +1,4 @@
 <resources xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     >
 
     <!-- Base application theme. -->
@@ -56,7 +55,7 @@
         <item name="queryBackground">@android:color/transparent</item>
         <item name="searchIcon">@drawable/ic_search</item>
         <item name="closeIcon">@drawable/ic_clear</item>
-        <item name="queryHint">@string/search</item>
+        <item name="queryHint">@string/action_search</item>
         <item name="android:imeActionId">6</item>
     </style>
 </resources>

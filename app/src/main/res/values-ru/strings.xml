@@ -3,25 +3,31 @@
 <resources>
     <string name="app_name">За покупками</string>
     <string name="action_settings">Настройки</string>
-    <string name="search">Поиск</string>
+    <string name="action_search">Поиск</string>
     <string name="action_share">Отправить</string>
     <string name="action_edit">Редактировать</string>
+    <string name="action_deleteAll">Очистить список</string>
+    <string name="action_deleteChecked">Удалить купленное</string>
+    <string name="new_category">Новая категория</string>
+    <string name="enter_сategory">Введите категорию</string>
+    <string name="delete">Удалить</string>
+    <string name="delete_сategory">Удалить категорию?</string>
+    <string name="tv_description">Загружаемся…</string>
+    <string name="fail_sending">Отправка не удалась</string>
+    <string name="deleted_category" formatted="false">Категория %s удалена</string>
+    <string name="invalid_field">Поле "%s" некорректно!</string>
 
-    <string name="name">Название</string>
+    <string name="title">Название</string>
     <string name="total">Итого:</string>
 
     <!-- EmptyView -->
-    <string name="emptyList">Список пуст</string>
+    <string name="empty_list">Список пуст</string>
 
     <!-- Titles -->
     <string name="edit_item_title">Редактирование</string>
 
-    <!-- Tab menu -->
-    <string name="favourites">Избранное</string>
-    <string name="add_category">Добавить категорию</string>
-
     <!-- Bottom menu -->
-    <string name="list">Продукты</string>
+    <string name="products">Продукты</string>
     <string name="recipes">Рецепты</string>
     <string name="cart">Корзина</string>
 
@@ -33,27 +39,15 @@
     </string-array>
 
     <!-- Item -->
-    <string name="item_name">"Название продукта:"</string>
+    <string name="item_titlr">"Название продукта:"</string>
     <string name="item_min_count">"Минимальное количество:"</string>
     <string name="item_unit">"Единицы измерения:"</string>
     <string name="item_price">"Цена(за 1 ед):"</string>
     <string name="item_category">"Категория:"</string>
 
 
-    <string name="ok">Ок</string>
-    <string name="cancel">Отмена</string>
-    <string name="action_deleteAll">Очистить список</string>
-    <string name="action_deleteChecked">Удалить купленное</string>
-    <string name="newCategory">Новая категория</string>
-    <string name="enterCategory">Введите категорию</string>
-    <string name="delete">Удалить</string>
-    <string name="deleteCategory">Удалить категорию?</string>
-    <string name="tv_description">Загружаемся...</string>
-    <string name="fail_sending">Отправка не удалась</string>
-    <string name="deleted_category" formatted="false">Категория %s удалена</string>
-    <string name="invalid_field">Поле "%s" некорректно!</string>
-
-
+    <string name="ok">ОК</string>
+    <string name="cancel">ОТМЕНА</string>
     <string name="cart_product_title">%s (%s %s)</string>
 
     <string name="item_title_hint">Название</string>
@@ -64,13 +58,13 @@
     <string name="field_price">Цена</string>
     <string name="field_title">Название</string>
     <string name="category">Категория</string>
-    <string name="willBeSoon">Совсем скоро запрашиваемая функция будет реализована...</string>
+    <string name="will_be_soon">Совсем скоро запрашиваемый функционал будет реализован…</string>
     <string name="templates">Шаблоны</string>
     <string name="check_fields">Проверьте поля!</string>
-    <string name="chooseApp">Выберите приложение для отправки:</string>
+    <string name="choose_app">Выберите приложение для отправки:</string>
 
-    <string name="addedToList">Продукт добавлен в списки</string>
-    <string name="deleteCategoryPromt">Вы действительно хотите удалить категорию?</string>
+    <string name="added_to_list">Продукт добавлен в списки</string>
+    <string name="confirm_deleting_category">Вы действительно хотите удалить категорию?</string>
 
     <string name="title_activity_settings">Settings</string>
 
@@ -147,5 +141,10 @@
     <string name="pref_title_vibrate">Vibrate</string>
     <string name="result">Result</string>
     <string name="confirm_deleting">Подтвердите удаление</string>
+
+    <string name="product_added_to_cart">Товар добавлен в корзину</string>
+    <string name="buyed_on">Куплено на сумму:</string>
+    <string name="full_price">Общая стоимость:</string>
+    <string name="add">Add</string>
 
 </resources>
