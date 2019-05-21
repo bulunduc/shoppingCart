@@ -143,8 +143,8 @@
     <string name="confirm_deleting">Подтвердите удаление</string>
 
     <string name="product_added_to_cart">Товар добавлен в корзину</string>
-    <string name="buyed_on">Куплено на сумму:</string>
-    <string name="full_price">Общая стоимость:</string>
+    <string name="buyed_on">Куплено на сумму: </string>
+    <string name="full_price">Общая стоимость: </string>
     <string name="add">Add</string>
 
 </resources>
