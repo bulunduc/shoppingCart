@@ -32,15 +32,21 @@ import com.bulunduc.shoppingcart.utilities.AppUtilities;
 import java.util.ArrayList;
 import java.util.Collections;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class EditItemFragment extends DialogFragment {
     private static final String TAG = "EditItemFragment";
+    private Unbinder mUnbinder;
     private Activity mActivity;
-    private EditText etTitle;
-    private EditText etCount;
-    private Spinner spUnit;
-    private Spinner spItemCategory;
-    private EditText etPrice;
-    private EditText etNewCategory;
+
+    @BindView(R.id.etItemName) protected EditText etTitle;
+    @BindView(R.id.etItemMinCount) protected EditText etCount;
+    @BindView(R.id.etItemPrice) protected EditText etPrice;
+    @BindView(R.id.spItemUnit) protected Spinner spUnit;
+    @BindView(R.id.spItemCategory) protected Spinner spItemCategory;
+    @BindView(R.id.etNewCategory) protected EditText etNewCategory;
 
     private String mItemName, mUnit, mNewCategory;
     private Double mMinCount, mPrice;
@@ -62,8 +68,6 @@ public class EditItemFragment extends DialogFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
-
     private void initItemModelFields() throws EmptyTextException, InvalidCountException, InvalidPriceException {
         mItemName = etTitle.getText().toString();
         if (mItemName.isEmpty()) throw new EmptyTextException();
@@ -83,11 +87,11 @@ public class EditItemFragment extends DialogFragment {
         if (mNewCategory.isEmpty()) throw new EmptyTextException();
 
     }
-
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_edit_item, null);
+        mUnbinder = ButterKnife.bind(this, rootView);
         initVar();
         initView(rootView);
         initFunctionality();
@@ -170,14 +174,8 @@ public class EditItemFragment extends DialogFragment {
     }
 
     private void initView(View view) {
-        etTitle = view.findViewById(R.id.etItemName);
-        etCount = view.findViewById(R.id.etItemMinCount);
         etCount.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        spUnit = view.findViewById(R.id.spItemUnit);
-        etPrice = view.findViewById(R.id.etItemPrice);
         etPrice.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        spItemCategory = view.findViewById(R.id.spItemCategory);
-        etNewCategory = view.findViewById(R.id.etNewCategory);
     }
 
     private void initFunctionality() {
@@ -185,31 +183,26 @@ public class EditItemFragment extends DialogFragment {
         etTitle.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 etTitle.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-
             }
 
             @Override
             public void afterTextChanged(Editable s) {
-
             }
         });
         etCount.setText(mMinCount.toString());
         etCount.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 etCount.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-
             }
 
             @Override
@@ -281,5 +274,9 @@ public class EditItemFragment extends DialogFragment {
         spItemCategory.setSelection(mCategoryPosition);
     }
 
-
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
 }

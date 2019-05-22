@@ -27,12 +27,17 @@ import com.bulunduc.shoppingcart.models.Item;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class CategoryPageFragment extends Fragment{
     private static final String TAG = "CategoryPageFragment";
     private static final String ARG_PAGE = "ARG_PAGE";
     private static final String CATEGORIES = "CATEGORIES";
     private static final String PRODUCTS = "PRODUCTS";
     private static final String HIGHLIGHT = "highlight";
+    private Unbinder mUnbinder;
 
     private Context mContext;
     private Activity mActivity;
@@ -43,9 +48,9 @@ public class CategoryPageFragment extends Fragment{
     private String highlightString;
 
     private ItemViewAdapter mAdapter;
-    private RecyclerViewEmptySupport mRvProducts;
-    private View mEmptyView;
-    private ImageButton mDeleteCategory;
+    @BindView(R.id.recyclerView) protected RecyclerViewEmptySupport mRvProducts;
+    @BindView(R.id.emptyView) protected View mEmptyView;
+    @BindView(R.id.deleteCategory) protected ImageButton mDeleteCategory;
 
     public static CategoryPageFragment newInstance(int page, ArrayList<String> categories, ArrayList<Item> products, String highlightText) {
         Bundle args = new Bundle();
@@ -74,16 +79,14 @@ public class CategoryPageFragment extends Fragment{
     @Override public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                                        Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_category_viewpager, container, false);
+        mUnbinder = ButterKnife.bind(this, view);
         initView(view);
         initFunctionality();
         return view;
     }
 
     private void initView(View view){
-        mRvProducts = view.findViewById(R.id.recycler_view);
         mRvProducts.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
-        mEmptyView = view.findViewById(R.id.empty_view);
-        mDeleteCategory = mEmptyView.findViewById(R.id.deleteCategory);
         mRvProducts.setEmptyView(mEmptyView);
     }
 
@@ -162,4 +165,9 @@ public class CategoryPageFragment extends Fragment{
         }
     }
 
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+    }
 }

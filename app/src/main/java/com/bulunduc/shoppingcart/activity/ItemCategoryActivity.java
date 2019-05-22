@@ -30,13 +30,19 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class ItemCategoryActivity extends BaseActivity implements AddItemDialogClickListener {
     private static final String TAG = "ItemCategoryActivity";
     private Activity mActivity;
     private Context mContext;
-    private ViewPager mViewPager;
-    private TabLayout mTabLayout;
-    private MaterialSearchView mSearchView;
+
+    @BindView(R.id.cartContainer) protected ViewPager mViewPager;
+    @BindView(R.id.tabs) protected TabLayout mTabLayout;
+    @BindView(R.id.search_view) protected MaterialSearchView mSearchView;
+    @BindView(R.id.bottom_navigation) protected BottomNavigationView bottomNavigationView;
+
     private static int savedCurrentTab = AppConstants.ZERO_VALUE_IDENTIFIER;
 
     private LinkedHashMap<String, ArrayList<Item>> mAllProducts;
@@ -79,9 +85,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
     public void initView() {
         setContentView(R.layout.activity_item_category_viewpager);
-        mViewPager = findViewById(R.id.cartContainer);
-        mTabLayout = findViewById(R.id.tabs);
-        mSearchView = (MaterialSearchView) findViewById(R.id.search_view);
+        ButterKnife.bind(this);
         mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
             @Override
             public boolean onQueryTextSubmit(String query) {
@@ -130,7 +134,6 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         initToolbar(true);
         setToolbarTitle(getString(R.string.app_name));
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);

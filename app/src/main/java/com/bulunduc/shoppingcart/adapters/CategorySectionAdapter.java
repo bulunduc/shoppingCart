@@ -20,6 +20,8 @@ import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionParameters;
 import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
@@ -120,35 +122,27 @@ public class CategorySectionAdapter extends StatelessSection {
         }
     }
 
-    private class ItemViewHolder extends RecyclerView.ViewHolder {
-        private final TextView itemName;
-        private final TextView itemPrice;
-        private final CheckBox isItemChecked;
-        private final RelativeLayout itemContainer;
-        private final RelativeLayout expandView;
-        private final EditText etCount;
-        private final Spinner spUnit;
-        private final EditText etPrice;
-        private final ImageButton btnSaveCartItem;
+    protected class ItemViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.cartItemName) protected TextView itemName;
+        @BindView(R.id.cartItemPrice) protected TextView itemPrice;
+        @BindView(R.id.cartItemIsChecked) protected CheckBox isItemChecked;
+        @BindView(R.id.cartContainer) protected RelativeLayout itemContainer;
+        @BindView(R.id.expandContainer) protected RelativeLayout expandView;
+        @BindView(R.id.etCount) protected EditText etCount;
+        @BindView(R.id.spUnit) protected Spinner spUnit;
+        @BindView(R.id.etPrice) protected EditText etPrice;
+        @BindView(R.id.btnSaveCartItem) protected ImageButton btnSaveCartItem;
 
         ItemViewHolder(View view) {
             super(view);
-            itemName = itemView.findViewById(R.id.cartItemName);
-            itemPrice = itemView.findViewById(R.id.cartItemPrice);
-            isItemChecked = itemView.findViewById(R.id.cartItemIsChecked);
-            itemContainer = itemView.findViewById(R.id.cartContainer);
-            expandView = itemView.findViewById(R.id.expand_container);
-            etCount = itemView.findViewById(R.id.etCount);
-            spUnit = itemView.findViewById(R.id.spUnit);
-            etPrice = itemView.findViewById(R.id.etPrice);
-            btnSaveCartItem = itemView.findViewById(R.id.btnSaveCartItem);
+            ButterKnife.bind(this, view);
         }
     }
 
     private class CardTapListener implements View.OnClickListener {
         @Override
         public void onClick(View v) {
-            View someView = v.findViewById(R.id.expand_container);
+            View someView = v.findViewById(R.id.expandContainer);
             if (someView.getVisibility() == View.GONE) {
                 someView.setVisibility(View.VISIBLE);
             } else if (someView.getVisibility() == View.VISIBLE) {

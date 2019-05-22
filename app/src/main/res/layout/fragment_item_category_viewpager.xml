@@ -8,7 +8,7 @@
     android:background="@color/backgroundColor">
 
     <com.bulunduc.shoppingcart.adapters.RecyclerViewEmptySupport
-        android:id="@+id/recycler_view"
+        android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:paddingBottom="56dp"
@@ -22,6 +22,6 @@
         android:background="@color/backgroundColor"/>
 
     <include
-        android:id="@+id/empty_view"
+        android:id="@+id/emptyView"
         layout="@layout/recyclerview_category_emptyview" />
 </android.support.constraint.ConstraintLayout>

@@ -12,22 +12,23 @@ import android.widget.ProgressBar;
 
 import com.bulunduc.shoppingcart.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class SplashActivity extends AppCompatActivity {
 
 
     private static final int SPLASH_DURATION = 2000;
-    private ImageView imageView;
     private Animation animation;
-    private ProgressBar progressBar;
-    private ConstraintLayout layout;
+    @BindView(R.id.ivSplashIcon) protected ImageView imageView;
+    @BindView(R.id.progressBar) protected ProgressBar progressBar;
+    @BindView(R.id.splashLayout) protected ConstraintLayout layout;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_splash);
-        progressBar = findViewById(R.id.progressBar);
-        layout = findViewById(R.id.splashLayout);
-        imageView = findViewById(R.id.ivSplashIcon);
+        ButterKnife.bind(this);
         animation = AnimationUtils.loadAnimation(getBaseContext(), R.anim.rotate);
 
     }

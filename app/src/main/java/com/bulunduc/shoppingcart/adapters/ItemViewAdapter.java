@@ -27,6 +27,9 @@ import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 
 public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHolder> {
     private static final String TAG = "ItemViewAdapter";
@@ -65,19 +68,19 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
     }
 
 
-    class ViewHolder extends RecyclerView.ViewHolder {
-        TextView title;
-        Button lessCount;
-        EditText count;
-        TextView unit;
-        Button moreCount;
-        TextView price;
-        ImageButton addToCart;
+    protected class ViewHolder extends RecyclerView.ViewHolder {
+        @BindView(R.id.item_title) protected TextView title;
+        @BindView(R.id.less_count) protected Button lessCount;
+        @BindView(R.id.item_count) protected EditText count;
+        @BindView(R.id.item_unit) protected TextView unit;
+        @BindView(R.id.more_count) protected Button moreCount;
+        @BindView(R.id.item_price) protected TextView price;
+        @BindView(R.id.add_to_cart) protected ImageButton addToCart;
         int position = 0;
-
 
         ViewHolder(final View itemView) {
             super(itemView);
+            ButterKnife.bind(this, itemView);
             itemView.setOnTouchListener(new View.OnTouchListener() {
                 private GestureDetector gestureDetector = new GestureDetector(mActivity, new GestureDetector.SimpleOnGestureListener() {
                     @Override
@@ -93,15 +96,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
                     return true;
                 }
             });
-            title = itemView.findViewById(R.id.item_title);
-            lessCount = itemView.findViewById(R.id.less_count);
-            count = itemView.findViewById(R.id.item_count);
             count.setFilters(new NumberInputFilter[]{new NumberInputFilter(4, 2)});
-            unit = itemView.findViewById(R.id.item_unit);
-            moreCount = itemView.findViewById(R.id.more_count);
-            price = itemView.findViewById(R.id.item_price);
-            addToCart = itemView.findViewById(R.id.add_to_cart);
-
         }
 
         void bind(final Item item) {

@@ -33,15 +33,24 @@ import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
+
 public class AddItemFragment extends DialogFragment {
     private static final String TAG = "ItemAddBottomSheet";
+    private Unbinder mUnbinder;
     private static Activity mActivity;
     private ArrayList<String> mCategories = new ArrayList<>();
     private int mCurrentCategoryPosition;
 
-    private EditText mTitleEditText, mCountEditText, mPriceEditText, mNewCategoryEditText;
-    private Spinner mUnitSpinner, mCategorySpinner;
-    private ImageButton mAddItemImageButton;
+    @BindView(R.id.itemName) protected EditText mTitleEditText;
+    @BindView(R.id.itemCount) protected EditText mCountEditText;
+    @BindView(R.id.itemPrice) protected EditText mPriceEditText;
+    @BindView(R.id.itemNewCategory) protected EditText mNewCategoryEditText;
+    @BindView(R.id.itemUnit) protected Spinner mUnitSpinner;
+    @BindView(R.id.itemCategory) protected Spinner mCategorySpinner;
+    @BindView(R.id.addItemToCategory) protected ImageButton mAddItemImageButton;
 
     private String mTitle, mUnit, mCategory;
     private Double mCount, mPrice;
@@ -57,7 +66,6 @@ public class AddItemFragment extends DialogFragment {
         fragment.setArguments(args);
         return fragment;
     }
-
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_item_add, null);
@@ -67,15 +75,12 @@ public class AddItemFragment extends DialogFragment {
         dialog.show();
         return dialog;
     }
-
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initVar();
         setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.DialogStyle);
     }
-
-
     private void initVar() {
         Bundle bundle = getArguments();
         if (bundle != null) {
@@ -89,21 +94,14 @@ public class AddItemFragment extends DialogFragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_item_add, container, false);
-
+        mUnbinder = ButterKnife.bind(this, view);
         initView(view);
         initFunctionality();
         return view;
     }
     private void initView(View rootView) {
-        mTitleEditText = rootView.findViewById(R.id.itemName);
-        mCountEditText = rootView.findViewById(R.id.itemCount);
         mCountEditText.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        mUnitSpinner = rootView.findViewById(R.id.itemUnit);
-        mPriceEditText = rootView.findViewById(R.id.itemPrice);
         mPriceEditText.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        mCategorySpinner = rootView.findViewById(R.id.itemCategory);
-        mNewCategoryEditText = rootView.findViewById(R.id.itemNewCategory);
-        mAddItemImageButton = rootView.findViewById(R.id.addItemToCategory);
     }
 
     private void initFunctionality() {
@@ -269,5 +267,12 @@ public class AddItemFragment extends DialogFragment {
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
         ActivityUtilities.hideKeyboardFrom(mActivity.getApplicationContext(), getView());
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        mUnbinder.unbind();
+
     }
 }

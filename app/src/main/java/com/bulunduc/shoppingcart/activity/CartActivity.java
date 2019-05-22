@@ -33,6 +33,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckListener, View.OnClickListener, AddItemDialogClickListener {
@@ -46,12 +48,12 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
     private Double totalPrice;
     private Double checkedItemsPrice;
 
-    private RecyclerView rvCart;
-    private TextView emptyView;
-    private TextView tvTotalPrice;
-    private TextView tvcheckedItemsPrice;
+    @BindView(R.id.recycler_view_cart) protected RecyclerView rvCart;
+    @BindView(R.id.emptyView) protected TextView emptyView;
+    @BindView(R.id.totalPrice) protected TextView tvTotalPrice;
+    @BindView(R.id.checkedItemsPrice) protected TextView tvcheckedItemsPrice;
 
-    private FloatingActionButton fabAddItem;
+    @BindView(R.id.addFab) FloatingActionButton fabAddItem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,8 +77,7 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
 
     public void initView() {
         setContentView(R.layout.activity_cart);
-        rvCart = findViewById(R.id.recycler_view_cart);
-        emptyView = findViewById(R.id.empty_view);
+        ButterKnife.bind(this);
         showRecyclerView();
         rvCart.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         initSectionAdapter();
@@ -109,12 +110,7 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
             }
         });
 
-
-        tvTotalPrice = findViewById(R.id.totalPrice);
-        tvcheckedItemsPrice = findViewById(R.id.checkedItemsPrice);
         updatePriceTextView();
-
-        fabAddItem = findViewById(R.id.addFab);
         fabAddItem.setOnClickListener(this);
     }
 
