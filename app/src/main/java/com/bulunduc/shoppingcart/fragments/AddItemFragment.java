@@ -35,6 +35,8 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnItemSelected;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 public class AddItemFragment extends DialogFragment {
@@ -104,56 +106,20 @@ public class AddItemFragment extends DialogFragment {
         mPriceEditText.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
     }
 
+    @OnTextChanged(R.id.itemName)
+    protected void onTextItemNameChanged() {
+        mTitleEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
+    }
+    @OnTextChanged(R.id.itemCount)
+    protected void onTextItemCountChanged() {
+        mCountEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
+    }
+    @OnTextChanged(R.id.itemPrice)
+    protected void onTextItemPriceChanged() {
+        mPriceEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
+    }
+
     private void initFunctionality() {
-        mTitleEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mTitleEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        mCountEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCountEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        mPriceEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mPriceEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         final ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mActivity.getResources().getStringArray(R.array.units));
         unitAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mUnitSpinner.setAdapter(unitAdapter);
@@ -168,8 +134,6 @@ public class AddItemFragment extends DialogFragment {
 
             }
         });
-
-
         mCategories.add(mCategories.size(), getString(R.string.new_category));
         final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);

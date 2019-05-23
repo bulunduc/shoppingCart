@@ -10,7 +10,11 @@ import android.view.MenuItem;
 
 import com.bulunduc.shoppingcart.R;
 
+import butterknife.BindView;
+import butterknife.ButterKnife;
+
 public class TemplatesActivity extends BaseActivity {
+    @BindView(R.id.bottom_navigation) protected BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +25,8 @@ public class TemplatesActivity extends BaseActivity {
 
     private void initView(){
         initToolbar(true);
+        ButterKnife.bind(this);
         setToolbarTitle(getString(R.string.templates));
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(1);
         menuItem.setChecked(true);
@@ -40,8 +44,6 @@ public class TemplatesActivity extends BaseActivity {
                         Intent intent2 = new Intent(TemplatesActivity.this, CartActivity.class);
                         startActivity(intent2);
                         break;
-
-
                 }
                 return false;
             }

@@ -185,7 +185,6 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
     public void addToCart(Item item) {
         String category = getCategory(item);
-        //here was fixed setCount and ItemViewAdapter
         AppUtilities.addItemAndReturnCartList(mContext, new CartItem(item, category, false));
         AppUtilities.showToast(mContext, getString(R.string.product_added_to_cart));
     }
@@ -211,7 +210,6 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater menuInflater = getMenuInflater();
         menuInflater.inflate(R.menu.menu_main, menu);
 

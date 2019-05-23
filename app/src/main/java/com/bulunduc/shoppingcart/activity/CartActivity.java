@@ -35,9 +35,10 @@ import java.util.TreeSet;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
-public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckListener, View.OnClickListener, AddItemDialogClickListener {
+public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckListener, AddItemDialogClickListener {
 
     private static final String TAG = "CartActivity";
     private Activity mActivity;
@@ -52,8 +53,7 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
     @BindView(R.id.emptyView) protected TextView emptyView;
     @BindView(R.id.totalPrice) protected TextView tvTotalPrice;
     @BindView(R.id.checkedItemsPrice) protected TextView tvcheckedItemsPrice;
-
-    @BindView(R.id.addFab) FloatingActionButton fabAddItem;
+    @BindView(R.id.bottom_navigation) protected BottomNavigationView bottomNavigationView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +86,6 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         initToolbar(true);
         setToolbarTitle(getString(R.string.cart));
 
-        BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
@@ -111,7 +110,6 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         });
 
         updatePriceTextView();
-        fabAddItem.setOnClickListener(this);
     }
 
     private void showRecyclerView() {
@@ -312,14 +310,11 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         AppUtilities.saveCartList(mContext, mCartItemList);
     }
 
-    @Override
-    public void onClick(View v) {
-        if (v.getId() == R.id.addFab) {
-            ArrayList<String> categories = AppUtilities.getCategories(mContext);
-            AddItemFragment addItemFragment = AddItemFragment.newInstance(this, categories, 1);
-            addItemFragment.show(getFragmentManager(), addItemFragment.getTag());
-
-        }
+    @OnClick(R.id.addFab)
+    protected void onSaveClick() {
+        ArrayList<String> categories = AppUtilities.getCategories(mContext);
+        AddItemFragment addItemFragment = AddItemFragment.newInstance(this, categories, 1);
+        addItemFragment.show(getFragmentManager(), addItemFragment.getTag());
     }
 
     @Override

@@ -34,6 +34,7 @@ import java.util.ArrayList;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnTextChanged;
 import butterknife.Unbinder;
 
 import static android.R.layout.simple_spinner_dropdown_item;
@@ -103,56 +104,21 @@ public class ItemAddBottomSheetDialogFragment extends BottomSheetDialogFragment 
         mPriceEditText.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
     }
 
+
+    @OnTextChanged(R.id.itemName)
+    protected void onTextItemNameChanged() {
+        mTitleEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
+    }
+    @OnTextChanged(R.id.itemCount)
+    protected void onTextItemCountChanged() {
+        mCountEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
+    }
+    @OnTextChanged(R.id.itemPrice)
+    protected void onTextItemPriceChanged() {
+        mPriceEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
+    }
+
     private void initFunctionality() {
-        mTitleEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mTitleEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        mCountEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mCountEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        mPriceEditText.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-
-            }
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                mPriceEditText.getBackground().setColorFilter(getResources().getColor(R.color.editTextDefaultColor), PorterDuff.Mode.SRC_ATOP);
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
         unitAdapter = new ArrayAdapter<>(mActivity, simple_spinner_item, mActivity.getResources().getStringArray(R.array.units));
         unitAdapter.setDropDownViewResource(simple_spinner_dropdown_item);
         mUnitSpinner.setAdapter(unitAdapter);
@@ -248,7 +214,6 @@ public class ItemAddBottomSheetDialogFragment extends BottomSheetDialogFragment 
         mTitleEditText.setText("");
         mCountEditText.setText("");
         mPriceEditText.setText("");
-
     }
 
     @Override
