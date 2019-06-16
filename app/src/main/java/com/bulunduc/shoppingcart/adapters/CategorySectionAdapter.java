@@ -62,13 +62,10 @@ public class CategorySectionAdapter extends StatelessSection {
         itemViewHolder.itemPrice.setText(String.valueOf(item.getItem().getFinalPrice()));
         itemViewHolder.isItemChecked.setChecked(item.isBuyed());
         itemViewHolder.itemContainer.setBackgroundColor(appContext.getResources().getColor(item.isBuyed() ? R.color.lightGray : R.color.backgroundColor));
-        itemViewHolder.isItemChecked.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
-            @Override
-            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-                item.setBuyed(isChecked);
-                itemViewHolder.itemContainer.setBackgroundColor(appContext.getResources().getColor(isChecked ? R.color.lightGray : R.color.backgroundColor));
-                mItemIsBuyedCheckListener.onCheckBoxClicked(item, isChecked);
-            }
+        itemViewHolder.isItemChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            item.setBuyed(isChecked);
+            itemViewHolder.itemContainer.setBackgroundColor(appContext.getResources().getColor(isChecked ? R.color.lightGray : R.color.backgroundColor));
+            mItemIsBuyedCheckListener.onCheckBoxClicked(item, isChecked);
         });
 
         itemViewHolder.etCount.setText(String.valueOf(item.getItem().getCount()));
@@ -81,22 +78,19 @@ public class CategorySectionAdapter extends StatelessSection {
         itemViewHolder.etPrice.setText(String.valueOf(item.getItem().getPrice()));
         itemViewHolder.etPrice.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
 
-        itemViewHolder.btnSaveCartItem.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    Double count = Double.parseDouble(itemViewHolder.etCount.getText().toString());
-                    Double price = Double.parseDouble(itemViewHolder.etPrice.getText().toString());
+        itemViewHolder.btnSaveCartItem.setOnClickListener(v -> {
+            try {
+                Double count = Double.parseDouble(itemViewHolder.etCount.getText().toString());
+                Double price = Double.parseDouble(itemViewHolder.etPrice.getText().toString());
 
-                    item.getItem().setCount(count);
-                    item.getItem().setCountUnit(itemViewHolder.spUnit.getSelectedItem().toString());
-                    item.getItem().setPrice(price);
-                    itemViewHolder.itemName.setText(String.format(appContext.getString(R.string.cart_product_title), item.getItem().getItemName(), item.getItem().getCount().toString(), item.getItem().getCountUnit()));
-                    itemViewHolder.itemPrice.setText(String.valueOf(item.getItem().getFinalPrice()));
+                item.getItem().setCount(count);
+                item.getItem().setCountUnit(itemViewHolder.spUnit.getSelectedItem().toString());
+                item.getItem().setPrice(price);
+                itemViewHolder.itemName.setText(String.format(appContext.getString(R.string.cart_product_title), item.getItem().getItemName(), item.getItem().getCount().toString(), item.getItem().getCountUnit()));
+                itemViewHolder.itemPrice.setText(String.valueOf(item.getItem().getFinalPrice()));
 
-                } catch (NumberFormatException e) {
-                    AppUtilities.showToast(appContext, appContext.getString(R.string.check_fields));
-                }
+            } catch (NumberFormatException e) {
+                AppUtilities.showToast(appContext, appContext.getString(R.string.check_fields));
             }
         });
     }

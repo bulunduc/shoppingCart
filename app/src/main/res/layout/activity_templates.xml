@@ -8,16 +8,16 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:theme="@style/AppTheme">
-
     <include layout="@layout/toolbar" />
-
     </android.support.design.widget.AppBarLayout>
 
-    <TextView
-        android:layout_width="match_parent"
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/rvTemplates"
+        android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:gravity="center_vertical|center_horizontal"
-        android:text="@string/will_be_soon"/>
+        android:paddingTop="?attr/actionBarSize"
+        android:paddingBottom="?attr/actionBarSize"
+        android:layout_marginTop="5dp"/>
 
     <include layout="@layout/bottom_navigation_menu" />
 

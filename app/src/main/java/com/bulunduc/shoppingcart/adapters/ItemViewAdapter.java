@@ -118,19 +118,16 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
             count.setText(txtCount);
             count.setSelection(txtCount.length());
             price.setText(String.valueOf(item.getPrice() * item.getCount()));
-            lessCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        if (count.getText().toString().equals(""))
-                            count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
-                        Double newCount = Double.parseDouble(count.getText().toString()) - item.getStepCount();
-                        if (newCount < AppConstants.ZERO_DOUBLE_VALUE)
-                            newCount = AppConstants.ZERO_DOUBLE_VALUE;
-                        count.setText(Item.getStringFormatCount(newCount, item.getCountUnit()));
-                    } catch (NumberFormatException e) {
-                        AppUtilities.showToast(mActivity, "Неверный формат!");
-                    }
+            lessCount.setOnClickListener(v -> {
+                try {
+                    if (count.getText().toString().equals(""))
+                        count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
+                    Double newCount = Double.parseDouble(count.getText().toString()) - item.getStepCount();
+                    if (newCount < AppConstants.ZERO_DOUBLE_VALUE)
+                        newCount = AppConstants.ZERO_DOUBLE_VALUE;
+                    count.setText(Item.getStringFormatCount(newCount, item.getCountUnit()));
+                } catch (NumberFormatException e) {
+                    AppUtilities.showToast(mActivity, "Неверный формат!");
                 }
             });
             count.addTextChangedListener(new TextWatcher() {
@@ -154,29 +151,23 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
             });
             unit.setText(item.getCountUnit());
             moreCount.setOnClickListener(null);
-            moreCount.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        if (count.getText().toString().isEmpty())
-                            count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
-                        Double newWeight = Double.parseDouble(count.getText().toString()) + item.getStepCount();
-                        count.setText(Item.getStringFormatCount(newWeight, item.getCountUnit()));
-                    } catch (NumberFormatException e) {
-                        AppUtilities.showToast(mActivity, "Неверный формат!");
-                    }
+            moreCount.setOnClickListener(v -> {
+                try {
+                    if (count.getText().toString().isEmpty())
+                        count.setText(String.valueOf(AppConstants.ZERO_DOUBLE_VALUE));
+                    Double newWeight = Double.parseDouble(count.getText().toString()) + item.getStepCount();
+                    count.setText(Item.getStringFormatCount(newWeight, item.getCountUnit()));
+                } catch (NumberFormatException e) {
+                    AppUtilities.showToast(mActivity, "Неверный формат!");
                 }
             });
             addToCart.setOnClickListener(null);
-            addToCart.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    try {
-                        if (Double.parseDouble(count.getText().toString()) != 0.0)
-                            ((ItemCategoryActivity) mActivity).addToCart(new Item(item.getItemName(), Double.parseDouble(count.getText().toString()), item.getCountUnit(), item.getPrice()));
-                    } catch (NumberFormatException e) {
-                        AppUtilities.showToast(mActivity, "Неверный формат!");
-                    }
+            addToCart.setOnClickListener(v -> {
+                try {
+                    if (Double.parseDouble(count.getText().toString()) != 0.0)
+                        ((ItemCategoryActivity) mActivity).addToCart(new Item(item.getItemName(), Double.parseDouble(count.getText().toString()), item.getCountUnit(), item.getPrice()));
+                } catch (NumberFormatException e) {
+                    AppUtilities.showToast(mActivity, "Неверный формат!");
                 }
             });
         }

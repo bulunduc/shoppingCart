@@ -109,7 +109,6 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
             }
         });
 
-
         tvTotalPrice = findViewById(R.id.totalPrice);
         tvcheckedItemsPrice = findViewById(R.id.checkedItemsPrice);
         updatePriceTextView();
@@ -168,7 +167,6 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
 
     private void initSectionAdapter() {
         for (String category : getCategories()) {
-            Log.d("initSectionAdapter", category);
             sectionAdapter.addSection(new CategorySectionAdapter(mContext, category, getCartItemsByCategory(category), CartActivity.this));
         }
     }
@@ -192,9 +190,9 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         for (CartItem cartItem : mCartItemList) {
             totalPrice = totalPrice + cartItem.getItem().getFinalPrice();
             if (cartItem.isBuyed()) {
-                mCartCheckedItemList.add(cartItem);
                 checkedItemsPrice = checkedItemsPrice + cartItem.getItem().getFinalPrice();
             }
+
         }
     }
 
@@ -299,6 +297,11 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
     @Override
     public void onCheckBoxClicked(CartItem itemModel, boolean isBuyed) {
         itemModel.setBuyed(isBuyed);
+        if (isBuyed){
+            mCartCheckedItemList.add(itemModel);
+        }else{
+            mCartCheckedItemList.remove(itemModel);
+        }
         updatePrice();
     }
 
