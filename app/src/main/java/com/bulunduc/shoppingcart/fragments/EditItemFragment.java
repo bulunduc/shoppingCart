@@ -93,29 +93,20 @@ public class EditItemFragment extends DialogFragment {
         initFunctionality();
         AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
         builder.setView(rootView)
-                .setPositiveButton(R.string.ok, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        //Do nothing here because we override this button later to change the close behaviour.
-                    }
+                .setPositiveButton(R.string.ok, (dialog, which) -> {
+                    //Do nothing here because we override this button later to change the close behaviour.
                 })
-                .setNeutralButton(R.string.delete, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent();
-                        intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mCategories.get(mCategoryPosition));
-                        intent.putExtra(AppConstants.KEY_POSITION, mPosition);
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), Result.DELETE.getCode(), intent);
-                       // getTargetFragment().onActivityResult(getTargetRequestCode(), AppConstants.ITEM_DELETE, intent);
-                    }
+                .setNeutralButton(R.string.delete, (dialog, which) -> {
+                    Intent intent = new Intent();
+                    intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mCategories.get(mCategoryPosition));
+                    intent.putExtra(AppConstants.KEY_POSITION, mPosition);
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), Result.DELETE.getCode(), intent);
+                   // getTargetFragment().onActivityResult(getTargetRequestCode(), AppConstants.ITEM_DELETE, intent);
                 })
-                .setNegativeButton(R.string.cancel, new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent();
-                        getTargetFragment().onActivityResult(getTargetRequestCode(), Result.CANCEL.getCode(), intent);
-                        //getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, intent);
-                    }
+                .setNegativeButton(R.string.cancel, (dialog, which) -> {
+                    Intent intent = new Intent();
+                    getTargetFragment().onActivityResult(getTargetRequestCode(), Result.CANCEL.getCode(), intent);
+                    //getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, intent);
                 });
 
         final AlertDialog dialog = builder.create();

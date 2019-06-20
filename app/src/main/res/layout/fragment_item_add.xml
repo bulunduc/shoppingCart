@@ -11,6 +11,18 @@
     app:behavior_peekHeight="300dp"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior">
 
+    <TextView
+        android:id="@+id/layoutTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/colorPrimary"
+        android:gravity="center_vertical"
+        android:padding="16dp"
+        android:text="Добавить"
+        android:textColor="@android:color/black"
+        android:textSize="24sp"
+        android:textStyle="bold" />
+
     <RelativeLayout
         android:id="@+id/rows"
         android:layout_width="wrap_content"

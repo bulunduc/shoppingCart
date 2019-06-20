@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bulunduc.shoppingcart.R;
+import com.bulunduc.shoppingcart.fragments.ShowTemplateProductsFragment;
 import com.bulunduc.shoppingcart.models.Template;
 
 import java.util.ArrayList;
@@ -19,7 +22,7 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
     private static final String TAG = "TemplateAdapter";
     private Activity mActivity;
     private Context mContext;
-    private ArrayList<Template> mTemplates = new ArrayList<>();
+    private ArrayList<Template> mTemplates;
 
     public TemplateAdapter(Context applicationContext, Activity activity, ArrayList<Template> templates) {
         mActivity = activity;
@@ -37,6 +40,10 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(mTemplates.get(position));
+        holder.tvTemplateTitle.setOnClickListener(v -> {
+            ShowTemplateProductsFragment showProducts = ShowTemplateProductsFragment.newInstance(mTemplates.get(position).getItems());
+            showProducts.show(mActivity.getFragmentManager(), showProducts.getTag());
+        });
     }
 
     @Override

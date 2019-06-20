@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class Template {
     private String title;
     private int imageId;
-    private ArrayList<CartItem> items;
+    private ArrayList<Item> items;
 
-    public Template(String title, int imageId, ArrayList<CartItem> items) {
+    public Template(String title, int imageId, ArrayList<Item> items) {
         this.title = title;
         this.imageId = imageId;
         this.items = items;
@@ -29,11 +29,11 @@ public class Template {
         this.imageId = imageId;
     }
 
-    public ArrayList<CartItem> getItems() {
+    public ArrayList<Item> getItems() {
         return items;
     }
 
-    public void setItems(ArrayList<CartItem> items) {
+    public void setItems(ArrayList<Item> items) {
         this.items = items;
     }
 }

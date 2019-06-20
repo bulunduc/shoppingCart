@@ -2,14 +2,14 @@ package com.bulunduc.shoppingcart.utilities;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Item;
+import com.bulunduc.shoppingcart.models.Template;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -35,6 +35,15 @@ public class AppUtilities {
             showToast(activity.getApplicationContext(), "");
         }
         backPressed = System.currentTimeMillis();
+    }
+    public static ArrayList<Template> getTemplatesList(Context context) {
+        String jsonTemplatesList = JSONUtilities.getInstance().loadJson(context, AppConstants.DEFAULT_PRODUCT_DIRECTORY, AppConstants.TEMPLATES_JSON_FILE);
+        Log.d(TAG, jsonTemplatesList);
+        return JSONUtilities.getInstance().parceJSONTemplates(jsonTemplatesList);
+    }
+
+    public static void saveTemplatesList(Context context, ArrayList<Template> templates) {
+        JSONUtilities.getInstance().writeToJSON(context, AppConstants.TEMPLATES_JSON_FILE, JSONUtilities.getInstance().parceTemplatesToJSON(templates));
     }
 
     public static LinkedHashMap<String, ArrayList<Item>> getProductList(Context context) {

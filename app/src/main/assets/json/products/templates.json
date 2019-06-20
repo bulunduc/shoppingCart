@@ -1,0 +1,76 @@
+{
+  "templates": [
+    {
+      "category": "Борщ",
+      "image_res": 0,
+      "products": [
+        {
+          "title": "Говядина",
+          "count": "0.5",
+          "unit": "кг",
+          "price": 150
+        },
+        {
+          "title": "Свекла",
+          "count": "1",
+          "unit": "шт",
+          "price": 15
+        },
+        {
+          "title": "Капуста",
+          "count": "0.3",
+          "unit": "кг",
+          "price": 20
+        },
+        {
+          "title": "Картошка",
+          "count": "0.2",
+          "unit": "кг",
+          "price": 10
+        },
+        {
+          "title": "Лук",
+          "count": "1",
+          "unit": "шт",
+          "price": 5
+        }
+      ]
+    },
+    {
+      "category": "Блины",
+      "image_res": 0,
+      "products": [
+        {
+          "title": "Мука",
+          "count": "0.5",
+          "unit": "кг",
+          "price": 25
+        },
+        {
+          "title": "Молоко",
+          "count": "0.5",
+          "unit": "л",
+          "price": 25
+        },
+        {
+          "title": "Яйцо",
+          "count": "2",
+          "unit": "шт",
+          "price": 10
+        },
+        {
+          "title": "Сода",
+          "count": "0.05",
+          "unit": "г",
+          "price": 0
+        },
+        {
+          "title": "Сахар",
+          "count": "0.1",
+          "unit": "кг",
+          "price": 5
+        }
+      ]
+	}
+  ]
+}

@@ -20,7 +20,6 @@ public class AppConstants {
     public static final String ALL_PRODUCT_JSON_FILE = "all_products.json";
     public static final String JSON_KEY_ALL_PRODUCTS = "all";
     public static final String JSON_KEY_PRODUCTS = "products";
-    public static final String JSON_KEY_PROD_CATEGORY = "category";
     public static final String JSON_KEY_PROD_IMAGE = "image_res";
     public static final String JSON_KEY_PROD_TITLE = "title";
     public static final String JSON_KEY_PROD_COUNT = "count";
@@ -31,8 +30,17 @@ public class AppConstants {
     public static final String CART_JSON_FILE = "cart_list.json";
     public static final String JSON_KEY_CART_ITEMS = "cart_items";
     public static final String JSON_KEY_CART_ITEM = "item";
-    public static final String JSON_KEY_CART_CATEGORY = "category";
+    public static final String JSON_KEY_CATEGORY = "category";
     public static final String JSON_KEY_CART_ITEM_IS_BUYED = "buyed";
+
+    //templates file
+    public static final String DEFAULT_TEMPLATES_DIRECTORY = "json/templates/";
+
+    public static final String TEMPLATES_JSON_FILE = "templates.json";
+    public static final String JSON_KEY_TEMPLATES_ITEMS = "templates";
+    public static final String JSON_KEY_TEMPLATES_TITLE = "title";
+    public static final String JSON_KEY_TEMPLATES_IMAGE = "image_res";
+
 
     //weight constants
     public static final int WEIGHT_MIN_KG_L_PIECE_STEP = 1;

@@ -14,6 +14,7 @@ import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateAdapter;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Template;
+import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
 
@@ -32,11 +33,7 @@ public class TemplatesActivity extends BaseActivity {
     private void initView(){
         rvTemplates = findViewById(R.id.rvTemplates);
         rvTemplates.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
-        templates = new ArrayList<>();
-        templates.add(new Template("Список 1", R.drawable.ic_cart, new ArrayList<CartItem>()));
-        templates.add(new Template("Список 2", R.drawable.ic_cart, new ArrayList<CartItem>()));
-        templates.add(new Template("Список 3", R.drawable.ic_cart, new ArrayList<CartItem>()));
-        templates.add(new Template("Список 4", R.drawable.ic_cart, new ArrayList<CartItem>()));
+        templates = AppUtilities.getTemplatesList(this.getApplicationContext());
         adapter = new TemplateAdapter(this.getApplicationContext(), this, templates);
         rvTemplates.setAdapter(adapter);
         initToolbar(true);

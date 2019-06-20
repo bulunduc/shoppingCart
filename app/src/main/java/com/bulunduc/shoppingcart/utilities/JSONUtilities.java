@@ -7,6 +7,7 @@ import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.data.preference.AppPreference;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Item;
+import com.bulunduc.shoppingcart.models.Template;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,7 +39,8 @@ class JSONUtilities {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
         try {
-            if (AppPreference.getInstance(context).getBoolean(AppConstants.KEY_FIRST_RUN, true) && !fileName.equals(AppConstants.CART_JSON_FILE)) {
+            if (AppPreference.getInstance(context).getBoolean(AppConstants.KEY_FIRST_RUN, true) && !fileName.equals(AppConstants.CART_JSON_FILE)
+                    || fileName.equals(AppConstants.TEMPLATES_JSON_FILE)) {
                 bufferedReader = new BufferedReader(new InputStreamReader(context.getAssets().open(directory + fileName)));
             } else {
                 bufferedReader = new BufferedReader(new InputStreamReader(context.openFileInput(fileName)));
@@ -100,7 +102,7 @@ class JSONUtilities {
                 itemObject.put(AppConstants.JSON_KEY_PROD_PRICE, cartItem.getItem().getPrice());
 
                 object.put(AppConstants.JSON_KEY_CART_ITEM, itemObject);
-                object.put(AppConstants.JSON_KEY_CART_CATEGORY, cartItem.getCategory());
+                object.put(AppConstants.JSON_KEY_CATEGORY, cartItem.getCategory());
                 object.put(AppConstants.JSON_KEY_CART_ITEM_IS_BUYED, cartItem.isBuyed());
                 jsonArray.put(object);
             }
@@ -120,7 +122,7 @@ class JSONUtilities {
             JSONArray jsonArray = new JSONArray();
             for (String category : productList.keySet()) {
                 JSONObject categoryJsonObject = new JSONObject();
-                categoryJsonObject.put(AppConstants.JSON_KEY_PROD_CATEGORY, category);
+                categoryJsonObject.put(AppConstants.JSON_KEY_CATEGORY, category);
                 categoryJsonObject.put(AppConstants.JSON_KEY_PROD_IMAGE, 0);
                 JSONArray productsJsonArray = new JSONArray();
                 for (Item item : productList.get(category)) {
@@ -143,6 +145,62 @@ class JSONUtilities {
         return json;
     }
 
+    String parceTemplatesToJSON(ArrayList<Template> templates) {
+        String json = "";
+        try{
+            JSONObject jsonObject = new JSONObject();
+            JSONArray jsonArray = new JSONArray();
+            for (Template template : templates) {
+                JSONObject templateJSONObject = new JSONObject();
+                templateJSONObject.put(AppConstants.JSON_KEY_CATEGORY,template.getTitle() );
+                templateJSONObject.put(AppConstants.JSON_KEY_TEMPLATES_IMAGE,template.getImageId());
+                JSONArray productsJsonArray = new JSONArray();
+                for (Item item : template.getItems()) {
+                    JSONObject object = new JSONObject();
+                    object.put(AppConstants.JSON_KEY_PROD_TITLE, item.getItemName());
+                    object.put(AppConstants.JSON_KEY_PROD_COUNT, item.getCount());
+                    object.put(AppConstants.JSON_KEY_PROD_UNIT, item.getCountUnit());
+                    object.put(AppConstants.JSON_KEY_PROD_PRICE, item.getPrice());
+                    productsJsonArray.put(object);
+                }
+                templateJSONObject.put(AppConstants.JSON_KEY_PRODUCTS, productsJsonArray);
+                jsonArray.put(templateJSONObject);
+            }
+            jsonObject.put(AppConstants.JSON_KEY_TEMPLATES_ITEMS, jsonArray);
+            json = jsonObject.toString();
+        } catch (JSONException e){
+            e.printStackTrace();
+        }
+        return json;
+    }
+
+    ArrayList<Template> parceJSONTemplates(String json) {
+        ArrayList<Template> mTemplates = new ArrayList<>();
+        try {
+            JSONObject jsonObject = new JSONObject(json);
+            JSONArray jsonArray = jsonObject.getJSONArray(AppConstants.JSON_KEY_TEMPLATES_ITEMS);
+            for (int i = 0; i < jsonArray.length(); i++) {
+                JSONObject object = jsonArray.getJSONObject(i);
+                String title = object.getString(AppConstants.JSON_KEY_CATEGORY);
+                int imageRes = object.getInt(AppConstants.JSON_KEY_TEMPLATES_IMAGE);
+                ArrayList<Item> products = new ArrayList<>();
+                JSONArray productsArray = object.getJSONArray(AppConstants.JSON_KEY_PRODUCTS);
+                for (int j = 0; j < productsArray.length(); j++) {
+                    JSONObject categoryProduct = productsArray.getJSONObject(j);
+                    String item = categoryProduct.getString(AppConstants.JSON_KEY_PROD_TITLE);
+                    Double minCount = categoryProduct.getDouble(AppConstants.JSON_KEY_PROD_COUNT);
+                    String unit = categoryProduct.getString(AppConstants.JSON_KEY_PROD_UNIT);
+                    Double price = categoryProduct.getDouble(AppConstants.JSON_KEY_PROD_PRICE);
+                    products.add(new Item(item, minCount, unit, price));
+                }
+                mTemplates.add(new Template(title, imageRes, products));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return mTemplates;
+    }
+
     LinkedHashMap<String, ArrayList<Item>> parceJSONAllProducts(String json) {
         LinkedHashMap<String, ArrayList<Item>> mAllProducts = new LinkedHashMap<>();
         try {
@@ -151,7 +209,7 @@ class JSONUtilities {
             JSONArray jsonArray = jsonObject.getJSONArray(AppConstants.JSON_KEY_ALL_PRODUCTS);
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
-                String category = object.getString(AppConstants.JSON_KEY_PROD_CATEGORY);
+                String category = object.getString(AppConstants.JSON_KEY_CATEGORY);
                 int imageRes = object.getInt(AppConstants.JSON_KEY_PROD_IMAGE);
                 ArrayList<Item> categoryProducts = new ArrayList<>();
                 //imageResource
@@ -184,7 +242,7 @@ class JSONUtilities {
                         itemObject.getDouble(AppConstants.JSON_KEY_PROD_COUNT),
                         itemObject.getString(AppConstants.JSON_KEY_PROD_UNIT),
                         itemObject.getDouble(AppConstants.JSON_KEY_PROD_PRICE));
-                String category = object.getString(AppConstants.JSON_KEY_CART_CATEGORY);
+                String category = object.getString(AppConstants.JSON_KEY_CATEGORY);
                 boolean isBuyed = object.getBoolean(AppConstants.JSON_KEY_CART_ITEM_IS_BUYED);
                 cartList.add(new CartItem(item, category, isBuyed));
             }
