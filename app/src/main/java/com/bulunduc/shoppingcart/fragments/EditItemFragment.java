@@ -111,30 +111,27 @@ public class EditItemFragment extends DialogFragment {
 
         final AlertDialog dialog = builder.create();
         dialog.show();
-        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    initItemModelFields();
-                    Item item = new Item(mItemName, mMinCount, mUnit, mPrice);
+        dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v -> {
+            try {
+                initItemModelFields();
+                Item item = new Item(mItemName, mMinCount, mUnit, mPrice);
 
-                    Intent intent = new Intent();
-                    intent.putExtra(AppConstants.KEY_ITEM, item);
-                    intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mNewCategory);
-                    intent.putExtra(AppConstants.KEY_POSITION, mPosition);
-                    //getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
-                    getTargetFragment().onActivityResult(getTargetRequestCode(), Result.OK.getCode(), intent);
-                    dialog.dismiss();
-                } catch (EmptyTextException e) {
-                    if (mItemName.isEmpty()) showInvalidFields(getString(R.string.field_title), etTitle);
-                    else if (mNewCategory.isEmpty()) showInvalidFields(getString(R.string.category), etNewCategory);
+                Intent intent = new Intent();
+                intent.putExtra(AppConstants.KEY_ITEM, item);
+                intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mNewCategory);
+                intent.putExtra(AppConstants.KEY_POSITION, mPosition);
+                //getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
+                getTargetFragment().onActivityResult(getTargetRequestCode(), Result.OK.getCode(), intent);
+                dialog.dismiss();
+            } catch (EmptyTextException e) {
+                if (mItemName.isEmpty()) showInvalidFields(getString(R.string.field_title), etTitle);
+                else if (mNewCategory.isEmpty()) showInvalidFields(getString(R.string.category), etNewCategory);
 
-                    showInvalidFields(getString(R.string.field_title), etTitle);
-                } catch (InvalidCountException e) {
-                    showInvalidFields(getString(R.string.field_count), etCount);
-                } catch (InvalidPriceException e) {
-                    showInvalidFields(getString(R.string.field_price), etPrice);
-                }
+                showInvalidFields(getString(R.string.field_title), etTitle);
+            } catch (InvalidCountException e) {
+                showInvalidFields(getString(R.string.field_count), etCount);
+            } catch (InvalidPriceException e) {
+                showInvalidFields(getString(R.string.field_price), etPrice);
             }
         });
         return dialog;
