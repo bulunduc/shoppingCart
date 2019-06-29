@@ -8,7 +8,43 @@
           "title": "Говядина",
           "count": "0.5",
           "unit": "кг",
-          "price": 150
+          "price": 300
+        },
+        {
+          "title": "Свекла",
+          "count": "1",
+          "unit": "шт",
+          "price": 20
+        },
+        {
+          "title": "Капуста",
+          "count": "0.3",
+          "unit": "кг",
+          "price": 30
+        },
+        {
+          "title": "Картошка",
+          "count": "0.2",
+          "unit": "кг",
+          "price": 30
+        },
+        {
+          "title": "Лук",
+          "count": "1",
+          "unit": "шт",
+          "price": 15
+        }
+      ]
+    },
+    {
+      "category": "Рассольник",
+      "image_res": 0,
+      "products": [
+        {
+          "title": "Говядина",
+          "count": "0.5",
+          "unit": "кг",
+          "price": 300
         },
         {
           "title": "Свекла",
@@ -20,13 +56,49 @@
           "title": "Капуста",
           "count": "0.3",
           "unit": "кг",
-          "price": 20
+          "price": 30
         },
         {
           "title": "Картошка",
           "count": "0.2",
           "unit": "кг",
-          "price": 10
+          "price": 30
+        },
+        {
+          "title": "Лук",
+          "count": "1",
+          "unit": "шт",
+          "price": 5
+        }
+      ]
+    },
+    {
+      "category": "Щи",
+      "image_res": 0,
+      "products": [
+        {
+          "title": "Говядина",
+          "count": "0.5",
+          "unit": "кг",
+          "price": 300
+        },
+        {
+          "title": "Свекла",
+          "count": "1",
+          "unit": "шт",
+          "price": 15
+        },
+        {
+          "title": "Капуста",
+          "count": "0.3",
+          "unit": "кг",
+          "price": 30
+        },
+        {
+          "title": "Картошка",
+          "count": "0.2",
+          "unit": "кг",
+          "price": 30
         },
         {
           "title": "Лук",
@@ -44,19 +116,19 @@
           "title": "Мука",
           "count": "0.5",
           "unit": "кг",
-          "price": 25
+          "price": 50
         },
         {
           "title": "Молоко",
           "count": "0.5",
           "unit": "л",
-          "price": 25
+          "price": 50
         },
         {
           "title": "Яйцо",
           "count": "2",
           "unit": "шт",
-          "price": 10
+          "price": 7
         },
         {
           "title": "Сода",
@@ -68,7 +140,7 @@
           "title": "Сахар",
           "count": "0.1",
           "unit": "кг",
-          "price": 5
+          "price": 40
         }
       ]
 	}

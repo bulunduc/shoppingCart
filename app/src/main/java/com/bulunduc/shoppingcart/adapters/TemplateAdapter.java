@@ -41,7 +41,7 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         holder.bind(mTemplates.get(position));
         holder.tvTemplateTitle.setOnClickListener(v -> {
-            ShowTemplateProductsFragment showProducts = ShowTemplateProductsFragment.newInstance(mTemplates.get(position).getItems());
+            ShowTemplateProductsFragment showProducts = ShowTemplateProductsFragment.newInstance(mContext, mTemplates.get(position).getItems(), mTemplates.get(position).getTitle());
             showProducts.show(mActivity.getFragmentManager(), showProducts.getTag());
         });
     }

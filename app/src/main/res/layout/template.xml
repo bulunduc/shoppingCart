@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="@drawable/bg_add_view"
+    >
 
     <ImageView
         android:id="@+id/ivTemplateImage"
@@ -13,8 +15,9 @@
     <TextView
         android:id="@+id/tvTemplateTitle"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="40dp"
         android:gravity="center"
         android:text="category"
+        android:textSize="20sp"
         android:layout_below="@+id/ivTemplateImage"/>
 </RelativeLayout>

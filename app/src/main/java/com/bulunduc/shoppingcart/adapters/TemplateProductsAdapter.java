@@ -18,10 +18,12 @@ public class TemplateProductsAdapter extends RecyclerView.Adapter<TemplateProduc
     private static final String TAG = "TemplateAdapter";
     private Activity mActivity;
     private ArrayList<Item> mProducts = new ArrayList<>();
+    private ArrayList<Item> mProductsForCart = new ArrayList<>();
 
     public TemplateProductsAdapter(Activity activity, ArrayList<Item> products) {
         mActivity = activity;
         mProducts = products;
+        mProductsForCart.addAll(mProducts);
     }
 
     @NonNull
@@ -41,6 +43,9 @@ public class TemplateProductsAdapter extends RecyclerView.Adapter<TemplateProduc
         return mProducts.size();
     }
 
+    public ArrayList<Item> getCheckedProductList(){
+        return mProductsForCart;
+    }
     public class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvProductTitle;
         private CheckBox cbNeedToAdd;
@@ -53,7 +58,14 @@ public class TemplateProductsAdapter extends RecyclerView.Adapter<TemplateProduc
         }
 
         void bind(Item item){
-            tvProductTitle.setText(item.getItemName() + " (" + item.getCount() + item.getCountUnit() + "/" + item.getPrice() + ")");
+            tvProductTitle.setText(item.getItemName() + " (" + item.getCount() + item.getCountUnit() + "/" + item.getCount()*item.getPrice() + ")");
+            cbNeedToAdd.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked){
+                    mProductsForCart.add(item);
+                } else {
+                    mProductsForCart.remove(item);
+                }
+            });
         }
     }
 }
