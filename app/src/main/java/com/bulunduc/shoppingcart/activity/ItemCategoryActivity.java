@@ -29,6 +29,12 @@ import com.miguelcatalan.materialsearchview.MaterialSearchView;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
+import java.util.concurrent.TimeUnit;
+
+import io.reactivex.Observable;
+import io.reactivex.observers.DisposableObserver;
+import io.reactivex.schedulers.Schedulers;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ItemCategoryActivity extends BaseActivity implements AddItemDialogClickListener {
     private static final String TAG = "ItemCategoryActivity";
@@ -37,6 +43,8 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
     private ViewPager mViewPager;
     private TabLayout mTabLayout;
     private MaterialSearchView mSearchView;
+    private Observable<String> mObservable;
+    private DisposableObserver<String> mObserver;
     private static int savedCurrentTab = AppConstants.ZERO_VALUE_IDENTIFIER;
 
     private LinkedHashMap<String, ArrayList<Item>> mAllProducts;
@@ -81,27 +89,43 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         setContentView(R.layout.activity_item_category_viewpager);
         mViewPager = findViewById(R.id.cartContainer);
         mTabLayout = findViewById(R.id.tabs);
-        mSearchView = (MaterialSearchView) findViewById(R.id.search_view);
-        mSearchView.setOnQueryTextListener(new MaterialSearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                return false;
-            }
+        mSearchView = findViewById(R.id.search_view);
 
+        //TODO refactor observable code
+        mObservable = Observable.create(emitter -> {
+            MaterialSearchView.OnQueryTextListener listener = new MaterialSearchView.OnQueryTextListener() {
+                @Override
+                public boolean onQueryTextSubmit(String s) {
+                    return false;
+                }
+
+                @Override
+                public boolean onQueryTextChange(String s) {
+                    if (!emitter.isDisposed()) { //если еще не отписались
+                        emitter.onNext(s); //отправляем текущее состояние
+                        return true;
+                    }
+                    return false;
+                }
+            };
+            mSearchView.setOnQueryTextListener(listener);
+        });
+
+        mObserver = new DisposableObserver<String>() {
             @Override
-            public boolean onQueryTextChange(String newText) {
-                if (newText != null && !newText.isEmpty()) {
+            public void onNext(String s) {
+                if (s != null && !s.isEmpty()) {
                     LinkedHashMap<String, ArrayList<Item>> searchResults = new LinkedHashMap<>();
                     for (String category : mAllProducts.keySet()) {
                         for (Item item : mAllProducts.get(category)) {
-                            if (item.getItemName().toLowerCase().contains(newText.toLowerCase())) {
+                            if (item.getItemName().toLowerCase().contains(s.toLowerCase())) {
                                 if (!searchResults.containsKey(category)) {
                                     searchResults.put(category, new ArrayList<Item>());
                                 }
                                 searchResults.get(category).add(item);
 
                             }
-                            updateViewPager(searchResults, AppConstants.ZERO_VALUE_IDENTIFIER, newText.toLowerCase());
+                            updateViewPager(searchResults, AppConstants.ZERO_VALUE_IDENTIFIER, s.toLowerCase());
 
                         }
                     }
@@ -110,22 +134,32 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
                 } else {
                     updateViewPager(mAllProducts, AppConstants.ZERO_VALUE_IDENTIFIER, null);
                 }
-                return false;
             }
-        });
 
-        mSearchView.setOnSearchViewListener(new MaterialSearchView.SearchViewListener() {
             @Override
-            public void onSearchViewShown() {
+            public void onError(Throwable e) {
 
             }
 
             @Override
-            public void onSearchViewClosed() {
-                updateViewPager(mAllProducts, AppConstants.ZERO_VALUE_IDENTIFIER, "");
+            public void onComplete() {
 
             }
-        });
+        };
+
+
+        mObservable.debounce(500, TimeUnit.MILLISECONDS)
+                .filter(text -> {
+                    if (text.isEmpty()) {
+                        return false;
+                    } else {
+                        return true;
+                    }
+                })
+                .distinctUntilChanged()
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(mObserver);
 
         initToolbar(true);
         setToolbarTitle(getString(R.string.app_name));
@@ -278,5 +312,11 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
             mViewPager.setCurrentItem(position - 1);
         }
         AppUtilities.showLongToast(mContext, String.format(getString(R.string.deleted_category), currentCategory));
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mObserver.dispose();
     }
 }
