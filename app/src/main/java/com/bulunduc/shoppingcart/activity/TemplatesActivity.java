@@ -3,15 +3,18 @@ package com.bulunduc.shoppingcart.activity;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateAdapter;
+import com.bulunduc.shoppingcart.fragments.AddEditTemplateFragment;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Template;
 import com.bulunduc.shoppingcart.utilities.AppUtilities;
@@ -20,6 +23,7 @@ import java.util.ArrayList;
 
 public class TemplatesActivity extends BaseActivity {
     private RecyclerView rvTemplates;
+    private FloatingActionButton mFloatingActionButton;
     private TemplateAdapter adapter = null;
     private ArrayList<Template> templates;
 
@@ -36,6 +40,11 @@ public class TemplatesActivity extends BaseActivity {
         templates = AppUtilities.getTemplatesList(this.getApplicationContext());
         adapter = new TemplateAdapter(this.getApplicationContext(), this, templates);
         rvTemplates.setAdapter(adapter);
+        mFloatingActionButton = findViewById(R.id.addFab);
+        mFloatingActionButton.setOnClickListener(v -> {
+            AddEditTemplateFragment showProducts = AddEditTemplateFragment.newInstance(this.getApplicationContext());
+            showProducts.show(this.getFragmentManager(), showProducts.getTag());
+        });
         initToolbar(true);
         setToolbarTitle(getString(R.string.templates));
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
