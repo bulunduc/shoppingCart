@@ -106,7 +106,6 @@ public class EditItemFragment extends DialogFragment {
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {
                     Intent intent = new Intent();
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Result.CANCEL.getCode(), intent);
-                    //getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_CANCELED, intent);
                 });
 
         final AlertDialog dialog = builder.create();
@@ -120,7 +119,6 @@ public class EditItemFragment extends DialogFragment {
                 intent.putExtra(AppConstants.KEY_ITEM, item);
                 intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mNewCategory);
                 intent.putExtra(AppConstants.KEY_POSITION, mPosition);
-                //getTargetFragment().onActivityResult(getTargetRequestCode(), Activity.RESULT_OK, intent);
                 getTargetFragment().onActivityResult(getTargetRequestCode(), Result.OK.getCode(), intent);
                 dialog.dismiss();
             } catch (EmptyTextException e) {
