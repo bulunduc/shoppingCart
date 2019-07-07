@@ -17,7 +17,7 @@
         android:background="@color/colorPrimary"
         android:gravity="center_vertical"
         android:padding="8dp"
-        android:text="@string/add_item"
+        android:text="@string/add_template"
         android:textColor="@android:color/black"
         android:textSize="20sp"
         android:textStyle="bold"/>
@@ -31,7 +31,7 @@
         android:layout_marginLeft="16dp"/>
 
     <EditText
-        android:id="@+id/templateTitle"
+        android:id="@+id/etTemplateTitle"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -45,7 +45,7 @@
         android:layout_marginLeft="16dp"/>
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvProducts"
+        android:id="@+id/rvTemplProducts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="150dp"
@@ -59,52 +59,55 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:layout_marginLeft="8dp"
+        android:layout_marginRight="8dp">
 
         <EditText
-            android:id="@+id/title"
-            android:layout_width="100dp"
+            android:id="@+id/etTemplProdTitle"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
-            android:hint="title"
+            android:maxLines="1"
+            android:hint="@string/title"
             />
         <EditText
-            android:id="@+id/weight"
+            android:id="@+id/etTemplProdCount"
             android:layout_width="wrap_content"
+            android:maxWidth="40dp"
             android:layout_height="wrap_content"
-            android:hint="weight"/>
+            android:maxLines="1"
+            android:layout_weight="0.3"
+            android:inputType="numberDecimal"
+            android:text="1"/>
+
         <Spinner
-            android:id="@+id/unit"
+            android:id="@+id/spTemplProdUnit"
             android:layout_width="wrap_content"
+            android:maxWidth="30dp"
             android:layout_height="wrap_content"
-            android:entries="@array/units"></Spinner>
+            android:layout_weight="0.1"
+            android:entries="@array/units" />
         <EditText
-            android:id="@+id/price"
+            android:id="@+id/etTemplProdPrice"
             android:layout_width="wrap_content"
+            android:maxWidth="40dp"
             android:layout_height="wrap_content"
-            android:hint="price"/>
+            android:layout_weight="0.3"
+            android:maxLines="1"
+            android:inputType="numberDecimal"
+            android:text="100"/>
 
     </LinearLayout>
-    <LinearLayout
+    <Button
+        android:id="@+id/btnTemplAddProduct"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <Button
-            android:id="@+id/addProduct"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:layout_marginTop="8dp"
-            android:layout_marginLeft="8dp"
-            android:textSize="12sp"
-            android:text="@string/add_product"
-            />
-        <Button
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:layout_marginRight="8dp"
-            android:textSize="12sp"
-            android:text="..."/>
-    </LinearLayout>
+        android:layout_marginTop="8dp"
+        android:layout_marginLeft="8dp"
+        android:layout_marginBottom="8dp"
+        android:textSize="12sp"
+        android:text="@string/add_product"
+        />
 
 </LinearLayout>
