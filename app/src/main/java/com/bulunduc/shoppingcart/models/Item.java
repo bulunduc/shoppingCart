@@ -126,4 +126,9 @@ public class Item implements Parcelable {
         result = 31 * result + (getCountUnit() != null ? getCountUnit().hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return getItemName() + " " + getCount() + getCountUnit() + " " + getPrice();
+    }
 }

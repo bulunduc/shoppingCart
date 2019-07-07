@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -24,7 +25,7 @@ import java.util.ArrayList;
 
 public class AddEditTemplateFragment extends DialogFragment {
 
-    private static final String TAG = "ShowTemplateProductsFragment";
+    private static final String TAG = "AddTemplateFragment";
     private static Context mContext;
     RecyclerView rvProductsList;
     AddTemplateProductsAdapter adapter;
@@ -62,7 +63,40 @@ public class AddEditTemplateFragment extends DialogFragment {
         etPrice.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
     }
 
-    private boolean checkFields() {
+
+    private void initFunctionality() {
+        rvProductsList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
+        adapter = new AddTemplateProductsAdapter(this.getActivity(), mProducts);
+        rvProductsList.setAdapter(adapter);
+        btnAddProduct.setOnClickListener(v -> {
+            if (checkProductList()) {
+                mProducts.add(getItemFromFields());
+                rvProductsList.getAdapter().notifyDataSetChanged();
+            }
+            else {
+                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields)); //TODO описание получше
+            }
+
+        });
+    }
+
+    private Item getItemFromFields(){
+        String title = etTitle.getText().toString();
+        Double count = Double.parseDouble(etCount.getText().toString());
+        String unit = spUnit.getSelectedItem().toString();
+        Double price = Double.parseDouble(etPrice.getText().toString());
+
+        Item item = new Item(title, count, unit, price);
+        Log.d(TAG, "getItemFromFields: " + item.toString());
+        return item;
+    }
+    private boolean checkProductList(){
+        if (!etTitle.getText().toString().isEmpty()
+                && !etCount.getText().toString().isEmpty()
+                && !etPrice.getText().toString().isEmpty()) return true;
+        return false;
+    }
+    private boolean checkTemplatesFields() {
         if (!etTemplateTitle.getText().toString().isEmpty()
                 && mProducts.size() > 0) return true;
         return false;
@@ -72,9 +106,7 @@ public class AddEditTemplateFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_template, null);
         initView(rootView);
-        rvProductsList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
-        adapter = new AddTemplateProductsAdapter(this.getActivity(), mProducts);
-        rvProductsList.setAdapter(adapter);
+        initFunctionality();
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
         builder.setView(rootView)
@@ -85,10 +117,10 @@ public class AddEditTemplateFragment extends DialogFragment {
         final AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v -> {
-            if (checkFields()) {
+            if (checkTemplatesFields()) {
 
             } else {
-                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields));
+                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields)); //TODO описание получше
             }
         });
         return dialog;
