@@ -48,21 +48,8 @@ public class EditItemFragment extends DialogFragment {
     private int mCategoryPosition;
     private int mPosition;
 
-    public static EditItemFragment newInstance(String itemName, Double minCount, String unit, Double price, int category, ArrayList<String> categories, int position) {
-        Bundle args = new Bundle();
-        args.putString(AppConstants.KEY_ITEM_NAME, itemName);
-        args.putDouble(AppConstants.KEY_ITEM_MIN_COUNT, minCount);
-        args.putString(AppConstants.KEY_ITEM_UNIT, unit);
-        args.putDouble(AppConstants.KEY_ITEM_PRICE, price);
-        args.putInt(AppConstants.KEY_ITEM_CATEGORY, category);
-        args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
-        Log.d(TAG, "categories: " + categories.toString() + " : " + category);
-        args.putInt(AppConstants.KEY_POSITION, position);
-        EditItemFragment fragment = new EditItemFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public EditItemFragment() {
     }
-
 
     private void initItemModelFields() throws EmptyTextException, InvalidCountException, InvalidPriceException {
         mItemName = etTitle.getText().toString();
@@ -84,6 +71,7 @@ public class EditItemFragment extends DialogFragment {
 
     }
 
+
     @NonNull
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
@@ -101,7 +89,6 @@ public class EditItemFragment extends DialogFragment {
                     intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mCategories.get(mCategoryPosition));
                     intent.putExtra(AppConstants.KEY_POSITION, mPosition);
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Result.DELETE.getCode(), intent);
-                   // getTargetFragment().onActivityResult(getTargetRequestCode(), AppConstants.ITEM_DELETE, intent);
                 })
                 .setNegativeButton(R.string.cancel, (dialog, which) -> {
                     Intent intent = new Intent();
@@ -145,7 +132,7 @@ public class EditItemFragment extends DialogFragment {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mItemName = bundle.getString(AppConstants.KEY_ITEM_NAME);
-            mMinCount = bundle.getDouble(AppConstants.KEY_ITEM_MIN_COUNT);
+            mMinCount = bundle.getDouble(AppConstants.KEY_ITEM_COUNT);
             mUnit = bundle.getString(AppConstants.KEY_ITEM_UNIT);
             mPrice = bundle.getDouble(AppConstants.KEY_ITEM_PRICE);
             mCategoryPosition = bundle.getInt(AppConstants.KEY_ITEM_CATEGORY);

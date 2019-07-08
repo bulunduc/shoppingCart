@@ -17,6 +17,7 @@ import android.widget.Spinner;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.AddTemplateProductsAdapter;
+import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.filters.NumberInputFilter;
 import com.bulunduc.shoppingcart.models.Item;
 import com.bulunduc.shoppingcart.utilities.AppUtilities;
@@ -26,11 +27,11 @@ import java.util.ArrayList;
 public class AddEditTemplateFragment extends DialogFragment {
 
     private static final String TAG = "AddTemplateFragment";
-    private static Context mContext;
+    private Context mContext;
     RecyclerView rvProductsList;
     AddTemplateProductsAdapter adapter;
-    private static ArrayList<Item> mProducts = new ArrayList<>();
-    private static String mTemplateTitle = "title";
+    private ArrayList<Item> mProducts = new ArrayList<>();
+    private String mTemplateTitle = "title";
     private EditText etTemplateTitle;
     private EditText etTitle;
     private EditText etCount;
@@ -38,17 +39,20 @@ public class AddEditTemplateFragment extends DialogFragment {
     private Spinner spUnit;
     private Button btnAddProduct;
 
-    public static AddEditTemplateFragment newInstance(Context context) {
-        mContext = context;
-        return new AddEditTemplateFragment();
+    public AddEditTemplateFragment() {
     }
 
-    public static AddEditTemplateFragment newInstance(Context context, String title, ArrayList<Item> products) {
-        mContext = context;
-        mProducts = products;
-        mTemplateTitle = title;
-        return new AddEditTemplateFragment();
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        Bundle args = getArguments();
+        mContext = getActivity().getApplicationContext();
+        if (args != null){
+            mTemplateTitle = args.getString(AppConstants.KEY_TEMPLATE_TITLE);
+            mProducts = args.getParcelableArrayList(AppConstants.KEY_TEMPLATE_PRODUCT_LIST);
+        }
     }
+
 
     private void initView(View rootView) {
         etTemplateTitle = rootView.findViewById(R.id.etTemplateTitle);

@@ -35,7 +35,6 @@ import java.util.ArrayList;
 
 public class AddItemFragment extends DialogFragment {
     private static final String TAG = "ItemAddBottomSheet";
-    private static Activity mActivity;
     private ArrayList<String> mCategories = new ArrayList<>();
     private int mCurrentCategoryPosition;
 
@@ -48,20 +47,13 @@ public class AddItemFragment extends DialogFragment {
 
     private AddItemDialogClickListener mAddItemDialogClickListener;
 
-    public static AddItemFragment newInstance(Activity activity, ArrayList<String> categories, int position) {
-        mActivity = activity;
-        Bundle args = new Bundle();
-        args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
-        args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, position);
-        AddItemFragment fragment = new AddItemFragment();
-        fragment.setArguments(args);
-        return fragment;
+    public AddItemFragment() {
     }
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_item_add, null);
-        AlertDialog.Builder builder = new AlertDialog.Builder(mActivity);
+        AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setView(rootView);
         AlertDialog dialog = builder.create();
         dialog.show();
@@ -75,14 +67,13 @@ public class AddItemFragment extends DialogFragment {
         setStyle(android.support.v4.app.DialogFragment.STYLE_NORMAL, R.style.DialogStyle);
     }
 
-
     private void initVar() {
         Bundle bundle = getArguments();
         if (bundle != null) {
             mCategories = bundle.getStringArrayList(AppConstants.KEY_ITEM_CATEGORIES);
             mCurrentCategoryPosition = bundle.getInt(AppConstants.KEY_ITEM_CATEGORY_POSITION);
         }
-        mAddItemDialogClickListener = (AddItemDialogClickListener) mActivity;
+        mAddItemDialogClickListener = (AddItemDialogClickListener) getActivity();
     }
 
     @Nullable
@@ -94,6 +85,7 @@ public class AddItemFragment extends DialogFragment {
         initFunctionality();
         return view;
     }
+
     private void initView(View rootView) {
         mTitleEditText = rootView.findViewById(R.id.itemName);
         mCountEditText = rootView.findViewById(R.id.itemCount);
@@ -156,7 +148,7 @@ public class AddItemFragment extends DialogFragment {
 
             }
         });
-        final ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mActivity.getResources().getStringArray(R.array.units));
+        final ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, getActivity().getResources().getStringArray(R.array.units));
         unitAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mUnitSpinner.setAdapter(unitAdapter);
         mUnitSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -173,7 +165,7 @@ public class AddItemFragment extends DialogFragment {
 
 
         mCategories.add(mCategories.size(), getString(R.string.new_category));
-        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
+        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mCategorySpinner.setAdapter(categoryAdapter);
         mCategorySpinner.setSelection(mCurrentCategoryPosition);
@@ -203,8 +195,10 @@ public class AddItemFragment extends DialogFragment {
                     clear();
                     updateCategorySpinner();
                 } catch (EmptyTextException e) {
-                    if (mTitle.isEmpty()) showInvalidFields(getString(R.string.field_title), mTitleEditText);
-                    else if (mCategory.isEmpty()) showInvalidFields(getString(R.string.category), mNewCategoryEditText);
+                    if (mTitle.isEmpty())
+                        showInvalidFields(getString(R.string.field_title), mTitleEditText);
+                    else if (mCategory.isEmpty())
+                        showInvalidFields(getString(R.string.category), mNewCategoryEditText);
                 } catch (InvalidCountException e) {
                     showInvalidFields(getString(R.string.field_count), mCountEditText);
                 } catch (InvalidPriceException e) {
@@ -214,8 +208,8 @@ public class AddItemFragment extends DialogFragment {
         });
     }
 
-    private void updateCategorySpinner(){
-        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
+    private void updateCategorySpinner() {
+        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mCategorySpinner.setAdapter(categoryAdapter);
         mCategorySpinner.setSelection(mCurrentCategoryPosition);
@@ -223,7 +217,7 @@ public class AddItemFragment extends DialogFragment {
     }
 
     private void showInvalidFields(String field, EditText view) {
-        AppUtilities.showToast(mActivity.getApplicationContext(), String.format(getString(R.string.invalid_field), field));
+        AppUtilities.showToast(getActivity().getApplicationContext(), String.format(getString(R.string.invalid_field), field));
         view.getBackground().setColorFilter(getResources().getColor(R.color.editTextHighlightColor), PorterDuff.Mode.SRC_ATOP);
     }
 
@@ -268,6 +262,6 @@ public class AddItemFragment extends DialogFragment {
     @Override
     public void onCancel(DialogInterface dialog) {
         super.onCancel(dialog);
-        ActivityUtilities.hideKeyboardFrom(mActivity.getApplicationContext(), getView());
+        ActivityUtilities.hideKeyboardFrom(getActivity().getApplicationContext(), getView());
     }
 }

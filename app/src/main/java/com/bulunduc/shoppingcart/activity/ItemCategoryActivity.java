@@ -266,8 +266,14 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         if (id == R.id.add_item) {
             try {
                 ArrayList<String> categories = AppUtilities.getCategories(mContext);
-                AddItemFragment addItemFragment = AddItemFragment.newInstance(this, categories, 1);
-                addItemFragment.show(getFragmentManager(), addItemFragment.getTag());
+
+                Bundle args = new Bundle();
+                args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
+                args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, 1);
+                AddItemFragment fragment = new AddItemFragment();
+                fragment.setArguments(args);
+                fragment.show(getFragmentManager(), fragment.getTag());
+
             } catch (Exception e) {
                 e.printStackTrace();
             }

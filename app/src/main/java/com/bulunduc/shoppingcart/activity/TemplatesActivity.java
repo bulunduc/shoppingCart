@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
@@ -14,6 +15,7 @@ import android.view.View;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateAdapter;
+import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.fragments.AddEditTemplateFragment;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Template;
@@ -42,8 +44,9 @@ public class TemplatesActivity extends BaseActivity {
         rvTemplates.setAdapter(adapter);
         mFloatingActionButton = findViewById(R.id.addFab);
         mFloatingActionButton.setOnClickListener(v -> {
-            AddEditTemplateFragment showProducts = AddEditTemplateFragment.newInstance(this.getApplicationContext());
-            showProducts.show(this.getFragmentManager(), showProducts.getTag());
+            Bundle args = new Bundle();
+            AddEditTemplateFragment fragment = new AddEditTemplateFragment();
+            fragment.show(this.getFragmentManager(), fragment.getTag());
         });
         initToolbar(true);
         setToolbarTitle(getString(R.string.templates));

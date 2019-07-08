@@ -12,6 +12,7 @@ import android.view.View;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateProductsAdapter;
+import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Item;
 import com.bulunduc.shoppingcart.utilities.AppUtilities;
@@ -27,11 +28,17 @@ public class ShowTemplateProductsFragment extends DialogFragment {
     private static ArrayList<Item> mProducts = new ArrayList<>();
     private static String mCategory = "Template";
 
-    public static ShowTemplateProductsFragment newInstance(Context context, ArrayList<Item> products, String category){
-        mContext = context;
-        mProducts = products;
-        mCategory = category;
-        return new ShowTemplateProductsFragment();
+    public ShowTemplateProductsFragment(){}
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        mContext = getActivity().getApplicationContext();
+        Bundle args = getArguments();
+        if (args != null) {
+            mCategory = args.getString(AppConstants.KEY_TEMPLATE_TITLE);
+            mProducts = args.getParcelableArrayList(AppConstants.KEY_TEMPLATE_PRODUCT_LIST);
+        }
     }
 
     @Override

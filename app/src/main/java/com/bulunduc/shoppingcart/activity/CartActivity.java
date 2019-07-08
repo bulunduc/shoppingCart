@@ -21,6 +21,7 @@ import android.widget.TextView;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.CategorySectionAdapter;
+import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.fragments.AddItemFragment;
 import com.bulunduc.shoppingcart.listeners.AddItemDialogClickListener;
 import com.bulunduc.shoppingcart.listeners.CartItemIsBuyedCheckListener;
@@ -323,8 +324,13 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
     public void onClick(View v) {
         if (v.getId() == R.id.addFab) {
             ArrayList<String> categories = AppUtilities.getCategories(mContext);
-            AddItemFragment addItemFragment = AddItemFragment.newInstance(this, categories, 1);
-            addItemFragment.show(getFragmentManager(), addItemFragment.getTag());
+            Bundle args = new Bundle();
+            args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
+            args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, 1);
+            AddItemFragment fragment = new AddItemFragment();
+            fragment.setArguments(args);
+            fragment.show(getFragmentManager(), fragment.getTag());
+
 
         }
     }

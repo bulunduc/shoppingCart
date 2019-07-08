@@ -48,7 +48,7 @@ public class AppConstants {
     //dialog fragment edit item
     public static final String KEY_ITEM = "item";
     public static final String KEY_ITEM_NAME = "item_name";
-    public static final String KEY_ITEM_MIN_COUNT = "item_min_count";
+    public static final String KEY_ITEM_COUNT = "item_min_count";
     public static final String KEY_ITEM_UNIT = "item_unit";
     public static final String KEY_ITEM_PRICE = "item_price";
     public static final String KEY_ITEM_CATEGORY = "item_category";
@@ -57,6 +57,9 @@ public class AppConstants {
     public static final String KEY_POSITION = "position";
     public static final int EDIT_ITEM_REQUEST_CODE = 100;
 
+    //dialog fragment edit template
+    public static final String KEY_TEMPLATE_TITLE = "templ_title";
+    public static final String KEY_TEMPLATE_PRODUCT_LIST = "templ_list";
     public static final String APP_PREF_NAME = "shopping_cart_app_pref";
     public static final String KEY_ITEM_CATEGORY_POSITION = "position";
 }

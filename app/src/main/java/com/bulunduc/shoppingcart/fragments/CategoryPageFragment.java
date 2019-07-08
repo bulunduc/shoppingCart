@@ -3,7 +3,6 @@ package com.bulunduc.shoppingcart.fragments;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -26,6 +25,14 @@ import com.bulunduc.shoppingcart.listeners.ItemRecyclerViewClickListener;
 import com.bulunduc.shoppingcart.models.Item;
 
 import java.util.ArrayList;
+
+import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_CATEGORIES;
+import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_CATEGORY;
+import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_COUNT;
+import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_NAME;
+import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_PRICE;
+import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_UNIT;
+import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_POSITION;
 
 public class CategoryPageFragment extends Fragment{
     private static final String TAG = "CategoryPageFragment";
@@ -95,17 +102,13 @@ public class CategoryPageFragment extends Fragment{
                 builder.setTitle(R.string.confirm_deleting)
                         .setMessage(getString(R.string.confirm_deleting_category))
                         .setIcon(R.mipmap.ic_launcher)
-                        .setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                ((ItemCategoryActivity)getActivity()).deleteCurrentCategory();
-                                dialog.dismiss();
-                            }
+                        .setPositiveButton(getString(R.string.ok), (dialog, id) -> {
+                            ((ItemCategoryActivity)getActivity()).deleteCurrentCategory();
+                            dialog.dismiss();
                         })
-                        .setNegativeButton(getString(R.string.cancel), new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int id) {
-                                // Закрываем окно
-                                dialog.cancel();
-                            }
+                        .setNegativeButton(getString(R.string.cancel), (dialog, id) -> {
+                            // Закрываем окно
+                            dialog.cancel();
                         });
                 builder.show();
 
@@ -121,21 +124,24 @@ public class CategoryPageFragment extends Fragment{
 
             @Override
             public void onItemLongClick(View view, int position) {
-                FragmentManager manager = getActivity().getSupportFragmentManager();
-                EditItemFragment editItemFragment = EditItemFragment.newInstance(mProducts.get(position).getItemName(),
-                        mProducts.get(position).getCount(), mProducts.get(position).getCountUnit(),
-                        mProducts.get(position).getPrice(),mCategoryId, mCategories,  position);
-                editItemFragment.setTargetFragment(CategoryPageFragment.this, AppConstants.EDIT_ITEM_REQUEST_CODE);
-                editItemFragment.show(manager, AppConstants.KEY_DIALOG_FRAGMENT);
             }
 
             @Override
             public void onItemDoubleClick(int position) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
                 Log.d(TAG, "category(click): " + mCategories.get(mCategoryId));
-                EditItemFragment editItemFragment = EditItemFragment.newInstance(mProducts.get(position).getItemName(),
-                        mProducts.get(position).getCount(), mProducts.get(position).getCountUnit(),
-                        mProducts.get(position).getPrice(),mCategoryId, mCategories,  position);
+                Bundle args = new Bundle();
+                args.putString(KEY_ITEM_NAME, mProducts.get(position).getItemName());
+                args.putDouble(KEY_ITEM_COUNT, mProducts.get(position).getCount());
+                args.putString(KEY_ITEM_UNIT, mProducts.get(position).getCountUnit());
+                args.putDouble(KEY_ITEM_PRICE, mProducts.get(position).getPrice());
+                args.putInt(KEY_ITEM_CATEGORY, mCategoryId);
+                args.putStringArrayList(KEY_ITEM_CATEGORIES, mCategories);
+                args.putInt(KEY_POSITION, position);
+
+
+                EditItemFragment editItemFragment = new EditItemFragment();
+                editItemFragment.setArguments(args);
                 editItemFragment.setTargetFragment(CategoryPageFragment.this, AppConstants.EDIT_ITEM_REQUEST_CODE);
                 editItemFragment.show(manager, AppConstants.KEY_DIALOG_FRAGMENT);
             }
@@ -148,7 +154,7 @@ public class CategoryPageFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppConstants.EDIT_ITEM_REQUEST_CODE) {
-            int position = data.getIntExtra(AppConstants.KEY_POSITION, AppConstants.INVALID_VALUE_IDENTIFIER);
+            int position = data.getIntExtra(KEY_POSITION, AppConstants.INVALID_VALUE_IDENTIFIER);
             Log.d(TAG, "position: " + position);
             String category = data.getStringExtra(AppConstants.KEY_ITEM_CATEGORY);
             if (resultCode == Result.OK.getCode()) {
