@@ -2,6 +2,7 @@ package com.bulunduc.shoppingcart.activity;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -286,9 +287,42 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         if (!mAllProducts.containsKey(category)) {
             mAllProducts.put(category, new ArrayList<Item>());
         }
-        mAllProducts.get(category).add(item);
-        AppUtilities.showToast(mContext, mContext.getResources().getString(R.string.added_to_list));
-        updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
+        int position = findSimilarProductPosition(category, item);
+        if (position < 0) {
+            mAllProducts.get(category).add(item);
+            AppUtilities.showToast(mContext, mContext.getResources().getString(R.string.added_to_list));
+            updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
+        } else {
+            Item similarItem = mAllProducts.get(category).get(position);
+            new AlertDialog.Builder(this)
+                    .setTitle("Найден похожий продукт")
+                    .setMessage("Вы действительно хотите добавить аналогичный продукт?\n" +
+                            "На данный момент в списках есть:\n" +
+                            similarItem.getItemName() + "\n" +
+                            " Количество: " + similarItem.getCount() + similarItem.getCountUnit() +"\n" +
+                            " Цена: " + similarItem.getPrice() + "\n")
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .setPositiveButton("Да", (dialog, whichButton) -> {
+                        mAllProducts.get(category).add(item);
+                        AppUtilities.showToast(mContext, mContext.getResources().getString(R.string.added_to_list));
+                        updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
+                    })
+                    .setNeutralButton("Обновить текущий", (dialog, whichButton) -> {
+                        mAllProducts.get(category).set(position, item);
+                        AppUtilities.showToast(mContext, "Продукт обновлен");
+                        updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
+                    })
+                    .setNegativeButton("Нет", null).show();
+        }
+    }
+
+    private int findSimilarProductPosition(String category, Item item) {
+        for (int i = 0; i < mAllProducts.get(category).size(); i++) {
+            if (mAllProducts.get(category).get(i).getItemName().toLowerCase().equals(item.getItemName().toLowerCase())) {
+                return i;
+            }
+        }
+        return AppConstants.INVALID_VALUE_IDENTIFIER;
     }
 
     @Override

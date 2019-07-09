@@ -75,9 +75,11 @@
     <string name="add">Добавить</string>
     <string name="add_item">Добавить продукт</string>
     <string name="add_template">Добавить шаблон</string>
-    <string name="templateTitle">Название шаблона:</string>
+    <string name="template_title">Название шаблона:</string>
+    <string name="template_products">Продукты:</string>
     <string name="add_product">Добавить продукт</string>
     <string name="weight">Кол-во</string>
     <string name="price">Цена(1ед)</string>
+    <string name="add_to_cart_title">Добавить в корзину</string>
 
 </resources>

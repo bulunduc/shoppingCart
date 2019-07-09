@@ -5,20 +5,15 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
-import android.text.Layout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.fragments.ShowTemplateProductsFragment;
 import com.bulunduc.shoppingcart.models.Template;
-
-import java.nio.Buffer;
 import java.util.ArrayList;
 
 public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHolder> {
@@ -47,6 +42,7 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
             Bundle args = new Bundle();
             args.putString(AppConstants.KEY_TEMPLATE_TITLE,  mTemplates.get(position).getTitle());
             args.putParcelableArrayList(AppConstants.KEY_TEMPLATE_PRODUCT_LIST,  mTemplates.get(position).getItems());
+            args.putInt(AppConstants.KEY_POSITION, position);
             ShowTemplateProductsFragment fragment = new ShowTemplateProductsFragment();
             fragment.setArguments(args);
             fragment.show(mActivity.getFragmentManager(), fragment.getTag());
@@ -59,18 +55,15 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
-        private ImageView ivTemplateImage;
         private TextView tvTemplateTitle;
 
 
         public ViewHolder(View itemView) {
             super(itemView);
-            ivTemplateImage = itemView.findViewById(R.id.ivTemplateImage);
             tvTemplateTitle = itemView.findViewById(R.id.tvTemplateTitle);
         }
 
         void bind(Template template){
-            ivTemplateImage.setImageResource(template.getImageId());
             tvTemplateTitle.setText(template.getTitle());
 
         }

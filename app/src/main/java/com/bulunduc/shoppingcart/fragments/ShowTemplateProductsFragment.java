@@ -9,10 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.widget.ImageButton;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateProductsAdapter;
 import com.bulunduc.shoppingcart.constants.AppConstants;
+import com.bulunduc.shoppingcart.listeners.TemplateDialogClickListener;
 import com.bulunduc.shoppingcart.models.CartItem;
 import com.bulunduc.shoppingcart.models.Item;
 import com.bulunduc.shoppingcart.utilities.AppUtilities;
@@ -24,9 +26,12 @@ public class ShowTemplateProductsFragment extends DialogFragment {
     private static final String TAG = "ShowTemplateProductsFragment";
     private static Context mContext;
     RecyclerView rv;
+    ImageButton ibEditTemplate;
+    ImageButton ibDeleteTemplate;
     TemplateProductsAdapter adapter;
     private static ArrayList<Item> mProducts = new ArrayList<>();
     private static String mCategory = "Template";
+    private TemplateDialogClickListener mTemplateDialogClickListener;
 
     public ShowTemplateProductsFragment(){}
 
@@ -43,7 +48,21 @@ public class ShowTemplateProductsFragment extends DialogFragment {
 
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
-        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_template, null);
+        View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_view_template, null);
+        mTemplateDialogClickListener = (TemplateDialogClickListener) getActivity();
+        ibEditTemplate = rootView.findViewById(R.id.ibEditTemplate);
+        ibEditTemplate.setOnClickListener(v->{
+            Bundle args = getArguments();
+            AddEditTemplateFragment fragment = new AddEditTemplateFragment();
+            fragment.setArguments(args);
+            fragment.show(getFragmentManager(), fragment.getTag());
+        });
+        ibDeleteTemplate = rootView.findViewById(R.id.ibDeleteTemplate);
+        ibDeleteTemplate.setOnClickListener(v->{
+            AppUtilities.showToast(mContext, "Шаблон удален");
+            mTemplateDialogClickListener.onTemplateDeleteClick(getArguments().getInt(AppConstants.KEY_POSITION));
+            dismiss();
+        });
         rv = rootView.findViewById(R.id.rvTemplateProducts);
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 

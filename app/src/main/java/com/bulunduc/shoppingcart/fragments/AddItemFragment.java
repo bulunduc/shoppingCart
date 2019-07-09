@@ -162,8 +162,6 @@ public class AddItemFragment extends DialogFragment {
 
             }
         });
-
-
         mCategories.add(mCategories.size(), getString(R.string.new_category));
         final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -186,24 +184,21 @@ public class AddItemFragment extends DialogFragment {
             }
         });
 
-        mAddItemImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                try {
-                    initItemModelFields();
-                    mAddItemDialogClickListener.onItemAddClick(new Item(mTitle, mCount, mUnit, mPrice), mCategory);
-                    clear();
-                    updateCategorySpinner();
-                } catch (EmptyTextException e) {
-                    if (mTitle.isEmpty())
-                        showInvalidFields(getString(R.string.field_title), mTitleEditText);
-                    else if (mCategory.isEmpty())
-                        showInvalidFields(getString(R.string.category), mNewCategoryEditText);
-                } catch (InvalidCountException e) {
-                    showInvalidFields(getString(R.string.field_count), mCountEditText);
-                } catch (InvalidPriceException e) {
-                    showInvalidFields(getString(R.string.field_price), mPriceEditText);
-                }
+        mAddItemImageButton.setOnClickListener(v -> {
+            try {
+                initItemModelFields();
+                mAddItemDialogClickListener.onItemAddClick(new Item(mTitle, mCount, mUnit, mPrice), mCategory);
+                clear();
+                updateCategorySpinner();
+            } catch (EmptyTextException e) {
+                if (mTitle.isEmpty())
+                    showInvalidFields(getString(R.string.field_title), mTitleEditText);
+                else if (mCategory.isEmpty())
+                    showInvalidFields(getString(R.string.category), mNewCategoryEditText);
+            } catch (InvalidCountException e) {
+                showInvalidFields(getString(R.string.field_count), mCountEditText);
+            } catch (InvalidPriceException e) {
+                showInvalidFields(getString(R.string.field_price), mPriceEditText);
             }
         });
     }

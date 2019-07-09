@@ -105,17 +105,17 @@
         app:layout_constraintLeft_toLeftOf="@id/add_to_cart">
 
         <Button
-            android:id="@+id/less_count"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:text="-"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <Button
             android:id="@+id/more_count"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:text="+"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <Button
+            android:id="@+id/less_count"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:text="-"
             app:layout_constraintTop_toTopOf="parent" />
     </LinearLayout>
     <ImageButton

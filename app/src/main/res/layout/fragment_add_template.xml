@@ -25,8 +25,8 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/templateTitle"
-        android:layout_marginBottom="8dp"
+        android:text="@string/template_title"
+        style="@style/TextViewEditFragmentStyle"
         android:layout_marginTop="8dp"
         android:layout_marginLeft="16dp"/>
 
@@ -36,24 +36,28 @@
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
         android:layout_marginRight="8dp"
-        android:inputType="textPersonName"
-        android:textSize="20sp"/>
+        android:inputType="textCapSentences"
+        android:textSize="16sp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/products"
-        android:layout_marginLeft="16dp"/>
+        android:text="@string/template_products"
+        style="@style/TextViewEditFragmentStyle"
+        android:layout_marginBottom="8dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/rvTemplProducts"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:minHeight="150dp"
-        android:layout_marginTop="8dp"
+        android:background="@drawable/bg_rv_boarding"
         android:layout_marginLeft="8dp"
+        android:layout_marginTop="8dp"
         android:layout_marginRight="8dp"
-        android:layout_marginBottom="8dp">
+        android:layout_marginBottom="8dp"
+        android:minHeight="150dp">
 
     </android.support.v7.widget.RecyclerView>
 
@@ -70,6 +74,7 @@
             android:layout_weight="1"
             android:layout_height="wrap_content"
             android:maxLines="1"
+            android:inputType="textCapSentences"
             android:hint="@string/title"
             />
         <EditText
@@ -80,7 +85,9 @@
             android:maxLines="1"
             android:layout_weight="0.3"
             android:inputType="numberDecimal"
-            android:text="1"/>
+            android:textAlignment="textEnd"
+            android:text="1"
+            android:layout_gravity="end" />
 
         <Spinner
             android:id="@+id/spTemplProdUnit"
@@ -97,7 +104,9 @@
             android:layout_weight="0.3"
             android:maxLines="1"
             android:inputType="numberDecimal"
-            android:text="100"/>
+            android:textAlignment="textEnd"
+            android:text="100"
+            android:layout_gravity="end" />
 
     </LinearLayout>
     <Button

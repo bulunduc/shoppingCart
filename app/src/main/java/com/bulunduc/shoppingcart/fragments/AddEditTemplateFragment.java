@@ -19,7 +19,9 @@ import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.AddTemplateProductsAdapter;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.filters.NumberInputFilter;
+import com.bulunduc.shoppingcart.listeners.TemplateDialogClickListener;
 import com.bulunduc.shoppingcart.models.Item;
+import com.bulunduc.shoppingcart.models.Template;
 import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
@@ -31,13 +33,15 @@ public class AddEditTemplateFragment extends DialogFragment {
     RecyclerView rvProductsList;
     AddTemplateProductsAdapter adapter;
     private ArrayList<Item> mProducts = new ArrayList<>();
-    private String mTemplateTitle = "title";
+    private String mTemplateTitle = "";
     private EditText etTemplateTitle;
     private EditText etTitle;
     private EditText etCount;
     private EditText etPrice;
     private Spinner spUnit;
     private Button btnAddProduct;
+    private int position = -1;
+    private TemplateDialogClickListener mTemplateDialogClickListener;
 
     public AddEditTemplateFragment() {
     }
@@ -50,6 +54,7 @@ public class AddEditTemplateFragment extends DialogFragment {
         if (args != null){
             mTemplateTitle = args.getString(AppConstants.KEY_TEMPLATE_TITLE);
             mProducts = args.getParcelableArrayList(AppConstants.KEY_TEMPLATE_PRODUCT_LIST);
+            position = args.getInt(AppConstants.KEY_POSITION);
         }
     }
 
@@ -69,6 +74,8 @@ public class AddEditTemplateFragment extends DialogFragment {
 
 
     private void initFunctionality() {
+        mTemplateDialogClickListener = (TemplateDialogClickListener) getActivity();
+        etTemplateTitle.setText(mTemplateTitle);
         rvProductsList.setLayoutManager(new LinearLayoutManager(this.getActivity()));
         adapter = new AddTemplateProductsAdapter(this.getActivity(), mProducts);
         rvProductsList.setAdapter(adapter);
@@ -76,6 +83,9 @@ public class AddEditTemplateFragment extends DialogFragment {
             if (checkProductList()) {
                 mProducts.add(getItemFromFields());
                 rvProductsList.getAdapter().notifyDataSetChanged();
+                etTitle.setText("");
+                etCount.setText("1");
+                etPrice.setText("100");
             }
             else {
                 AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields)); //TODO описание получше
@@ -106,22 +116,27 @@ public class AddEditTemplateFragment extends DialogFragment {
         return false;
     }
 
+    private String getTemplateTitle(){
+        return etTemplateTitle.getText().toString();
+    }
+
     @Override
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_add_template, null);
         initView(rootView);
         initFunctionality();
-
         AlertDialog.Builder builder = new AlertDialog.Builder(this.getActivity());
         builder.setView(rootView)
                 .setPositiveButton("OK", (dialog, which) -> {/*overrided*/})
 
                 .setNegativeButton("Отмена", null);
-
         final AlertDialog dialog = builder.create();
         dialog.show();
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v -> {
             if (checkTemplatesFields()) {
+                mTemplateDialogClickListener.onTemplateAddClick(new Template(getTemplateTitle(), 0, mProducts),position);
+                AppUtilities.showToast(getActivity().getApplicationContext(), "Шаблон добавлен!"); //TODO описание получше
+                dialog.dismiss();
 
             } else {
                 AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields)); //TODO описание получше

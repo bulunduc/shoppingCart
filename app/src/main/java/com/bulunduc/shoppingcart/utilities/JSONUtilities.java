@@ -39,8 +39,8 @@ class JSONUtilities {
         StringBuilder stringBuffer = new StringBuilder();
         BufferedReader bufferedReader = null;
         try {
-            if (AppPreference.getInstance(context).getBoolean(AppConstants.KEY_FIRST_RUN, true) && !fileName.equals(AppConstants.CART_JSON_FILE)
-                    || fileName.equals(AppConstants.TEMPLATES_JSON_FILE)) {
+            if (AppPreference.getInstance(context).getBoolean(AppConstants.KEY_FIRST_RUN, true)
+                    && !fileName.equals(AppConstants.CART_JSON_FILE)) {
                 bufferedReader = new BufferedReader(new InputStreamReader(context.getAssets().open(directory + fileName)));
             } else {
                 bufferedReader = new BufferedReader(new InputStreamReader(context.openFileInput(fileName)));
