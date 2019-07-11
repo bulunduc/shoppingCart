@@ -2,7 +2,6 @@
   "all": [
     {
       "category": "Мясная продукция",
-      "image_res": 0,
       "products": [
         {
           "title": "Говядина",
@@ -38,7 +37,6 @@
     },
     {
       "category": "Рыбная продукция",
-      "image_res": 0,
       "products": [
         {
           "title": "Минтай",
@@ -74,7 +72,6 @@
     },
     {
       "category": "Молочная продукция",
-      "image_res": 0,
       "products": [
         {
           "title":"Молоко",
@@ -105,7 +102,6 @@
     },
     {
       "category": "Бакалея",
-      "image_res": 0,
       "products": [
         {
           "title":"Масло растительное",
@@ -136,7 +132,6 @@
     },
     {
       "category": "Фрукты, овощи",
-      "image_res": 0,
       "products": [
         {
           "title":"Яблоки",
@@ -167,7 +162,6 @@
     },
     {
       "category": "Кондитерская продукция",
-      "image_res": 0,
       "products": [
         {
           "title":"Конфеты",
@@ -198,7 +192,6 @@
     },
     {
       "category": "Выпечка",
-      "image_res": 0,
       "products": [
         {
           "title":"Хлеб белый",
@@ -229,7 +222,6 @@
     },
     {
       "category": "Напитки",
-      "image_res": 0,
       "products": [
         {
           "title":"Кофе",
@@ -260,7 +252,6 @@
     },
     {
       "category": "Химия и товары для дома",
-      "image_res": 0,
       "products": [
         {
           "title":"Порошок",
@@ -291,7 +282,6 @@
     },
     {
       "category": "Продукция для детей",
-      "image_res": 0,
       "products": [
         {
           "title":"Присыпка",

@@ -270,7 +270,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
                 Bundle args = new Bundle();
                 args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
-                args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, 1);
+                args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, mTabLayout.getSelectedTabPosition());
                 AddItemFragment fragment = new AddItemFragment();
                 fragment.setArguments(args);
                 fragment.show(getFragmentManager(), fragment.getTag());
@@ -296,11 +296,9 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
             Item similarItem = mAllProducts.get(category).get(position);
             new AlertDialog.Builder(this)
                     .setTitle("Найден похожий продукт")
-                    .setMessage("Вы действительно хотите добавить аналогичный продукт?\n" +
-                            "На данный момент в списках есть:\n" +
-                            similarItem.getItemName() + "\n" +
-                            " Количество: " + similarItem.getCount() + similarItem.getCountUnit() +"\n" +
-                            " Цена: " + similarItem.getPrice() + "\n")
+                    .setMessage(getString(R.string.foundSimilarItemMessage, similarItem.getItemName(),
+                            String.valueOf(similarItem.getCount()), similarItem.getCountUnit(),
+                            String.valueOf(similarItem.getPrice())))
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .setPositiveButton("Да", (dialog, whichButton) -> {
                         mAllProducts.get(category).add(item);

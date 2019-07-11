@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateProductsAdapter;
@@ -26,11 +27,12 @@ public class ShowTemplateProductsFragment extends DialogFragment {
     private static final String TAG = "ShowTemplateProductsFragment";
     private static Context mContext;
     RecyclerView rv;
+    TextView tvTemplateTitle;
     ImageButton ibEditTemplate;
     ImageButton ibDeleteTemplate;
     TemplateProductsAdapter adapter;
-    private static ArrayList<Item> mProducts = new ArrayList<>();
-    private static String mCategory = "Template";
+    private ArrayList<Item> mProducts = new ArrayList<>();
+    private String mTitle = "";
     private TemplateDialogClickListener mTemplateDialogClickListener;
 
     public ShowTemplateProductsFragment(){}
@@ -41,7 +43,7 @@ public class ShowTemplateProductsFragment extends DialogFragment {
         mContext = getActivity().getApplicationContext();
         Bundle args = getArguments();
         if (args != null) {
-            mCategory = args.getString(AppConstants.KEY_TEMPLATE_TITLE);
+            mTitle = args.getString(AppConstants.KEY_TEMPLATE_TITLE);
             mProducts = args.getParcelableArrayList(AppConstants.KEY_TEMPLATE_PRODUCT_LIST);
         }
     }
@@ -50,6 +52,8 @@ public class ShowTemplateProductsFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_view_template, null);
         mTemplateDialogClickListener = (TemplateDialogClickListener) getActivity();
+        tvTemplateTitle = rootView.findViewById(R.id.tvTemplateTitle);
+        tvTemplateTitle.setText(mTitle);
         ibEditTemplate = rootView.findViewById(R.id.ibEditTemplate);
         ibEditTemplate.setOnClickListener(v->{
             Bundle args = getArguments();
@@ -73,7 +77,7 @@ public class ShowTemplateProductsFragment extends DialogFragment {
         builder.setView(rootView)
                 .setPositiveButton("OK", (dialog, which) -> {
                     for (Item mProduct : adapter.getCheckedProductList()) {
-                        AppUtilities.addItemAndReturnCartList(mContext, new CartItem(mProduct, mCategory, false));
+                        AppUtilities.addItemAndReturnCartList(mContext, new CartItem(mProduct, mTitle, false));
                     }
                     AppUtilities.showToast(mContext, getString(R.string.product_added_to_cart));
 

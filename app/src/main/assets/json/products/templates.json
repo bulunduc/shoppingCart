@@ -2,7 +2,6 @@
   "templates": [
     {
       "category": "Борщ",
-      "image_res": 0,
       "products": [
         {
           "title": "Говядина",
@@ -38,7 +37,6 @@
     },
     {
       "category": "Рассольник",
-      "image_res": 0,
       "products": [
         {
           "title": "Говядина",
@@ -74,7 +72,6 @@
     },
     {
       "category": "Щи",
-      "image_res": 0,
       "products": [
         {
           "title": "Говядина",
@@ -110,7 +107,6 @@
     },
     {
       "category": "Блины",
-      "image_res": 0,
       "products": [
         {
           "title": "Мука",

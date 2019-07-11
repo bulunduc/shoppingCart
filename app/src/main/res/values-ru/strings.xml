@@ -82,4 +82,6 @@
     <string name="price">Цена(1ед)</string>
     <string name="add_to_cart_title">Добавить в корзину</string>
 
+
+    <string name="foundSimilarItemMessage">"    %s (%s%s / %s)%n%n    Вы действительно хотите добавить новый продукт?%n"</string>
 </resources>

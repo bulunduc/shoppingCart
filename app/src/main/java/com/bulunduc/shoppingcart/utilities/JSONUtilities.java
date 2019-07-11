@@ -123,7 +123,6 @@ class JSONUtilities {
             for (String category : productList.keySet()) {
                 JSONObject categoryJsonObject = new JSONObject();
                 categoryJsonObject.put(AppConstants.JSON_KEY_CATEGORY, category);
-                categoryJsonObject.put(AppConstants.JSON_KEY_PROD_IMAGE, 0);
                 JSONArray productsJsonArray = new JSONArray();
                 for (Item item : productList.get(category)) {
                     JSONObject object = new JSONObject();
@@ -153,7 +152,6 @@ class JSONUtilities {
             for (Template template : templates) {
                 JSONObject templateJSONObject = new JSONObject();
                 templateJSONObject.put(AppConstants.JSON_KEY_CATEGORY,template.getTitle() );
-                templateJSONObject.put(AppConstants.JSON_KEY_TEMPLATES_IMAGE,template.getImageId());
                 JSONArray productsJsonArray = new JSONArray();
                 for (Item item : template.getItems()) {
                     JSONObject object = new JSONObject();
@@ -182,7 +180,6 @@ class JSONUtilities {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String title = object.getString(AppConstants.JSON_KEY_CATEGORY);
-                int imageRes = object.getInt(AppConstants.JSON_KEY_TEMPLATES_IMAGE);
                 ArrayList<Item> products = new ArrayList<>();
                 JSONArray productsArray = object.getJSONArray(AppConstants.JSON_KEY_PRODUCTS);
                 for (int j = 0; j < productsArray.length(); j++) {
@@ -193,7 +190,7 @@ class JSONUtilities {
                     Double price = categoryProduct.getDouble(AppConstants.JSON_KEY_PROD_PRICE);
                     products.add(new Item(item, minCount, unit, price));
                 }
-                mTemplates.add(new Template(title, imageRes, products));
+                mTemplates.add(new Template(title, products));
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -210,9 +207,7 @@ class JSONUtilities {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject object = jsonArray.getJSONObject(i);
                 String category = object.getString(AppConstants.JSON_KEY_CATEGORY);
-                int imageRes = object.getInt(AppConstants.JSON_KEY_PROD_IMAGE);
                 ArrayList<Item> categoryProducts = new ArrayList<>();
-                //imageResource
                 JSONArray categoryProductsArray = object.getJSONArray(AppConstants.JSON_KEY_PRODUCTS);
                 for (int j = 0; j < categoryProductsArray.length(); j++) {
                     JSONObject categoryProduct = categoryProductsArray.getJSONObject(j);

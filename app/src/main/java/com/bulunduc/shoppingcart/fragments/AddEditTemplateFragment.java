@@ -134,7 +134,7 @@ public class AddEditTemplateFragment extends DialogFragment {
         dialog.show();
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v -> {
             if (checkTemplatesFields()) {
-                mTemplateDialogClickListener.onTemplateAddClick(new Template(getTemplateTitle(), 0, mProducts),position);
+                mTemplateDialogClickListener.onTemplateAddClick(new Template(getTemplateTitle(),  mProducts),position);
                 AppUtilities.showToast(getActivity().getApplicationContext(), "Шаблон добавлен!"); //TODO описание получше
                 dialog.dismiss();
 

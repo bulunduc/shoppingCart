@@ -78,5 +78,7 @@
     <string name="add_template">Add template</string>
     <string name="add_to_cart_title">Добавить в корзину</string>
 
+    <string name="foundSimilarItemMessage">"Found this product: %s%n Count: %s%s%n Price: %s%n Are you sure add new product?%n"</string>
+
 
 </resources>
