@@ -11,7 +11,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -143,14 +142,14 @@ public class EditItemFragment extends DialogFragment {
     }
 
     private void initView(View view) {
-        etTitle = view.findViewById(R.id.etItemName);
-        etCount = view.findViewById(R.id.etItemMinCount);
+        etTitle = view.findViewById(R.id.et_edit_item_name);
+        etCount = view.findViewById(R.id.et_edit_item_count);
         etCount.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        spUnit = view.findViewById(R.id.spItemUnit);
-        etPrice = view.findViewById(R.id.etItemPrice);
+        spUnit = view.findViewById(R.id.sp_edit_item_unit);
+        etPrice = view.findViewById(R.id.et_edit_item_price);
         etPrice.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        spItemCategory = view.findViewById(R.id.spItemCategory);
-        etNewCategory = view.findViewById(R.id.etNewCategory);
+        spItemCategory = view.findViewById(R.id.sp_edit_item_category);
+        etNewCategory = view.findViewById(R.id.et_edit_new_category);
     }
 
     private void initFunctionality() {

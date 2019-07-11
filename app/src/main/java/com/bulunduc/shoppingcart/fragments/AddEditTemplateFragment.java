@@ -8,7 +8,6 @@ import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
@@ -40,7 +39,7 @@ public class AddEditTemplateFragment extends DialogFragment {
     private EditText etPrice;
     private Spinner spUnit;
     private Button btnAddProduct;
-    private int position = -1;
+    private int mPosition = AppConstants.INVALID_VALUE_IDENTIFIER;
     private TemplateDialogClickListener mTemplateDialogClickListener;
 
     public AddEditTemplateFragment() {
@@ -51,23 +50,23 @@ public class AddEditTemplateFragment extends DialogFragment {
         super.onCreate(savedInstanceState);
         Bundle args = getArguments();
         mContext = getActivity().getApplicationContext();
-        if (args != null){
+        if (args != null) {
             mTemplateTitle = args.getString(AppConstants.KEY_TEMPLATE_TITLE);
             mProducts = args.getParcelableArrayList(AppConstants.KEY_TEMPLATE_PRODUCT_LIST);
-            position = args.getInt(AppConstants.KEY_POSITION);
+            mPosition = args.getInt(AppConstants.KEY_POSITION);
         }
     }
 
 
     private void initView(View rootView) {
-        etTemplateTitle = rootView.findViewById(R.id.etTemplateTitle);
-        rvProductsList = rootView.findViewById(R.id.rvTemplProducts);
+        etTemplateTitle = rootView.findViewById(R.id.et_template_title);
+        rvProductsList = rootView.findViewById(R.id.rv_templ_products);
 
-        etTitle = rootView.findViewById(R.id.etTemplProdTitle);
-        etCount = rootView.findViewById(R.id.etTemplProdCount);
-        spUnit = rootView.findViewById(R.id.spTemplProdUnit);
-        etPrice = rootView.findViewById(R.id.etTemplProdPrice);
-        btnAddProduct = rootView.findViewById(R.id.btnTemplAddProduct);
+        etTitle = rootView.findViewById(R.id.et_templ_prod_title);
+        etCount = rootView.findViewById(R.id.et_templ_prod_count);
+        spUnit = rootView.findViewById(R.id.sp_templ_prod_unit);
+        etPrice = rootView.findViewById(R.id.et_templ_prod_price);
+        btnAddProduct = rootView.findViewById(R.id.btn_templ_add_product);
         etCount.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
         etPrice.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
     }
@@ -86,37 +85,32 @@ public class AddEditTemplateFragment extends DialogFragment {
                 etTitle.setText("");
                 etCount.setText("1");
                 etPrice.setText("100");
-            }
-            else {
+            } else {
                 AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields)); //TODO описание получше
             }
-
         });
     }
 
-    private Item getItemFromFields(){
+    private Item getItemFromFields() {
         String title = etTitle.getText().toString();
         Double count = Double.parseDouble(etCount.getText().toString());
         String unit = spUnit.getSelectedItem().toString();
         Double price = Double.parseDouble(etPrice.getText().toString());
-
-        Item item = new Item(title, count, unit, price);
-        Log.d(TAG, "getItemFromFields: " + item.toString());
-        return item;
+        return new Item(title, count, unit, price);
     }
-    private boolean checkProductList(){
-        if (!etTitle.getText().toString().isEmpty()
+
+    private boolean checkProductList() {
+        return !etTitle.getText().toString().isEmpty()
                 && !etCount.getText().toString().isEmpty()
-                && !etPrice.getText().toString().isEmpty()) return true;
-        return false;
-    }
-    private boolean checkTemplatesFields() {
-        if (!etTemplateTitle.getText().toString().isEmpty()
-                && mProducts.size() > 0) return true;
-        return false;
+                && !etPrice.getText().toString().isEmpty();
     }
 
-    private String getTemplateTitle(){
+    private boolean checkTemplatesFields() {
+        return !etTemplateTitle.getText().toString().isEmpty()
+                && mProducts.size() > 0;
+    }
+
+    private String getTemplateTitle() {
         return etTemplateTitle.getText().toString();
     }
 
@@ -134,8 +128,8 @@ public class AddEditTemplateFragment extends DialogFragment {
         dialog.show();
         dialog.getButton(DialogInterface.BUTTON_POSITIVE).setOnClickListener(v -> {
             if (checkTemplatesFields()) {
-                mTemplateDialogClickListener.onTemplateAddClick(new Template(getTemplateTitle(),  mProducts),position);
-                AppUtilities.showToast(getActivity().getApplicationContext(), "Шаблон добавлен!"); //TODO описание получше
+                mTemplateDialogClickListener.onTemplateAddClick(new Template(getTemplateTitle(), mProducts), mPosition);
+                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.added_template_message));
                 dialog.dismiss();
 
             } else {

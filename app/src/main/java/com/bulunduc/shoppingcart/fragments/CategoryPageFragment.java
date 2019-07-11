@@ -9,7 +9,6 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,16 +22,7 @@ import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.constants.Result;
 import com.bulunduc.shoppingcart.listeners.ItemRecyclerViewClickListener;
 import com.bulunduc.shoppingcart.models.Item;
-
 import java.util.ArrayList;
-
-import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_CATEGORIES;
-import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_CATEGORY;
-import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_COUNT;
-import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_NAME;
-import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_PRICE;
-import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_ITEM_UNIT;
-import static com.bulunduc.shoppingcart.constants.AppConstants.KEY_POSITION;
 
 public class CategoryPageFragment extends Fragment{
     private static final String TAG = "CategoryPageFragment";
@@ -54,16 +44,7 @@ public class CategoryPageFragment extends Fragment{
     private View mEmptyView;
     private ImageButton mDeleteCategory;
 
-    public static CategoryPageFragment newInstance(int page, ArrayList<String> categories, ArrayList<Item> products, String highlightText) {
-        Bundle args = new Bundle();
-        args.putInt(ARG_PAGE, page);
-        args.putStringArrayList(CATEGORIES, categories );
-        args.putParcelableArrayList(PRODUCTS, products);
-        args.putString(HIGHLIGHT, highlightText);
-        CategoryPageFragment fragment = new CategoryPageFragment();
-        fragment.setArguments(args);
-        return fragment;
-    }
+    public CategoryPageFragment(){}
 
     @Override public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,36 +71,31 @@ public class CategoryPageFragment extends Fragment{
         mRvProducts = view.findViewById(R.id.recycler_view);
         mRvProducts.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         mEmptyView = view.findViewById(R.id.empty_view);
-        mDeleteCategory = mEmptyView.findViewById(R.id.deleteCategory);
+        mDeleteCategory = mEmptyView.findViewById(R.id.btn_delete_category);
         mRvProducts.setEmptyView(mEmptyView);
     }
 
     private void initFunctionality(){
-        mDeleteCategory.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle(R.string.confirm_deleting)
-                        .setMessage(getString(R.string.confirm_deleting_category))
-                        .setIcon(R.mipmap.ic_launcher)
-                        .setPositiveButton(getString(R.string.ok), (dialog, id) -> {
-                            ((ItemCategoryActivity)getActivity()).deleteCurrentCategory();
-                            dialog.dismiss();
-                        })
-                        .setNegativeButton(getString(R.string.cancel), (dialog, id) -> {
-                            // Закрываем окно
-                            dialog.cancel();
-                        });
-                builder.show();
+        mDeleteCategory.setOnClickListener(v -> {
+            AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+            builder.setTitle(R.string.confirm_deleting)
+                    .setMessage(getString(R.string.confirm_deleting_category))
+                    .setIcon(R.mipmap.ic_launcher)
+                    .setPositiveButton(getString(R.string.ok), (dialog, id) -> {
+                        ((ItemCategoryActivity)getActivity()).deleteCurrentCategory();
+                        dialog.dismiss();
+                    })
+                    .setNegativeButton(getString(R.string.cancel), (dialog, id) -> {
+                        dialog.cancel();
+                    });
+            builder.show();
 
-            }
         });
 
         mAdapter = new ItemViewAdapter(getActivity(), mProducts, highlightString);
         mAdapter.setItemRecyclerViewClickListener(new ItemRecyclerViewClickListener() {
             @Override
             public void onItemClick(View view, int position) {
-
             }
 
             @Override
@@ -129,23 +105,20 @@ public class CategoryPageFragment extends Fragment{
             @Override
             public void onItemDoubleClick(int position) {
                 FragmentManager manager = getActivity().getSupportFragmentManager();
-                Log.d(TAG, "category(click): " + mCategories.get(mCategoryId));
                 Bundle args = new Bundle();
-                args.putString(KEY_ITEM_NAME, mProducts.get(position).getItemName());
-                args.putDouble(KEY_ITEM_COUNT, mProducts.get(position).getCount());
-                args.putString(KEY_ITEM_UNIT, mProducts.get(position).getCountUnit());
-                args.putDouble(KEY_ITEM_PRICE, mProducts.get(position).getPrice());
-                args.putInt(KEY_ITEM_CATEGORY, mCategoryId);
-                args.putStringArrayList(KEY_ITEM_CATEGORIES, mCategories);
-                args.putInt(KEY_POSITION, position);
-
+                args.putString(AppConstants.KEY_ITEM_NAME, mProducts.get(position).getItemName());
+                args.putDouble(AppConstants.KEY_ITEM_COUNT, mProducts.get(position).getCount());
+                args.putString(AppConstants.KEY_ITEM_UNIT, mProducts.get(position).getCountUnit());
+                args.putDouble(AppConstants.KEY_ITEM_PRICE, mProducts.get(position).getPrice());
+                args.putInt(AppConstants.KEY_ITEM_CATEGORY, mCategoryId);
+                args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, mCategories);
+                args.putInt(AppConstants.KEY_POSITION, position);
 
                 EditItemFragment editItemFragment = new EditItemFragment();
                 editItemFragment.setArguments(args);
                 editItemFragment.setTargetFragment(CategoryPageFragment.this, AppConstants.EDIT_ITEM_REQUEST_CODE);
                 editItemFragment.show(manager, AppConstants.KEY_DIALOG_FRAGMENT);
             }
-
         });
         mRvProducts.setAdapter(mAdapter);
     }
@@ -154,8 +127,7 @@ public class CategoryPageFragment extends Fragment{
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == AppConstants.EDIT_ITEM_REQUEST_CODE) {
-            int position = data.getIntExtra(KEY_POSITION, AppConstants.INVALID_VALUE_IDENTIFIER);
-            Log.d(TAG, "position: " + position);
+            int position = data.getIntExtra(AppConstants.KEY_POSITION, AppConstants.INVALID_VALUE_IDENTIFIER);
             String category = data.getStringExtra(AppConstants.KEY_ITEM_CATEGORY);
             if (resultCode == Result.OK.getCode()) {
                 Item item = data.getParcelableExtra(AppConstants.KEY_ITEM);

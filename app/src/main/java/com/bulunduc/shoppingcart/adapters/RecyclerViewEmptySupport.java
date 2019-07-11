@@ -23,7 +23,6 @@ public class RecyclerViewEmptySupport extends RecyclerView {
                     RecyclerViewEmptySupport.this.setVisibility(View.VISIBLE);
                 }
             }
-
         }
     };
 
@@ -42,11 +41,9 @@ public class RecyclerViewEmptySupport extends RecyclerView {
     @Override
     public void setAdapter(Adapter adapter) {
         super.setAdapter(adapter);
-
         if (adapter != null) {
             adapter.registerAdapterDataObserver(emptyObserver);
         }
-
         emptyObserver.onChanged();
     }
 

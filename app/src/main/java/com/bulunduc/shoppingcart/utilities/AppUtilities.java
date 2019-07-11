@@ -56,7 +56,6 @@ public class AppUtilities {
     }
 
     public static void addItemToProductList(Context context, String category, Item item) {
-        //todo setting(сделать галку - сохранять из корзины в списки или нет)
         HashMap<String, ArrayList<Item>> products = getProductList(context);
         if (!products.keySet().contains(category)) {
             products.put(category, new ArrayList<Item>());

@@ -25,12 +25,12 @@ import java.util.ArrayList;
 public class ShowTemplateProductsFragment extends DialogFragment {
 
     private static final String TAG = "ShowTemplateProductsFragment";
-    private static Context mContext;
-    RecyclerView rv;
-    TextView tvTemplateTitle;
-    ImageButton ibEditTemplate;
-    ImageButton ibDeleteTemplate;
-    TemplateProductsAdapter adapter;
+    private Context mContext;
+    private RecyclerView rv;
+    private TextView tvTemplateTitle;
+    private ImageButton ibEditTemplate;
+    private ImageButton ibDeleteTemplate;
+    private TemplateProductsAdapter adapter;
     private ArrayList<Item> mProducts = new ArrayList<>();
     private String mTitle = "";
     private TemplateDialogClickListener mTemplateDialogClickListener;
@@ -52,22 +52,22 @@ public class ShowTemplateProductsFragment extends DialogFragment {
     public Dialog onCreateDialog(Bundle savedInstanceState) {
         View rootView = LayoutInflater.from(getActivity()).inflate(R.layout.fragment_view_template, null);
         mTemplateDialogClickListener = (TemplateDialogClickListener) getActivity();
-        tvTemplateTitle = rootView.findViewById(R.id.tvTemplateTitle);
+        tvTemplateTitle = rootView.findViewById(R.id.tv_template_title);
         tvTemplateTitle.setText(mTitle);
-        ibEditTemplate = rootView.findViewById(R.id.ibEditTemplate);
+        ibEditTemplate = rootView.findViewById(R.id.ib_edit_template);
         ibEditTemplate.setOnClickListener(v->{
             Bundle args = getArguments();
             AddEditTemplateFragment fragment = new AddEditTemplateFragment();
             fragment.setArguments(args);
             fragment.show(getFragmentManager(), fragment.getTag());
         });
-        ibDeleteTemplate = rootView.findViewById(R.id.ibDeleteTemplate);
+        ibDeleteTemplate = rootView.findViewById(R.id.ib_delete_template);
         ibDeleteTemplate.setOnClickListener(v->{
             AppUtilities.showToast(mContext, "Шаблон удален");
             mTemplateDialogClickListener.onTemplateDeleteClick(getArguments().getInt(AppConstants.KEY_POSITION));
             dismiss();
         });
-        rv = rootView.findViewById(R.id.rvTemplateProducts);
+        rv = rootView.findViewById(R.id.rv_template_products);
         rv.setLayoutManager(new LinearLayoutManager(this.getActivity()));
 
         adapter = new TemplateProductsAdapter(this.getActivity(), mProducts);

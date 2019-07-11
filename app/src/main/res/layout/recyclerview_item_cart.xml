@@ -5,34 +5,34 @@
     android:layout_height="wrap_content"
     android:animateLayoutChanges="true"
     android:background="@color/backgroundColor"
-    android:id="@+id/cartContainer">
+    android:id="@+id/cart_container">
 
     <RelativeLayout
         android:id="@+id/main_container"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
         <TextView
-            android:id="@+id/cartItemName"
+            android:id="@+id/tv_cart_item_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentStart="true"
             android:layout_centerVertical="true"
-            android:text="Name(2кг)"
+            android:text=""
             android:layout_margin="8dp"
             android:layout_alignParentLeft="true" />
 
         <TextView
-            android:id="@+id/cartItemPrice"
+            android:id="@+id/tv_cart_item_price"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
             android:layout_centerVertical="true"
-            android:layout_toLeftOf="@id/cartItemIsChecked"
-            android:layout_toStartOf="@+id/cartItemIsChecked"
-            android:text="Price: 300р" />
+            android:layout_toLeftOf="@id/cb_cart_item_is_checked"
+            android:layout_toStartOf="@+id/cb_cart_item_is_checked"
+            android:text="" />
 
         <CheckBox
-            android:id="@+id/cartItemIsChecked"
+            android:id="@+id/cb_cart_item_is_checked"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="8dp"
@@ -49,41 +49,47 @@
         android:layout_marginLeft="16dp"
         android:layout_marginRight="8dp"
         android:layout_below="@id/main_container"
-        android:visibility="visible">
+        android:visibility="visible"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="16dp">
 
         <EditText
-            android:id="@+id/etCount"
+            android:id="@+id/et_cart_item_count"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:gravity="right"
             android:layout_marginLeft="24dp"
             android:layout_marginRight="8dp"
             android:hint="@string/field_count"
+            android:inputType="numberDecimal"
             android:singleLine="true"
             android:maxLines="1"
-            android:textSize="14sp" />
+            android:textSize="14sp"
+            android:importantForAutofill="no"
+            android:layout_marginStart="24dp"
+            android:layout_marginEnd="8dp" />
 
         <Spinner
-            android:id="@+id/spUnit"
+            android:id="@+id/sp_cart_item_unit"
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_toEndOf="@+id/etCount"
-            android:layout_toRightOf="@+id/etCount"
+            android:layout_toEndOf="@+id/et_cart_item_count"
+            android:layout_toRightOf="@+id/et_cart_item_count"
             android:entries="@array/units" />
 
         <EditText
-            android:id="@+id/etPrice"
+            android:id="@+id/et_cart_item_price"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
-            android:layout_toLeftOf="@id/btnSaveCartItem"
+            android:layout_toLeftOf="@id/btn_save_cart_item"
             android:hint="@string/field_price"
             android:textSize="14sp"
-            android:gravity="right"
+            android:gravity="end"
             android:maxLines="1"
-            android:layout_toStartOf="@id/btnSaveCartItem" />
+            android:layout_toStartOf="@id/btn_save_cart_item" />
         <ImageButton
-            android:id="@+id/btnSaveCartItem"
+            android:id="@+id/btn_save_cart_item"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="16dp"
@@ -92,6 +98,7 @@
             android:background="@color/backgroundColor"
             android:layout_centerVertical="true"
             android:layout_marginStart="16dp"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:contentDescription="save"/>
     </RelativeLayout>
 </RelativeLayout>

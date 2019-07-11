@@ -12,12 +12,13 @@ import android.widget.TextView;
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.models.Item;
 
+import java.text.MessageFormat;
 import java.util.ArrayList;
 
 public class AddTemplateProductsAdapter extends RecyclerView.Adapter<AddTemplateProductsAdapter.ViewHolder>{
     private static final String TAG = "AddTemplateProductsAdapter";
     private Activity mActivity;
-    private ArrayList<Item> mProducts = new ArrayList<>();
+    private ArrayList<Item> mProducts;
 
     public AddTemplateProductsAdapter(Activity activity, ArrayList<Item> products) {
         mActivity = activity;
@@ -41,20 +42,20 @@ public class AddTemplateProductsAdapter extends RecyclerView.Adapter<AddTemplate
         return mProducts.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvProductTitle;
         private CheckBox cbNeedToAdd;
 
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            tvProductTitle = itemView.findViewById(R.id.productTitle);
-            cbNeedToAdd = itemView.findViewById(R.id.needToAdd);
+            tvProductTitle = itemView.findViewById(R.id.product_title);
+            cbNeedToAdd = itemView.findViewById(R.id.need_to_add_item_to_cart);
             cbNeedToAdd.setVisibility(View.GONE);
         }
 
         void bind(Item item){
-            tvProductTitle.setText(item.getItemName() + " (" + item.getCount() + item.getCountUnit() + "/" + item.getCount()*item.getPrice() + ")");
+            tvProductTitle.setText(MessageFormat.format("{0} ({1}{2}/{3})", item.getItemName(), item.getCount(), item.getCountUnit(), item.getCount() * item.getPrice()));
         }
     }
 }

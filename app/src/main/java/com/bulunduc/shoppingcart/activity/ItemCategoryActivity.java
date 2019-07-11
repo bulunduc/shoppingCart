@@ -5,13 +5,11 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.TabLayout;
 
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -69,7 +67,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         if (savedInstanceState != null)
             savedCurrentTab = savedInstanceState.getInt(AppConstants.KEY_SAVED_TAB);
         else {
-            //проверяем что время еще не прошло
+            //проверяем что время сохранения вкладок еще не прошло
             if (AppPreference.getInstance(mContext).getLong(AppConstants.KEY_SAVING_TIME) + AppConstants.KEY_TIME >
                     System.currentTimeMillis()) {
                 savedCurrentTab = AppPreference.getInstance(mContext).getInt(AppConstants.KEY_SAVED_TAB);
@@ -88,11 +86,10 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
     public void initView() {
         setContentView(R.layout.activity_item_category_viewpager);
-        mViewPager = findViewById(R.id.cartContainer);
+        mViewPager = findViewById(R.id.cart_container);
         mTabLayout = findViewById(R.id.tabs);
         mSearchView = findViewById(R.id.search_view);
 
-        //TODO refactor observable code
         mObservable = Observable.create(emitter -> {
             MaterialSearchView.OnQueryTextListener listener = new MaterialSearchView.OnQueryTextListener() {
                 @Override
@@ -111,7 +108,6 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
             };
             mSearchView.setOnQueryTextListener(listener);
         });
-
         mObserver = new DisposableObserver<String>() {
             @Override
             public void onNext(String s) {
@@ -121,17 +117,15 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
                         for (Item item : mAllProducts.get(category)) {
                             if (item.getItemName().toLowerCase().contains(s.toLowerCase())) {
                                 if (!searchResults.containsKey(category)) {
-                                    searchResults.put(category, new ArrayList<Item>());
+                                    searchResults.put(category, new ArrayList<>());
                                 }
                                 searchResults.get(category).add(item);
-
                             }
                             updateViewPager(searchResults, AppConstants.ZERO_VALUE_IDENTIFIER, s.toLowerCase());
-
                         }
                     }
                     if (searchResults.isEmpty())
-                        AppUtilities.showToast(mContext, "Ничего не найдено");
+                        AppUtilities.showToast(mContext, getString(R.string.nothing_found));
                 } else {
                     updateViewPager(mAllProducts, AppConstants.ZERO_VALUE_IDENTIFIER, null);
                 }
@@ -147,46 +141,32 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
             }
         };
-
-
         mObservable.debounce(500, TimeUnit.MILLISECONDS)
-                .filter(text -> {
-                    if (text.isEmpty()) {
-                        return false;
-                    } else {
-                        return true;
-                    }
-                })
+                .filter(text -> !text.isEmpty())
                 .distinctUntilChanged()
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(mObserver);
-
         initToolbar(true);
         setToolbarTitle(getString(R.string.app_name));
-
         BottomNavigationView bottomNavigationView = findViewById(R.id.bottom_navigation);
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(0);
         menuItem.setChecked(true);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_lists:
-                        break;
-                    case R.id.action_templates:
-                        Intent intent1 = new Intent(ItemCategoryActivity.this, TemplatesActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.action_cart:
-                        Intent intent2 = new Intent(ItemCategoryActivity.this, CartActivity.class);
-                        startActivity(intent2);
-                        break;
-
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_lists:
+                    break;
+                case R.id.action_templates:
+                    Intent intent1 = new Intent(ItemCategoryActivity.this, TemplatesActivity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.action_cart:
+                    Intent intent2 = new Intent(ItemCategoryActivity.this, CartActivity.class);
+                    startActivity(intent2);
+                    break;
             }
+            return false;
         });
     }
 
@@ -194,12 +174,11 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         if (!newCategory.equals(oldCategory)) {
             mAllProducts.get(oldCategory).remove(position);
             if (!mAllProducts.keySet().contains(newCategory)) {
-                mAllProducts.put(newCategory, new ArrayList<Item>());
+                mAllProducts.put(newCategory, new ArrayList<>());
                 updateViewPager(mAllProducts, mAllProducts.size(), "");
             }
             mAllProducts.get(newCategory).add(model);
         } else {
-            Log.d(TAG, "updateProductLists: " + mAllProducts.get(oldCategory).get(0).getItemName());
             mAllProducts.get(oldCategory).set(position, model);
         }
     }
@@ -216,13 +195,12 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
     }
 
     public void addToCart(Item item) {
-        String category = getCategory(item);
-        //here was fixed setCount and ItemViewAdapter
+        String category = getCategoryByItem(item);
         AppUtilities.addItemAndReturnCartList(mContext, new CartItem(item, category, false));
         AppUtilities.showToast(mContext, getString(R.string.product_added_to_cart));
     }
 
-    private String getCategory(Item item) {
+    private String getCategoryByItem(Item item) {
         for (String s : mAllProducts.keySet()) {
             for (Item model : mAllProducts.get(s)) {
                 if (model.equals(item)) {
@@ -255,8 +233,6 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             AppUtilities.showToast(mContext, getString(R.string.will_be_soon));
             /*
@@ -267,14 +243,12 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         if (id == R.id.add_item) {
             try {
                 ArrayList<String> categories = AppUtilities.getCategories(mContext);
-
                 Bundle args = new Bundle();
                 args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
                 args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, mTabLayout.getSelectedTabPosition());
                 AddItemFragment fragment = new AddItemFragment();
                 fragment.setArguments(args);
                 fragment.show(getFragmentManager(), fragment.getTag());
-
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -285,7 +259,7 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
     @Override
     public void onItemAddClick(Item item, String category) {
         if (!mAllProducts.containsKey(category)) {
-            mAllProducts.put(category, new ArrayList<Item>());
+            mAllProducts.put(category, new ArrayList<>());
         }
         int position = findSimilarProductPosition(category, item);
         if (position < 0) {
@@ -295,22 +269,22 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
         } else {
             Item similarItem = mAllProducts.get(category).get(position);
             new AlertDialog.Builder(this)
-                    .setTitle("Найден похожий продукт")
+                    .setTitle(R.string.found_similar_item)
                     .setMessage(getString(R.string.foundSimilarItemMessage, similarItem.getItemName(),
                             String.valueOf(similarItem.getCount()), similarItem.getCountUnit(),
                             String.valueOf(similarItem.getPrice())))
                     .setIcon(android.R.drawable.ic_dialog_alert)
-                    .setPositiveButton("Да", (dialog, whichButton) -> {
+                    .setPositiveButton(getString(R.string.yes), (dialog, whichButton) -> {
                         mAllProducts.get(category).add(item);
                         AppUtilities.showToast(mContext, mContext.getResources().getString(R.string.added_to_list));
                         updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
                     })
-                    .setNeutralButton("Обновить текущий", (dialog, whichButton) -> {
+                    .setNeutralButton(getString(R.string.update_current), (dialog, whichButton) -> {
                         mAllProducts.get(category).set(position, item);
-                        AppUtilities.showToast(mContext, "Продукт обновлен");
+                        AppUtilities.showToast(mContext, getString(R.string.updated_item));
                         updateViewPager(mAllProducts, getTabPositionByCategory(category), null);
                     })
-                    .setNegativeButton("Нет", null).show();
+                    .setNegativeButton(getString(R.string.no), null).show();
         }
     }
 

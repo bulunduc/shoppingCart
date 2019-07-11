@@ -15,8 +15,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.activity.ItemCategoryActivity;
 import com.bulunduc.shoppingcart.constants.AppConstants;
@@ -34,6 +32,17 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
     private ArrayList<Item> mItems;
     private String mHighlight;
     private ItemRecyclerViewClickListener mItemRecyclerViewClickListener;
+
+    public ItemViewAdapter(Activity activity, ArrayList<Item> productList) {
+        mActivity = activity;
+        mItems = new ArrayList<>();
+        mItems = productList;
+        mHighlight = "";
+    }
+
+    public void setSearchHighlightString(String highlight) {
+        mHighlight = highlight;
+    }
 
     public ItemViewAdapter(Activity activity, ArrayList<Item> productList, String highlightString) {
         mActivity = activity;
@@ -127,7 +136,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
                         newCount = AppConstants.ZERO_DOUBLE_VALUE;
                     count.setText(Item.getStringFormatCount(newCount, item.getCountUnit()));
                 } catch (NumberFormatException e) {
-                    AppUtilities.showToast(mActivity, "Неверный формат!");
+                    AppUtilities.showToast(mActivity, mActivity.getString(R.string.incorrect_format));
                 }
             });
             count.addTextChangedListener(new TextWatcher() {
@@ -158,7 +167,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
                     Double newWeight = Double.parseDouble(count.getText().toString()) + item.getStepCount();
                     count.setText(Item.getStringFormatCount(newWeight, item.getCountUnit()));
                 } catch (NumberFormatException e) {
-                    AppUtilities.showToast(mActivity, "Неверный формат!");
+                    AppUtilities.showToast(mActivity, mActivity.getString(R.string.incorrect_format));
                 }
             });
             addToCart.setOnClickListener(null);
@@ -167,7 +176,7 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
                     if (Double.parseDouble(count.getText().toString()) != 0.0)
                         ((ItemCategoryActivity) mActivity).addToCart(new Item(item.getItemName(), Double.parseDouble(count.getText().toString()), item.getCountUnit(), item.getPrice()));
                 } catch (NumberFormatException e) {
-                    AppUtilities.showToast(mActivity, "Неверный формат!");
+                    AppUtilities.showToast(mActivity, mActivity.getString(R.string.incorrect_format));
                 }
             });
         }

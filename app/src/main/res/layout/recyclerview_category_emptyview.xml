@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <TextView
-        android:id="@+id/emptyList"
+        android:id="@+id/empty_list"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
@@ -21,12 +21,13 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:gravity="right"
+            android:gravity="end"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="16dp"
-            android:text="@string/delete_сategory"/>
+            android:text="@string/delete_сategory"
+            android:layout_marginStart="16dp" />
         <ImageButton
-            android:id="@+id/deleteCategory"
+            android:id="@+id/btn_delete_category"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:src="@drawable/ic_delete"

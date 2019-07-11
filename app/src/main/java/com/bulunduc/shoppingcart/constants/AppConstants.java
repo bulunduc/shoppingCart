@@ -41,6 +41,11 @@ public class AppConstants {
     public static final String JSON_KEY_TEMPLATES_TITLE = "title";
     public static final String JSON_KEY_TEMPLATES_IMAGE = "image_res";
 
+    public static final String ARG_PAGE = "ARG_PAGE";
+    public static final String CATEGORIES = "CATEGORIES";
+    public static final String PRODUCTS = "PRODUCTS";
+    public static final String HIGHLIGHT = "highlight";
+
 
     //weight constants
     public static final int WEIGHT_MIN_KG_L_PIECE_STEP = 1;

@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_add_view"
+    android:background="@drawable/background_add_view"
     android:orientation="vertical">
 
     <RelativeLayout
@@ -17,7 +17,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
             <TextView
-                android:id="@+id/layoutTitle"
+                android:id="@+id/layout_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -28,7 +28,7 @@
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvTemplateTitle"
+                android:id="@+id/tv_template_title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:gravity="center_vertical"
@@ -43,7 +43,7 @@
         </LinearLayout>
 
         <ImageButton
-            android:id="@+id/ibEditTemplate"
+            android:id="@+id/ib_edit_template"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
@@ -51,11 +51,11 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="2dp"
             android:background="@color/colorPrimary"
-            android:layout_toLeftOf="@id/ibDeleteTemplate"
+            android:layout_toLeftOf="@id/ib_delete_template"
             app:srcCompat="@drawable/ic_edit" />
 
         <ImageButton
-            android:id="@+id/ibDeleteTemplate"
+            android:id="@+id/ib_delete_template"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:layout_alignParentTop="true"
@@ -67,9 +67,8 @@
             app:srcCompat="@drawable/ic_delete" />
     </RelativeLayout>
 
-
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTemplateProducts"
+        android:id="@+id/rv_template_products"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="8dp" />

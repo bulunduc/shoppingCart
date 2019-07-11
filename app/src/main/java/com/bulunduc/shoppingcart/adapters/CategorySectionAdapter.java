@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.CheckBox;
-import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.RelativeLayout;
@@ -25,9 +24,9 @@ import io.github.luizgrp.sectionedrecyclerviewadapter.StatelessSection;
 
 
 public class CategorySectionAdapter extends StatelessSection {
-    String categoryTitle;
-    ArrayList<CartItem> cartList;
-    Context appContext;
+    private String mCategoryTitle;
+    private ArrayList<CartItem> mCartItems;
+    private Context mContext;
     private CartItemIsBuyedCheckListener mItemIsBuyedCheckListener;
 
     public CategorySectionAdapter(Context context, String title, ArrayList<CartItem> list, CartItemIsBuyedCheckListener listener) {
@@ -35,16 +34,15 @@ public class CategorySectionAdapter extends StatelessSection {
                 .itemResourceId(R.layout.recyclerview_item_cart)
                 .headerResourceId(R.layout.recyclerview_category_title_cart)
                 .build());
-
-        this.appContext = context;
-        this.categoryTitle = title;
-        this.cartList = list;
+        this.mContext = context;
+        this.mCategoryTitle = title;
+        this.mCartItems = list;
         this.mItemIsBuyedCheckListener = listener;
     }
 
     @Override
     public int getContentItemsTotal() {
-        return cartList.size();
+        return mCartItems.size();
     }
 
     @Override
@@ -57,21 +55,21 @@ public class CategorySectionAdapter extends StatelessSection {
     public void onBindItemViewHolder(RecyclerView.ViewHolder holder, int position) {
         final ItemViewHolder itemViewHolder = (ItemViewHolder) holder;
         itemViewHolder.expandView.setVisibility(View.GONE);
-        final CartItem item = cartList.get(position);
-        itemViewHolder.itemName.setText(String.format(appContext.getString(R.string.cart_product_title), item.getItem().getItemName(), item.getItem().getCount().toString(), item.getItem().getCountUnit()));
+        final CartItem item = mCartItems.get(position);
+        itemViewHolder.itemName.setText(String.format(mContext.getString(R.string.cart_product_title), item.getItem().getItemName(), item.getItem().getCount().toString(), item.getItem().getCountUnit()));
         itemViewHolder.itemPrice.setText(String.valueOf(item.getItem().getFinalPrice()));
         itemViewHolder.isItemChecked.setChecked(item.isBuyed());
-        itemViewHolder.itemContainer.setBackgroundColor(appContext.getResources().getColor(item.isBuyed() ? R.color.lightGray : R.color.backgroundColor));
+        itemViewHolder.itemContainer.setBackgroundColor(mContext.getResources().getColor(item.isBuyed() ? R.color.lightGray : R.color.backgroundColor));
         itemViewHolder.isItemChecked.setOnCheckedChangeListener((buttonView, isChecked) -> {
             item.setBuyed(isChecked);
-            itemViewHolder.itemContainer.setBackgroundColor(appContext.getResources().getColor(isChecked ? R.color.lightGray : R.color.backgroundColor));
+            itemViewHolder.itemContainer.setBackgroundColor(mContext.getResources().getColor(isChecked ? R.color.lightGray : R.color.backgroundColor));
             mItemIsBuyedCheckListener.onCheckBoxClicked(item, isChecked);
         });
 
         itemViewHolder.etCount.setText(String.valueOf(item.getItem().getCount()));
         itemViewHolder.etCount.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
 
-        final ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<CharSequence>(appContext, R.layout.spinner_item, appContext.getResources().getStringArray(R.array.units));
+        final ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(mContext, R.layout.spinner_item, mContext.getResources().getStringArray(R.array.units));
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         itemViewHolder.spUnit.setAdapter(spinnerAdapter);
         itemViewHolder.spUnit.setSelection(spinnerAdapter.getPosition(item.getItem().getCountUnit()));
@@ -82,15 +80,14 @@ public class CategorySectionAdapter extends StatelessSection {
             try {
                 Double count = Double.parseDouble(itemViewHolder.etCount.getText().toString());
                 Double price = Double.parseDouble(itemViewHolder.etPrice.getText().toString());
-
                 item.getItem().setCount(count);
                 item.getItem().setCountUnit(itemViewHolder.spUnit.getSelectedItem().toString());
                 item.getItem().setPrice(price);
-                itemViewHolder.itemName.setText(String.format(appContext.getString(R.string.cart_product_title), item.getItem().getItemName(), item.getItem().getCount().toString(), item.getItem().getCountUnit()));
+                itemViewHolder.itemName.setText(String.format(mContext.getString(R.string.cart_product_title), item.getItem().getItemName(), item.getItem().getCount().toString(), item.getItem().getCountUnit()));
                 itemViewHolder.itemPrice.setText(String.valueOf(item.getItem().getFinalPrice()));
 
             } catch (NumberFormatException e) {
-                AppUtilities.showToast(appContext, appContext.getString(R.string.check_fields));
+                AppUtilities.showToast(mContext, mContext.getString(R.string.check_fields));
             }
         });
     }
@@ -103,14 +100,14 @@ public class CategorySectionAdapter extends StatelessSection {
     @Override
     public void onBindHeaderViewHolder(RecyclerView.ViewHolder holder) {
         HeaderViewHolder headerViewHolder = (HeaderViewHolder) holder;
-        headerViewHolder.tvTitle.setText(categoryTitle);
+        headerViewHolder.tvTitle.setText(mCategoryTitle);
     }
 
     private class HeaderViewHolder extends RecyclerView.ViewHolder {
         private final TextView tvTitle;
         HeaderViewHolder(View view) {
             super(view);
-            tvTitle = view.findViewById(R.id.categoryTitle);
+            tvTitle = view.findViewById(R.id.category_title);
         }
     }
 
@@ -127,15 +124,15 @@ public class CategorySectionAdapter extends StatelessSection {
 
         ItemViewHolder(View view) {
             super(view);
-            itemName = itemView.findViewById(R.id.cartItemName);
-            itemPrice = itemView.findViewById(R.id.cartItemPrice);
-            isItemChecked = itemView.findViewById(R.id.cartItemIsChecked);
-            itemContainer = itemView.findViewById(R.id.cartContainer);
+            itemName = itemView.findViewById(R.id.tv_cart_item_name);
+            itemPrice = itemView.findViewById(R.id.tv_cart_item_price);
+            isItemChecked = itemView.findViewById(R.id.cb_cart_item_is_checked);
+            itemContainer = itemView.findViewById(R.id.cart_container);
             expandView = itemView.findViewById(R.id.expand_container);
-            etCount = itemView.findViewById(R.id.etCount);
-            spUnit = itemView.findViewById(R.id.spUnit);
-            etPrice = itemView.findViewById(R.id.etPrice);
-            btnSaveCartItem = itemView.findViewById(R.id.btnSaveCartItem);
+            etCount = itemView.findViewById(R.id.et_cart_item_count);
+            spUnit = itemView.findViewById(R.id.sp_cart_item_unit);
+            etPrice = itemView.findViewById(R.id.et_cart_item_price);
+            btnSaveCartItem = itemView.findViewById(R.id.btn_save_cart_item);
         }
     }
 
@@ -148,7 +145,6 @@ public class CategorySectionAdapter extends StatelessSection {
             } else if (someView.getVisibility() == View.VISIBLE) {
                 someView.setVisibility(View.GONE);
             }
-
         }
     }
 }

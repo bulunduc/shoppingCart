@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:focusableInTouchMode="true"
@@ -16,7 +15,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginRight="8dp"
         android:layout_marginBottom="8dp"
-        android:gravity="left"
+        android:gravity="start"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline8"
@@ -52,7 +51,9 @@
         app:layout_constraintEnd_toStartOf="@+id/item_unit"
         app:layout_constraintHorizontal_bias="1.0"
         app:layout_constraintStart_toEndOf="@+id/less_count"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:importantForAutofill="no"
+        android:layout_marginEnd="0dp" />
 
     <TextView
         android:id="@+id/unit_textview"
@@ -65,7 +66,8 @@
         android:text="kg"
         app:layout_constraintEnd_toStartOf="@id/more_count"
         app:layout_constraintStart_toEndOf="@id/item_count"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:paddingStart="0dp" />
 
     <Button
         android:id="@+id/less_count"
@@ -90,7 +92,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@+id/guideline9"
         app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toEndOf="@+id/price_textview_hint"
+        app:layout_constraintStart_toEndOf="@+id/tv_price_hint"
         app:layout_constraintTop_toBottomOf="@+id/item_count"
         app:layout_constraintVertical_bias="0.0" />
 
@@ -103,7 +105,8 @@
         android:src="@android:drawable/ic_input_add"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        android:contentDescription="@string/add_to_cart_title"/>
 
     <android.support.constraint.Guideline
         android:id="@+id/guideline8"
@@ -120,7 +123,7 @@
         app:layout_constraintGuide_begin="340dp" />
 
     <TextView
-        android:id="@+id/price_textview_hint"
+        android:id="@+id/tv_price_hint"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"

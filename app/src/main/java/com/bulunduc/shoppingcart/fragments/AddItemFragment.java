@@ -1,6 +1,5 @@
 package com.bulunduc.shoppingcart.fragments;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.DialogFragment;
@@ -87,15 +86,15 @@ public class AddItemFragment extends DialogFragment {
     }
 
     private void initView(View rootView) {
-        mTitleEditText = rootView.findViewById(R.id.itemName);
-        mCountEditText = rootView.findViewById(R.id.itemCount);
+        mTitleEditText = rootView.findViewById(R.id.et_item_name);
+        mCountEditText = rootView.findViewById(R.id.et_item_count);
         mCountEditText.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        mUnitSpinner = rootView.findViewById(R.id.itemUnit);
-        mPriceEditText = rootView.findViewById(R.id.itemPrice);
+        mUnitSpinner = rootView.findViewById(R.id.sp_item_unit);
+        mPriceEditText = rootView.findViewById(R.id.et_item_price);
         mPriceEditText.setFilters(new NumberInputFilter[]{new NumberInputFilter(6, 2)});
-        mCategorySpinner = rootView.findViewById(R.id.itemCategory);
-        mNewCategoryEditText = rootView.findViewById(R.id.itemNewCategory);
-        mAddItemImageButton = rootView.findViewById(R.id.addItemToCategory);
+        mCategorySpinner = rootView.findViewById(R.id.sp_item_category);
+        mNewCategoryEditText = rootView.findViewById(R.id.et_item_new_category);
+        mAddItemImageButton = rootView.findViewById(R.id.btn_add_item_to_category);
     }
 
     private void initFunctionality() {
@@ -148,6 +147,7 @@ public class AddItemFragment extends DialogFragment {
 
             }
         });
+
         final ArrayAdapter<String> unitAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, getActivity().getResources().getStringArray(R.array.units));
         unitAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mUnitSpinner.setAdapter(unitAdapter);

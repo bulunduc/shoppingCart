@@ -19,20 +19,20 @@
         android:gravity="left"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/secondRow"
+        app:layout_constraintEnd_toStartOf="@+id/second_row"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <LinearLayout
-        android:id="@+id/secondRow"
+        android:id="@+id/second_row"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="vertical"
         android:paddingTop="8dp"
-        app:layout_constraintEnd_toStartOf="@+id/linearLayout">
+        app:layout_constraintEnd_toStartOf="@+id/count_btn_layout">
 
         <LinearLayout
-            android:id="@+id/countLayout"
+            android:id="@+id/count_layout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
@@ -47,7 +47,9 @@
                 android:focusable="auto"
                 android:gravity="center"
                 android:inputType="numberDecimal"
-                android:textSize="14sp" />
+                android:textSize="14sp"
+                android:importantForAutofill="no"
+                android:layout_marginEnd="0dp" />
 
             <TextView
                 android:id="@+id/item_unit"
@@ -63,10 +65,10 @@
             android:layout_width="120dp"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            app:layout_constraintTop_toBottomOf="@+id/countLayout">
+            app:layout_constraintTop_toBottomOf="@+id/count_layout">
 
             <TextView
-                android:id="@+id/price_textview_hint"
+                android:id="@+id/tv_price_hint"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="8dp"
@@ -95,7 +97,7 @@
     </LinearLayout>
 
     <LinearLayout
-        android:id="@+id/linearLayout"
+        android:id="@+id/count_btn_layout"
         android:layout_width="wrap_content"
         android:layout_height="0dp"
         android:paddingBottom="8dp"

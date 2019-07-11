@@ -5,7 +5,7 @@
     android:id="@+id/bottomSheet"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg_add_view"
+    android:background="@drawable/background_add_view"
     android:orientation="vertical"
     app:behavior_hideable="true"
     app:behavior_peekHeight="300dp"
@@ -28,10 +28,11 @@
         android:text="@string/template_title"
         style="@style/TextViewEditFragmentStyle"
         android:layout_marginTop="8dp"
-        android:layout_marginLeft="16dp"/>
+        android:layout_marginLeft="16dp"
+        android:layout_marginStart="16dp" />
 
     <EditText
-        android:id="@+id/etTemplateTitle"
+        android:id="@+id/et_template_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginLeft="8dp"
@@ -49,7 +50,7 @@
         android:layout_marginStart="16dp" />
 
     <android.support.v7.widget.RecyclerView
-        android:id="@+id/rvTemplProducts"
+        android:id="@+id/rv_templ_products"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/bg_rv_boarding"
@@ -69,7 +70,7 @@
         android:layout_marginRight="8dp">
 
         <EditText
-            android:id="@+id/etTemplProdTitle"
+            android:id="@+id/et_templ_prod_title"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="wrap_content"
@@ -78,7 +79,7 @@
             android:hint="@string/title"
             />
         <EditText
-            android:id="@+id/etTemplProdCount"
+            android:id="@+id/et_templ_prod_count"
             android:layout_width="wrap_content"
             android:maxWidth="40dp"
             android:layout_height="wrap_content"
@@ -87,17 +88,18 @@
             android:inputType="numberDecimal"
             android:textAlignment="textEnd"
             android:text="1"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            android:importantForAutofill="no" />
 
         <Spinner
-            android:id="@+id/spTemplProdUnit"
+            android:id="@+id/sp_templ_prod_unit"
             android:layout_width="wrap_content"
             android:maxWidth="30dp"
             android:layout_height="wrap_content"
             android:layout_weight="0.1"
             android:entries="@array/units" />
         <EditText
-            android:id="@+id/etTemplProdPrice"
+            android:id="@+id/et_templ_prod_price"
             android:layout_width="wrap_content"
             android:maxWidth="40dp"
             android:layout_height="wrap_content"
@@ -106,11 +108,12 @@
             android:inputType="numberDecimal"
             android:textAlignment="textEnd"
             android:text="100"
-            android:layout_gravity="end" />
+            android:layout_gravity="end"
+            android:importantForAutofill="no" />
 
     </LinearLayout>
     <Button
-        android:id="@+id/btnTemplAddProduct"
+        android:id="@+id/btn_templ_add_product"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginTop="8dp"
@@ -118,6 +121,6 @@
         android:layout_marginBottom="8dp"
         android:textSize="12sp"
         android:text="@string/add_product"
-        />
+        android:layout_marginStart="8dp" />
 
 </LinearLayout>

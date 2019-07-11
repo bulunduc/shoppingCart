@@ -1,12 +1,12 @@
 package com.bulunduc.shoppingcart.activity;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -22,7 +22,7 @@ import java.util.ArrayList;
 public class TemplatesActivity extends BaseActivity implements TemplateDialogClickListener {
     private RecyclerView rvTemplates;
     private FloatingActionButton mFloatingActionButton;
-    private TemplateAdapter adapter = null;
+    private TemplateAdapter mTemplateAdapter = null;
     private ArrayList<Template> mTemplates;
 
     @Override
@@ -33,12 +33,12 @@ public class TemplatesActivity extends BaseActivity implements TemplateDialogCli
     }
 
     private void initView(){
-        rvTemplates = findViewById(R.id.rvTemplates);
+        rvTemplates = findViewById(R.id.rv_templates);
         rvTemplates.setLayoutManager(new GridLayoutManager(this, 2, GridLayoutManager.VERTICAL, false));
         mTemplates = AppUtilities.getTemplatesList(this.getApplicationContext());
-        adapter = new TemplateAdapter(this.getApplicationContext(), this, mTemplates);
-        rvTemplates.setAdapter(adapter);
-        mFloatingActionButton = findViewById(R.id.addFab);
+        mTemplateAdapter = new TemplateAdapter(this, mTemplates);
+        rvTemplates.setAdapter(mTemplateAdapter);
+        mFloatingActionButton = findViewById(R.id.fab_add_item);
         mFloatingActionButton.setOnClickListener(v -> {
             AddEditTemplateFragment fragment = new AddEditTemplateFragment();
             fragment.show(this.getFragmentManager(), fragment.getTag());
@@ -73,13 +73,19 @@ public class TemplatesActivity extends BaseActivity implements TemplateDialogCli
         } else {
             mTemplates.set(position, template);
         }
-        adapter.notifyDataSetChanged();
+        mTemplateAdapter.notifyDataSetChanged();
     }
 
     @Override
     public void onTemplateDeleteClick(int position) {
-        mTemplates.remove(position); //TODO add confirming dialog
-        adapter.notifyDataSetChanged();
+        new AlertDialog.Builder(this)
+                .setTitle(getString(R.string.confirm_template_delete_message, mTemplates.get(position).getTitle()))
+                .setIcon(android.R.drawable.ic_dialog_alert)
+                .setPositiveButton(getString(R.string.yes), (dialog, whichButton) -> {
+                    mTemplates.remove(position);
+                    mTemplateAdapter.notifyDataSetChanged();
+                })
+                .setNegativeButton(getString(R.string.no), null).show();
     }
 
     @Override
@@ -87,6 +93,4 @@ public class TemplatesActivity extends BaseActivity implements TemplateDialogCli
         super.onPause();
         AppUtilities.saveTemplatesList(getApplicationContext(), mTemplates);
     }
-
-
 }

@@ -1,10 +1,12 @@
 package com.bulunduc.shoppingcart.adapters;
 
+import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentStatePagerAdapter;
 
+import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.fragments.CategoryPageFragment;
 import com.bulunduc.shoppingcart.models.Item;
 
@@ -29,7 +31,14 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
 
     @Override
     public Fragment getItem(int position) {
-        return CategoryPageFragment.newInstance(position + 1, categories, allProducts.get(categories.get(position)), highlightText);
+        Bundle args = new Bundle();
+        args.putInt(AppConstants.ARG_PAGE, position + 1);
+        args.putStringArrayList(AppConstants.CATEGORIES, categories );
+        args.putParcelableArrayList(AppConstants.PRODUCTS, allProducts.get(categories.get(position)));
+        args.putString(AppConstants.HIGHLIGHT, highlightText);
+        CategoryPageFragment fragment = new CategoryPageFragment();
+        fragment.setArguments(args);
+        return fragment;
     }
 
     @Override

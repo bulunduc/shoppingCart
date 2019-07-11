@@ -17,7 +17,7 @@ import java.util.ArrayList;
 public class TemplateProductsAdapter extends RecyclerView.Adapter<TemplateProductsAdapter.ViewHolder>{
     private static final String TAG = "TemplateAdapter";
     private Activity mActivity;
-    private ArrayList<Item> mProducts = new ArrayList<>();
+    private ArrayList<Item> mProducts;
     private ArrayList<Item> mProductsForCart = new ArrayList<>();
 
     public TemplateProductsAdapter(Activity activity, ArrayList<Item> products) {
@@ -46,15 +46,15 @@ public class TemplateProductsAdapter extends RecyclerView.Adapter<TemplateProduc
     public ArrayList<Item> getCheckedProductList(){
         return mProductsForCart;
     }
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvProductTitle;
         private CheckBox cbNeedToAdd;
 
 
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            tvProductTitle = itemView.findViewById(R.id.productTitle);
-            cbNeedToAdd = itemView.findViewById(R.id.needToAdd);
+            tvProductTitle = itemView.findViewById(R.id.product_title);
+            cbNeedToAdd = itemView.findViewById(R.id.need_to_add_item_to_cart);
         }
 
         void bind(Item item){

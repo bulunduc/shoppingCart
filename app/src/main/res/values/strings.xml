@@ -79,6 +79,15 @@
     <string name="add_to_cart_title">Добавить в корзину</string>
 
     <string name="foundSimilarItemMessage">"Found this product: %s%n Count: %s%s%n Price: %s%n Are you sure add new product?%n"</string>
+    <string name="nothing_found">Ничего не найдено</string>
+    <string name="found_similar_item">Найден похожий продукт</string>
+    <string name="yes">Да</string>
+    <string name="update_current">Обновить текущий</string>
+    <string name="no">Нет</string>
+    <string name="updated_item">Продукт обновлен</string>
+    <string name="confirm_template_delete_message">Вы правда хотите удалить шаблон: %s?</string>
+    <string name="incorrect_format">Неверный формат!</string>
+    <string name="added_template_message">Шаблон добавлен!</string>
 
 
 </resources>

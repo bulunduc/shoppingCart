@@ -19,12 +19,10 @@ import java.util.ArrayList;
 public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHolder> {
     private static final String TAG = "TemplateAdapter";
     private Activity mActivity;
-    private Context mContext;
     private ArrayList<Template> mTemplates;
 
-    public TemplateAdapter(Context applicationContext, Activity activity, ArrayList<Template> templates) {
+    public TemplateAdapter(Activity activity, ArrayList<Template> templates) {
         mActivity = activity;
-        mContext = applicationContext;
         mTemplates = templates;
     }
 
@@ -54,18 +52,16 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
         return mTemplates.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder {
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tvTemplateTitle;
 
-
-        public ViewHolder(View itemView) {
+        ViewHolder(View itemView) {
             super(itemView);
-            tvTemplateTitle = itemView.findViewById(R.id.tvTemplateTitle);
+            tvTemplateTitle = itemView.findViewById(R.id.tv_template_title);
         }
 
         void bind(Template template){
             tvTemplateTitle.setText(template.getTitle());
-
         }
     }
 

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
 import android.os.Parcelable;
-import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.design.widget.FloatingActionButton;
 
@@ -37,21 +36,20 @@ import java.util.TreeSet;
 import io.github.luizgrp.sectionedrecyclerviewadapter.SectionedRecyclerViewAdapter;
 
 public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckListener, View.OnClickListener, AddItemDialogClickListener {
-
     private static final String TAG = "CartActivity";
     private Activity mActivity;
     private Context mContext;
     private ArrayList<CartItem> mCartItemList;
     private ArrayList<CartItem> mCartCheckedItemList;
-    private SectionedRecyclerViewAdapter sectionAdapter;
-    private Double totalPrice;
-    private Double checkedItemsPrice;
+    private Double mTotalPrice;
+    private Double mCheckedItemsPrice;
+
+    private SectionedRecyclerViewAdapter mSectionAdapter;
 
     private RecyclerView rvCart;
-    private TextView emptyView;
+    private TextView tvEmptyView;
     private TextView tvTotalPrice;
-    private TextView tvcheckedItemsPrice;
-
+    private TextView tvCheckedItemsPrice;
     private FloatingActionButton fabAddItem;
 
     @Override
@@ -65,23 +63,23 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         mActivity = CartActivity.this;
         mContext = mActivity.getApplicationContext();
         mCartCheckedItemList = new ArrayList<>();
-        loadData();
-        sectionAdapter = new SectionedRecyclerViewAdapter();
+        loadCartItemsData();
+        mSectionAdapter = new SectionedRecyclerViewAdapter();
     }
 
-    private void zeroPriceValues() {
-        totalPrice = new Double(0.0);
-        checkedItemsPrice = new Double(0.0);
+    private void loadCartItemsData() {
+        mCartItemList = AppUtilities.getCartList(mContext);
+        updatePriceValues();
     }
 
     public void initView() {
         setContentView(R.layout.activity_cart);
         rvCart = findViewById(R.id.recycler_view_cart);
-        emptyView = findViewById(R.id.empty_view);
+        tvEmptyView = findViewById(R.id.empty_view);
         showRecyclerView();
         rvCart.setLayoutManager(new LinearLayoutManager(mContext, LinearLayoutManager.VERTICAL, false));
         initSectionAdapter();
-        rvCart.setAdapter(sectionAdapter);
+        rvCart.setAdapter(mSectionAdapter);
 
         initToolbar(true);
         setToolbarTitle(getString(R.string.cart));
@@ -90,44 +88,39 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         Menu menu = bottomNavigationView.getMenu();
         MenuItem menuItem = menu.getItem(2);
         menuItem.setChecked(true);
-        bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.action_cart:
-                        break;
-                    case R.id.action_templates:
-                        Intent intent1 = new Intent(CartActivity.this, TemplatesActivity.class);
-                        startActivity(intent1);
-                        break;
-                    case R.id.action_lists:
-                        Intent intent2 = new Intent(CartActivity.this, ItemCategoryActivity.class);
-                        startActivity(intent2);
-                        break;
-
-                }
-                return false;
+        bottomNavigationView.setOnNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.action_cart:
+                    break;
+                case R.id.action_templates:
+                    Intent intent1 = new Intent(CartActivity.this, TemplatesActivity.class);
+                    startActivity(intent1);
+                    break;
+                case R.id.action_lists:
+                    Intent intent2 = new Intent(CartActivity.this, ItemCategoryActivity.class);
+                    startActivity(intent2);
+                    break;
             }
+            return false;
         });
 
-        tvTotalPrice = findViewById(R.id.totalPrice);
-        tvcheckedItemsPrice = findViewById(R.id.checkedItemsPrice);
+        tvTotalPrice = findViewById(R.id.total_price);
+        tvCheckedItemsPrice = findViewById(R.id.checked_items_price);
         updatePriceTextView();
 
-        fabAddItem = findViewById(R.id.addFab);
+        fabAddItem = findViewById(R.id.fab_add_item);
         fabAddItem.setOnClickListener(this);
     }
 
     private void showRecyclerView() {
         if (mCartItemList.isEmpty()) {
             rvCart.setVisibility(View.GONE);
-            emptyView.setVisibility(View.VISIBLE);
+            tvEmptyView.setVisibility(View.VISIBLE);
         } else {
             rvCart.setVisibility(View.VISIBLE);
-            emptyView.setVisibility(View.GONE);
+            tvEmptyView.setVisibility(View.GONE);
         }
     }
-
 
     private ArrayList<CartItem> getCartItemsByCategory(String category) {
         ArrayList<CartItem> cartItems = new ArrayList<>();
@@ -136,7 +129,8 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
                 //sum analog items
                 if (cartItems.contains(cartItemModel)) {
                     int position = cartItems.indexOf(cartItemModel);
-                    cartItems.get(position).getItem().addCount(cartItemModel.getItem().getCount(), cartItemModel.getItem().getCountUnit());
+                    cartItems.get(position).getItem()
+                            .addCount(cartItemModel.getItem().getCount(), cartItemModel.getItem().getCountUnit());
                 } else {
                     cartItems.add(cartItemModel);
                 }
@@ -146,10 +140,6 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         return cartItems;
     }
 
-    private void loadData() {
-        mCartItemList = AppUtilities.getCartList(mContext);
-        updatePriceValues();
-    }
 
     private void updateAndWriteData() {
         AppUtilities.saveCartList(mContext, mCartItemList);
@@ -161,14 +151,14 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
 
     //-------------SECTION_ADAPTER----------------//
     private void updateSectionAdapter() {
-        sectionAdapter.removeAllSections();
+        mSectionAdapter.removeAllSections();
         initSectionAdapter();
 
     }
 
     private void initSectionAdapter() {
         for (String category : getCategories()) {
-            sectionAdapter.addSection(new CategorySectionAdapter(mContext, category, getCartItemsByCategory(category), CartActivity.this));
+            mSectionAdapter.addSection(new CategorySectionAdapter(mContext, category, getCartItemsByCategory(category), CartActivity.this));
         }
     }
 
@@ -180,7 +170,7 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         return categories;
     }
 
-    //---------------PRICE---------------------//
+    //---------------PRICE METHODS---------------------//
     private void updatePrice() {
         updatePriceValues();
         updatePriceTextView();
@@ -189,19 +179,25 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
     private void updatePriceValues() {
         zeroPriceValues();
         for (CartItem cartItem : mCartItemList) {
-            totalPrice = totalPrice + cartItem.getItem().getFinalPrice();
+            mTotalPrice = mTotalPrice + cartItem.getItem().getFinalPrice();
             if (cartItem.isBuyed()) {
-                checkedItemsPrice = checkedItemsPrice + cartItem.getItem().getFinalPrice();
+                mCheckedItemsPrice = mCheckedItemsPrice + cartItem.getItem().getFinalPrice();
             }
 
         }
     }
 
     private void updatePriceTextView() {
-        tvTotalPrice.setText(totalPrice.toString());
-        tvcheckedItemsPrice.setText(checkedItemsPrice.toString());
+        tvTotalPrice.setText(mTotalPrice.toString());
+        tvCheckedItemsPrice.setText(mCheckedItemsPrice.toString());
     }
 
+    private void zeroPriceValues() {
+        mTotalPrice = Double.valueOf(0.0);
+        mCheckedItemsPrice = Double.valueOf(0.0);
+    }
+
+    //------------------------------------------------//
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -214,12 +210,10 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
             case R.id.action_share:
-                List<Intent> targetShareIntents = new ArrayList<Intent>();
-
+                List<Intent> targetShareIntents = new ArrayList<>();
                 Intent sendIntent = new Intent();
                 sendIntent.setAction(Intent.ACTION_SEND);
                 sendIntent.setType("text/plain");
-
                 List<ResolveInfo> resInfos = getPackageManager().queryIntentActivities(sendIntent, 0);
                 if (!resInfos.isEmpty()) {
                     for (ResolveInfo resInfo : resInfos) {
@@ -255,7 +249,7 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
                 break;
             case R.id.action_deleteChecked:
                 mCartItemList.removeAll(mCartCheckedItemList);
-                sectionAdapter.notifyDataSetChanged();
+                mSectionAdapter.notifyDataSetChanged();
                 updateAndWriteData();
                 break;
             case R.id.action_settings:
@@ -269,7 +263,6 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
         return super.onOptionsItemSelected(item);
 
     }
-
 
     private String cartListToSms() {
         StringBuilder sms = new StringBuilder();
@@ -309,7 +302,7 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
     @Override
     protected void onResume() {
         super.onResume();
-        if (sectionAdapter != null) {
+        if (mSectionAdapter != null) {
             updateSectionAdapter();
         }
     }
@@ -322,7 +315,7 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
 
     @Override
     public void onClick(View v) {
-        if (v.getId() == R.id.addFab) {
+        if (v.getId() == R.id.fab_add_item) {
             ArrayList<String> categories = AppUtilities.getCategories(mContext);
             Bundle args = new Bundle();
             args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
@@ -330,8 +323,6 @@ public class CartActivity extends BaseActivity implements CartItemIsBuyedCheckLi
             AddItemFragment fragment = new AddItemFragment();
             fragment.setArguments(args);
             fragment.show(getFragmentManager(), fragment.getTag());
-
-
         }
     }
 
