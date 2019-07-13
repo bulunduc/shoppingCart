@@ -76,18 +76,20 @@
     <string name="weight">Count</string>
     <string name="price">Price(1th)</string>
     <string name="add_template">Add template</string>
-    <string name="add_to_cart_title">Добавить в корзину</string>
+    <string name="add_to_cart_title">Add to cart</string>
 
     <string name="foundSimilarItemMessage">"Found this product: %s%n Count: %s%s%n Price: %s%n Are you sure add new product?%n"</string>
-    <string name="nothing_found">Ничего не найдено</string>
-    <string name="found_similar_item">Найден похожий продукт</string>
-    <string name="yes">Да</string>
-    <string name="update_current">Обновить текущий</string>
-    <string name="no">Нет</string>
-    <string name="updated_item">Продукт обновлен</string>
-    <string name="confirm_template_delete_message">Вы правда хотите удалить шаблон: %s?</string>
-    <string name="incorrect_format">Неверный формат!</string>
-    <string name="added_template_message">Шаблон добавлен!</string>
+    <string name="nothing_found">Nothing found</string>
+    <string name="found_similar_item">Found similar product</string>
+    <string name="yes">Yes</string>
+    <string name="update_current">Update current</string>
+    <string name="no">No</string>
+    <string name="updated_item">Product is updated</string>
+    <string name="confirm_template_delete_message">Are you sure delete template: %s?</string>
+    <string name="incorrect_format">Wrong format!</string>
+    <string name="added_template_message">Template is added!</string>
+    <string name="action_save">save</string>
+    <string name="action_set_category_order">Настроить категории</string>
 
 
 </resources>

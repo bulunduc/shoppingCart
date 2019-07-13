@@ -9,6 +9,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,6 +21,7 @@ import com.bulunduc.shoppingcart.adapters.ItemViewAdapter;
 import com.bulunduc.shoppingcart.adapters.RecyclerViewEmptySupport;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.constants.Result;
+import com.bulunduc.shoppingcart.helpers.SimpleItemTouchHelperCallback;
 import com.bulunduc.shoppingcart.listeners.ItemRecyclerViewClickListener;
 import com.bulunduc.shoppingcart.models.Item;
 import java.util.ArrayList;
@@ -121,6 +123,11 @@ public class CategoryPageFragment extends Fragment{
             }
         });
         mRvProducts.setAdapter(mAdapter);
+
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(mAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(mRvProducts);
     }
 
     @Override

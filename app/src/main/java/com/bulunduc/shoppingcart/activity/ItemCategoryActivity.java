@@ -13,6 +13,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.ViewPagerAdapter;
@@ -37,6 +38,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 
 public class ItemCategoryActivity extends BaseActivity implements AddItemDialogClickListener {
     private static final String TAG = "ItemCategoryActivity";
+    private static final int REQUEST_CODE = 100;
     private Activity mActivity;
     private Context mContext;
     private ViewPager mViewPager;
@@ -232,28 +234,50 @@ public class ItemCategoryActivity extends BaseActivity implements AddItemDialogC
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            AppUtilities.showToast(mContext, getString(R.string.will_be_soon));
-            /*
-            Intent intent = new Intent(ItemCategoryActivity.this, SettingsActivity.class);
-            startActivity(intent);
-            */
-        }
-        if (id == R.id.add_item) {
-            try {
-                ArrayList<String> categories = AppUtilities.getCategories(mContext);
-                Bundle args = new Bundle();
-                args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
-                args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, mTabLayout.getSelectedTabPosition());
-                AddItemFragment fragment = new AddItemFragment();
-                fragment.setArguments(args);
-                fragment.show(getFragmentManager(), fragment.getTag());
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        switch (item.getItemId()) {
+            case R.id.action_settings:
+                //AppUtilities.showToast(mContext, getString(R.string.will_be_soon));
+                /*
+                Intent intent = new Intent(ItemCategoryActivity.this, SettingsActivity.class);
+                startActivity(intent);
+                */
+                break;
+            case R.id.action_set_category_order:
+                Intent intent = new Intent(ItemCategoryActivity.this, EditCategoriesActiviry.class);
+                intent.putExtra(AppConstants.CATEGORIES, AppUtilities.getCategories(mContext));
+                startActivityForResult(intent, REQUEST_CODE);
+                break;
+            case R.id.add_item:
+                try {
+                    ArrayList<String> categories = AppUtilities.getCategories(mContext);
+                    Bundle args = new Bundle();
+                    args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, categories);
+                    args.putInt(AppConstants.KEY_ITEM_CATEGORY_POSITION, mTabLayout.getSelectedTabPosition());
+                    AddItemFragment fragment = new AddItemFragment();
+                    fragment.setArguments(args);
+                    fragment.show(getFragmentManager(), fragment.getTag());
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (data == null) {
+            return;
+        }
+        ArrayList<String> categories = data.getStringArrayListExtra(AppConstants.CATEGORIES);
+        LinkedHashMap<String, ArrayList<Item>> products = new LinkedHashMap<>();
+        for (String category : categories) {
+            products.put(category, mAllProducts.get(category));
+        }
+        mAllProducts = products;
+        updateViewPager(mAllProducts, 1, null);
+
+        AppUtilities.saveProductList(mContext, mAllProducts);
     }
 
     @Override

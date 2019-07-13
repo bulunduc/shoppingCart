@@ -19,14 +19,17 @@ import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.activity.ItemCategoryActivity;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.filters.NumberInputFilter;
+import com.bulunduc.shoppingcart.helpers.ItemTouchHelperAdapter;
+import com.bulunduc.shoppingcart.helpers.ItemTouchHelperViewHolder;
 import com.bulunduc.shoppingcart.listeners.ItemRecyclerViewClickListener;
 import com.bulunduc.shoppingcart.models.Item;
 import com.bulunduc.shoppingcart.utilities.AppUtilities;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 
-public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHolder> {
+public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHolder> implements ItemTouchHelperAdapter {
     private static final String TAG = "ItemViewAdapter";
     private Activity mActivity;
     private ArrayList<Item> mItems;
@@ -73,8 +76,26 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
         this.mItemRecyclerViewClickListener = itemRecyclerViewClickListener;
     }
 
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mItems, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mItems, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;        }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public void onItemDismiss(int position) {
+
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
         TextView title;
         Button lessCount;
         EditText count;
@@ -179,6 +200,16 @@ public class ItemViewAdapter extends RecyclerView.Adapter<ItemViewAdapter.ViewHo
                     AppUtilities.showToast(mActivity, mActivity.getString(R.string.incorrect_format));
                 }
             });
+        }
+
+        @Override
+        public void onItemSelected() {
+            itemView.setBackgroundResource(R.color.lightGray);
+        }
+
+        @Override
+        public void onItemClear() {
+            itemView.setBackgroundResource(R.color.backgroundColor);
         }
     }
 

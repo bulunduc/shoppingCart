@@ -7,12 +7,14 @@ import android.support.design.widget.FloatingActionButton;
 import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateAdapter;
 import com.bulunduc.shoppingcart.fragments.AddEditTemplateFragment;
+import com.bulunduc.shoppingcart.helpers.SimpleItemTouchHelperCallback;
 import com.bulunduc.shoppingcart.listeners.TemplateDialogClickListener;
 import com.bulunduc.shoppingcart.models.Template;
 import com.bulunduc.shoppingcart.utilities.AppUtilities;
@@ -38,6 +40,12 @@ public class TemplatesActivity extends BaseActivity implements TemplateDialogCli
         mTemplates = AppUtilities.getTemplatesList(this.getApplicationContext());
         mTemplateAdapter = new TemplateAdapter(this, mTemplates);
         rvTemplates.setAdapter(mTemplateAdapter);
+
+        ItemTouchHelper.Callback callback =
+                new SimpleItemTouchHelperCallback(mTemplateAdapter);
+        ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
+        touchHelper.attachToRecyclerView(rvTemplates);
+
         mFloatingActionButton = findViewById(R.id.fab_add_item);
         mFloatingActionButton.setOnClickListener(v -> {
             AddEditTemplateFragment fragment = new AddEditTemplateFragment();

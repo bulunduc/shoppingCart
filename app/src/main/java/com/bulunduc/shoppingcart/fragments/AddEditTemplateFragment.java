@@ -86,7 +86,7 @@ public class AddEditTemplateFragment extends DialogFragment {
                 etCount.setText("1");
                 etPrice.setText("100");
             } else {
-                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields)); //TODO описание получше
+                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields));
             }
         });
     }
@@ -133,8 +133,7 @@ public class AddEditTemplateFragment extends DialogFragment {
                 dialog.dismiss();
 
             } else {
-                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields)); //TODO описание получше
-            }
+                AppUtilities.showToast(getActivity().getApplicationContext(), getString(R.string.check_fields));             }
         });
         return dialog;
     }

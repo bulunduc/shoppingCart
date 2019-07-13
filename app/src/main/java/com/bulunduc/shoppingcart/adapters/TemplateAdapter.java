@@ -13,10 +13,13 @@ import android.widget.TextView;
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.constants.AppConstants;
 import com.bulunduc.shoppingcart.fragments.ShowTemplateProductsFragment;
+import com.bulunduc.shoppingcart.helpers.ItemTouchHelperAdapter;
+import com.bulunduc.shoppingcart.helpers.ItemTouchHelperViewHolder;
 import com.bulunduc.shoppingcart.models.Template;
 import java.util.ArrayList;
+import java.util.Collections;
 
-public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHolder> {
+public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHolder>  implements ItemTouchHelperAdapter {
     private static final String TAG = "TemplateAdapter";
     private Activity mActivity;
     private ArrayList<Template> mTemplates;
@@ -52,7 +55,27 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
         return mTemplates.size();
     }
 
-    class ViewHolder extends RecyclerView.ViewHolder {
+    @Override
+    public boolean onItemMove(int fromPosition, int toPosition) {
+        if (fromPosition < toPosition) {
+            for (int i = fromPosition; i < toPosition; i++) {
+                Collections.swap(mTemplates, i, i + 1);
+            }
+        } else {
+            for (int i = fromPosition; i > toPosition; i--) {
+                Collections.swap(mTemplates, i, i - 1);
+            }
+        }
+        notifyItemMoved(fromPosition, toPosition);
+        return true;
+    }
+
+    @Override
+    public void onItemDismiss(int position) {
+
+    }
+
+    class ViewHolder extends RecyclerView.ViewHolder implements ItemTouchHelperViewHolder {
         private TextView tvTemplateTitle;
 
         ViewHolder(View itemView) {
@@ -62,6 +85,16 @@ public class TemplateAdapter extends RecyclerView.Adapter<TemplateAdapter.ViewHo
 
         void bind(Template template){
             tvTemplateTitle.setText(template.getTitle());
+        }
+
+        @Override
+        public void onItemSelected() {
+            itemView.setBackgroundResource(R.color.lightGrayAccent);
+        }
+
+        @Override
+        public void onItemClear() {
+            itemView.setBackgroundResource(R.drawable.bg_activity);
         }
     }
 

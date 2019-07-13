@@ -24,7 +24,6 @@ public class ViewPagerAdapter extends FragmentStatePagerAdapter {
         super(fm);
         categories = new ArrayList<>();
         categories.addAll(products.keySet());
-        Collections.sort(categories);
         allProducts = products;
         highlightText = highlight != null ? highlight : "";
     }

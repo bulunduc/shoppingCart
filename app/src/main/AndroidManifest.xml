@@ -24,8 +24,7 @@
         </activity>
         <activity
             android:name=".activity.CartActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
         <activity android:name=".activity.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -35,8 +34,8 @@
         </activity>
         <activity
             android:name=".activity.TemplatesActivity"
-            android:screenOrientation="portrait"
-            />
+            android:screenOrientation="portrait" />
+        <activity android:name=".activity.EditCategoriesActiviry"></activity>
     </application>
 
 </manifest>

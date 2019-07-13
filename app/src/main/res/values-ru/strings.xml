@@ -60,7 +60,7 @@
     <string name="category">Категория</string>
     <string name="will_be_soon">Совсем скоро запрашиваемый функционал будет реализован…</string>
     <string name="templates">Шаблоны</string>
-    <string name="check_fields">Проверьте поля!</string>
+    <string name="check_fields">Некоторые поля остались незаполненными!</string>
     <string name="choose_app">Выберите приложение для отправки:</string>
 
     <string name="added_to_list">Продукт добавлен в списки</string>
@@ -94,5 +94,7 @@
     <string name="confirm_template_delete_message">Вы правда хотите удалить шаблон: %s?</string>
     <string name="incorrect_format">Неверный формат!</string>
     <string name="added_template_message">Шаблон добавлен!</string>
+    <string name="action_save">save</string>
+    <string name="action_set_category_order">Настроить категории</string>
 
 </resources>
