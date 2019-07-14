@@ -11,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v4.app.DialogFragment;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.AdapterView;
@@ -44,10 +45,11 @@ public class EditItemFragment extends DialogFragment {
     private String mItemName, mUnit, mNewCategory;
     private Double mMinCount, mPrice;
     private ArrayList<String> mCategories;
-    private int mCategoryPosition;
+    private String mCategory;
     private int mPosition;
 
     public EditItemFragment() {
+        mCategories = new ArrayList<>();
     }
 
     private void initItemModelFields() throws EmptyTextException, InvalidCountException, InvalidPriceException {
@@ -85,7 +87,7 @@ public class EditItemFragment extends DialogFragment {
                 })
                 .setNeutralButton(R.string.delete, (dialog, which) -> {
                     Intent intent = new Intent();
-                    intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mCategories.get(mCategoryPosition));
+                    intent.putExtra(AppConstants.KEY_ITEM_CATEGORY, mCategory);
                     intent.putExtra(AppConstants.KEY_POSITION, mPosition);
                     getTargetFragment().onActivityResult(getTargetRequestCode(), Result.DELETE.getCode(), intent);
                 })
@@ -134,9 +136,9 @@ public class EditItemFragment extends DialogFragment {
             mMinCount = bundle.getDouble(AppConstants.KEY_ITEM_COUNT);
             mUnit = bundle.getString(AppConstants.KEY_ITEM_UNIT);
             mPrice = bundle.getDouble(AppConstants.KEY_ITEM_PRICE);
-            mCategoryPosition = bundle.getInt(AppConstants.KEY_ITEM_CATEGORY);
-            mCategories = bundle.getStringArrayList(AppConstants.KEY_ITEM_CATEGORIES);
-            Collections.sort(mCategories);
+            mCategory = bundle.getString(AppConstants.KEY_ITEM_CATEGORY);
+            mCategories.addAll(bundle.getStringArrayList(AppConstants.KEY_ITEM_CATEGORIES));
+            //Collections.sort(mCategories);
             mPosition = bundle.getInt(AppConstants.KEY_POSITION);
         }
     }
@@ -190,7 +192,7 @@ public class EditItemFragment extends DialogFragment {
             }
         });
 
-        final ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<CharSequence>(mActivity, android.R.layout.simple_spinner_item, mActivity.getResources().getStringArray(R.array.units));
+        final ArrayAdapter<CharSequence> spinnerAdapter = new ArrayAdapter<>(mActivity, android.R.layout.simple_spinner_item, mActivity.getResources().getStringArray(R.array.units));
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spUnit.setAdapter(spinnerAdapter);
         spUnit.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -223,25 +225,23 @@ public class EditItemFragment extends DialogFragment {
 
             }
         });
-        final String[] categories = new String[mCategories.size() + 1];
-        for (int i = 0; i < categories.length - 1; i++) {
-            categories[i] = mCategories.get(i);
-        }
-        categories[categories.length - 1] = getString(R.string.new_category);
+        mCategories.add(getString(R.string.new_category));
 
-        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, categories);
+        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(mActivity, R.layout.spinner_item, mCategories);
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         spItemCategory.setAdapter(categoryAdapter);
         spItemCategory.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                mCategoryPosition = position;
-                if (categories[position].equals(getString(R.string.new_category))) {
+                mCategory = mCategories.get(position);
+                Log.d(TAG, position + " : " + mCategory);
+
+                if (mCategory.equals(getString(R.string.new_category))) {
                     etNewCategory.setVisibility(View.VISIBLE);
                     etNewCategory.setText("");
                 } else {
                     etNewCategory.setVisibility(View.GONE);
-                    etNewCategory.setText(mCategories.get(position));
+                    etNewCategory.setText(mCategory);
                 }
             }
 
@@ -250,8 +250,10 @@ public class EditItemFragment extends DialogFragment {
 
             }
         });
-        spItemCategory.setSelection(mCategoryPosition);
+
+        Log.d(TAG, "mCategories : " + mCategories.indexOf(mCategory));
+
+        spItemCategory.setSelection(mCategories.indexOf(mCategory));
+        //spItemCategory.setSelection(mCategory); //TODO check index here
     }
-
-
 }

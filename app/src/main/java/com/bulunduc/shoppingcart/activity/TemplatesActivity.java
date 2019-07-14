@@ -10,6 +10,8 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.helper.ItemTouchHelper;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.MotionEvent;
+import android.view.View;
 
 import com.bulunduc.shoppingcart.R;
 import com.bulunduc.shoppingcart.adapters.TemplateAdapter;
@@ -42,7 +44,7 @@ public class TemplatesActivity extends BaseActivity implements TemplateDialogCli
         rvTemplates.setAdapter(mTemplateAdapter);
 
         ItemTouchHelper.Callback callback =
-                new SimpleItemTouchHelperCallback(mTemplateAdapter);
+                        new SimpleItemTouchHelperCallback(mTemplateAdapter);
         ItemTouchHelper touchHelper = new ItemTouchHelper(callback);
         touchHelper.attachToRecyclerView(rvTemplates);
 

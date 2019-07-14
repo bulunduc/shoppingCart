@@ -112,7 +112,7 @@ public class CategoryPageFragment extends Fragment{
                 args.putDouble(AppConstants.KEY_ITEM_COUNT, mProducts.get(position).getCount());
                 args.putString(AppConstants.KEY_ITEM_UNIT, mProducts.get(position).getCountUnit());
                 args.putDouble(AppConstants.KEY_ITEM_PRICE, mProducts.get(position).getPrice());
-                args.putInt(AppConstants.KEY_ITEM_CATEGORY, mCategoryId);
+                args.putString(AppConstants.KEY_ITEM_CATEGORY, mCategories.get(mCategoryId));
                 args.putStringArrayList(AppConstants.KEY_ITEM_CATEGORIES, mCategories);
                 args.putInt(AppConstants.KEY_POSITION, position);
 

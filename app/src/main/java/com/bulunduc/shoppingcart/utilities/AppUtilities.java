@@ -86,7 +86,6 @@ public class AppUtilities {
     public static ArrayList<String> getCategories(Context context) {
         ArrayList<String> categories = new ArrayList<>();
         categories.addAll(getProductList(context).keySet());
-        Collections.sort(categories);
         return categories;
     }
 

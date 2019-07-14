@@ -47,6 +47,7 @@ public class AddItemFragment extends DialogFragment {
     private AddItemDialogClickListener mAddItemDialogClickListener;
 
     public AddItemFragment() {
+
     }
 
     @Override
@@ -69,7 +70,7 @@ public class AddItemFragment extends DialogFragment {
     private void initVar() {
         Bundle bundle = getArguments();
         if (bundle != null) {
-            mCategories = bundle.getStringArrayList(AppConstants.KEY_ITEM_CATEGORIES);
+            mCategories.addAll(bundle.getStringArrayList(AppConstants.KEY_ITEM_CATEGORIES));
             mCurrentCategoryPosition = bundle.getInt(AppConstants.KEY_ITEM_CATEGORY_POSITION);
         }
         mAddItemDialogClickListener = (AddItemDialogClickListener) getActivity();
@@ -162,11 +163,11 @@ public class AddItemFragment extends DialogFragment {
 
             }
         });
-        mCategories.add(mCategories.size(), getString(R.string.new_category));
-        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, mCategories.toArray(new String[mCategories.size()]));
+        mCategories.add(0, getString(R.string.new_category));
+        final ArrayAdapter<String> categoryAdapter = new ArrayAdapter<>(getActivity(), R.layout.spinner_item, mCategories);
         categoryAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         mCategorySpinner.setAdapter(categoryAdapter);
-        mCategorySpinner.setSelection(mCurrentCategoryPosition);
+        mCategorySpinner.setSelection(mCurrentCategoryPosition+1);
         mCategorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -233,8 +234,10 @@ public class AddItemFragment extends DialogFragment {
         if (mCategory.isEmpty()) throw new EmptyTextException();
         if (!mCategories.contains(mCategory)) {
             mCategories.add(mCategory);
-            mCurrentCategoryPosition = mCategories.indexOf(mCategory);
+            //mCurrentCategoryPosition = mCategories.indexOf(mCategory);
         }
+        mCurrentCategoryPosition = mCategories.indexOf(mCategory);
+
     }
 
     private void clear() {
