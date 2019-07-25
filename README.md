@@ -23,9 +23,9 @@
 Скриншоты
 
 
-<img src="https://github.com/bulunduc/shoppingCart/blob/master/allproducts.jpg" width="200" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/addProduct.jpg" width="200" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/editProduct.jpg" width="200" height="400"/>
+<img src="https://github.com/bulunduc/shoppingCart/blob/master/allproducts.jpg" width="250" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/addProduct.jpg" width="250" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/editProduct.jpg" width="250" height="400"/>
 
-<img src="https://github.com/bulunduc/shoppingCart/blob/master/menu.jpg" width="200" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/search.jpg" width="200" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/templateDetailView.jpg" width="200" height="400"/>
+<img src="https://github.com/bulunduc/shoppingCart/blob/master/menu.jpg" width="250" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/search.jpg" width="250" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/templateDetailView.jpg" width="250" height="400"/>
 
-<img src="https://github.com/bulunduc/shoppingCart/blob/master/addTemplate.jpg" width="200" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/cart.jpg" width="200" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/sms.jpg" width="200" height="400"/>
+<img src="https://github.com/bulunduc/shoppingCart/blob/master/addTemplate.jpg" width="250" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/cart.jpg" width="250" height="400"/> <img src="https://github.com/bulunduc/shoppingCart/blob/master/sms.jpg" width="250" height="400"/>
 
